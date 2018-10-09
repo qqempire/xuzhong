@@ -8,10 +8,15 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 //引入iconfont
 //import "./icon/iconfont.css"
-
+//引入iview
+import iView from 'iview';
+import 'iview/dist/styles/iview.css';
 
 Vue.use(ElementUI);
-
+Vue.use(iView, {
+  transfer: true,
+  size: 'large'
+});
 
 
 

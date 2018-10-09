@@ -1,9 +1,17 @@
 <template>
   <div class="hello">
-    <div class="aaa">
-      <h1>调研对象</h1>
-      <div class="bbb">2222</div>
-    </div>
+    <Layout :style="{marginLeft: '200px'}">
+            
+            <Content :style="{padding: '0 16px 16px'}">
+                <Breadcrumb :style="{margin: '16px 0'}">
+                    
+                    <div class="back">返回</div>
+                </Breadcrumb>
+                <Card>
+                    <div style="height: 600px">调研对象</div>
+                </Card>
+            </Content>
+        </Layout>
     
     
   </div>
