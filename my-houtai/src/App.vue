@@ -8,14 +8,14 @@
                 
                 <Submenu name="1">
                     <template slot="title">
-                        <Icon type="ios-navigate"></Icon>
+                        <Icon type="ios-compass" />
                         旭中首页
                     </template>
                     
                 </Submenu>
                 <Submenu name="2">
                     <template slot="title">
-                        <Icon type="ios-keypad"></Icon>
+                        <Icon type="md-list-box" />
                         项目管理
                     </template>
                     <MenuItem name="2-1">添加醒目</MenuItem>
@@ -25,7 +25,7 @@
                
                 <Submenu name="3">
                     <template slot="title">
-                        <Icon type="ios-analytics"></Icon>
+                        <Icon type="md-pricetags" />
                         调研对象管理
                     </template>
                     <MenuItem name="3-1">调研对象列表</MenuItem>
@@ -33,7 +33,7 @@
                 </Submenu>
                 <Submenu name="4">
                     <template slot="title">
-                        <Icon type="ios-analytics"></Icon>
+                        <Icon type="md-checkbox-outline" />
                         审核管理
                     </template>
                     <MenuItem name="4-1">审核安排</MenuItem>
@@ -42,7 +42,7 @@
                 </Submenu>
                 <Submenu name="5">
                     <template slot="title">
-                        <Icon type="ios-analytics"></Icon>
+                        <Icon type="md-pie" />
                         门店管理
                     </template>
                     <MenuItem name="5-1">添加门店</MenuItem>
@@ -50,7 +50,7 @@
                 </Submenu>
                 <Submenu name="6">
                     <template slot="title">
-                        <Icon type="ios-analytics"></Icon>
+                        <Icon type="ios-cube" />
                         企业管理
                     </template>
                     <MenuItem name="6-1">模板原理</MenuItem>
@@ -62,7 +62,7 @@
                 </Submenu>
                 <Submenu name="7">
                     <template slot="title">
-                        <Icon type="ios-analytics"></Icon>
+                       <Icon type="ios-create" />
                         报告管理
                     </template>
                     <MenuItem name="7-1">业绩报告</MenuItem>
@@ -74,14 +74,14 @@
                 </Submenu>
                 <Submenu name="8">
                     <template slot="title">
-                        <Icon type="ios-analytics"></Icon>
+                        <Icon type="md-eye" />
                         可视化管理
                     </template>
                    
                 </Submenu>
                 <Submenu name="9">
                     <template slot="title">
-                        <Icon type="ios-analytics"></Icon>
+                        <Icon type="ios-contact" />
                         我的任务
                     </template>
                     <MenuItem name="9-1">项目列表</MenuItem>

@@ -14,8 +14,11 @@ import Xiangmu from "../components/xiangmu/xiangmu.vue"
 import Diaoyan from "../components/diaoyan/diaoyan.vue" 
 
 import Shenhe from "../components/shenhe/shenhe.vue" 
+//企业
+import Moban from "../components/qiye/moban.vue" 
 
-
+import Bianji from "../components/qiye/moban/bianji.vue" 
+//import Canpin from "../components/qiye/moban/canpin.vue" 
 
 
 
@@ -50,6 +53,30 @@ export default new Router({
       path: '/shenhe',
       component: Shenhe
     },
+    //企业管理
+    {
+      path: '/moban',
+      component: Moban,
+        //   children:[
+        //     {
+        //     path:"/canpin",
+        //     component:Canpin
+        //    },
+        //  ]
+    },
+    {
+      path: '/bianji',
+      component: Bianji
+    },
+
+    
+
+
+
+
+
+
+
 
 
 

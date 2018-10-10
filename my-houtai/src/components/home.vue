@@ -23,17 +23,17 @@
                         <div id="update">
                              <div class="title"><span>状态列表</span></div>
                              <div class="data"> 
-                                <p>统计日期：
+                                <p>
                                     <Row>
                                         <Col span="8">
-                                            <DatePicker type="date" placeholder="开始日期" style="width: 120px;"></DatePicker>
+                                            <DatePicker type="date" placeholder="开始统计日期" style="width: 150px;"></DatePicker>
                                         </Col>
                                         
                                     </Row>
-                                    至
+                                    &nbsp;—&nbsp;
                                     <Row>
                                         <Col span="8">
-                                            <DatePicker type="date" placeholder="结束日期" style="width: 120px"></DatePicker>
+                                            <DatePicker type="date" placeholder="结束统计日期" style="width: 150px"></DatePicker>
                                         </Col>
                                         
                                     </Row>
@@ -47,13 +47,7 @@
                                     :value="item.value">
                                   </el-option>
                                 </el-select>
-                                <!-- <p>项目名称：<select>
-                                            <option value ="volvo">Volvo</option>
-                                            <option value ="saab">Saab</option>
-                                            <option value="opel">Opel</option>
-                                            <option value="audi">Audi</option>
-                                          </select>
-                                </p> -->
+                                
                                 <p ><el-input v-model="input" placeholder="请输入调研编号"></el-input>  <span class="search">搜索</span></p>
                              </div>
                              <!-- 表格 -->
