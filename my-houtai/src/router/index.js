@@ -14,11 +14,30 @@ import Xiangmu from "../components/xiangmu/xiangmu.vue"
 import Diaoyan from "../components/diaoyan/diaoyan.vue" 
 
 import Shenhe from "../components/shenhe/shenhe.vue" 
-//企业
-import Moban from "../components/qiye/moban.vue" 
+
+//企业管理
+
+//模板
+import Moban from "../components/qiye/moban/moban.vue" 
 
 import Bianji from "../components/qiye/moban/bianji.vue" 
-//import Canpin from "../components/qiye/moban/canpin.vue" 
+import Jiahua from "../components/qiye/moban/chakan_jia.vue" 
+import Shixiao from "../components/qiye/moban/chakan_shi.vue" 
+//员工
+import Yuangong from "../components/qiye/yuangong/yuangong.vue" 
+import Addshencha from "../components/qiye/yuangong/addshencha.vue" 
+//代理
+import Daili from "../components/qiye/daili/daili.vue" 
+//访问员
+import Fangwenyuan from "../components/qiye/fangwenyuan/fangwenyuan.vue" 
+//权限
+import Quanxian from "../components/qiye/quanxian/quanxian.vue" 
+//操作日志
+import Dodata from "../components/qiye/dodata/dodata.vue" 
+
+
+
+
 
 
 
@@ -53,6 +72,8 @@ export default new Router({
       path: '/shenhe',
       component: Shenhe
     },
+
+
     //企业管理
     {
       path: '/moban',
@@ -68,9 +89,44 @@ export default new Router({
       path: '/bianji',
       component: Bianji
     },
-
-    
-
+    //查看
+    {
+      path: '/chakan_jia',
+      component: Jiahua
+    },
+    {
+      path: '/chakan_shi',
+      component: Shixiao
+    },
+    //员工
+    {
+      path: '/yuangong',
+      component: Yuangong
+    },
+    {
+      path: '/addshencha',
+      component: Addshencha
+    },
+    //代理
+    {
+      path: '/daili',
+      component: Daili
+    },
+  //访问员
+  {
+    path: '/fangwenyuan',
+    component: Fangwenyuan
+  },
+  //权限
+  {
+    path: '/quanxian',
+    component: Quanxian
+  },
+//操作日志
+{
+  path: '/dodata',
+  component: Dodata
+},
 
 
 

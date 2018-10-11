@@ -4,16 +4,23 @@
     <Sider :style="{position: 'fixed', height: '100vh', left: 0, overflow: 'auto'}" style="background:#39435B">
             <Menu active-name="1-2" theme="dark" width="auto" :open-names="['1']" accordion style="background:#39435B">
                
-               <div class="logo">logo</div>
+               <div class="logo" >logo</div>
+
+               
+
                 
-                <Submenu name="1">
-                    <template slot="title">
-                        <Icon type="ios-compass" />
-                        旭中首页
-                    </template>
-                    
-                </Submenu>
-                <Submenu name="2">
+                    <Submenu name="1" >
+                        <template slot="title">
+                            <router-link to="./home" tag="span">
+                                <Icon type="ios-compass" />
+                                旭中首页
+                            </router-link>
+                        </template>
+                        
+                    </Submenu>
+                
+                
+                <Submenu name="2" >
                     <template slot="title">
                         <Icon type="md-list-box" />
                         项目管理
@@ -49,16 +56,34 @@
                     <MenuItem name="5-2">门店列表</MenuItem>
                 </Submenu>
                 <Submenu name="6">
-                    <template slot="title">
-                        <Icon type="ios-cube" />
-                        企业管理
+                    <template slot="title">                     
+                            <Icon type="ios-cube" />
+                            企业管理                       
                     </template>
-                    <MenuItem name="6-1">模板原理</MenuItem>
-                    <MenuItem name="6-2">员工管理</MenuItem>
-                    <MenuItem name="6-3">代理管理</MenuItem>
-                    <MenuItem name="6-4">访问员管理</MenuItem>
-                    <MenuItem name="6-5">权限管理</MenuItem>
-                    <MenuItem name="6-6">操作日志</MenuItem>
+
+                    
+                       <MenuItem name="6-1" >
+                          <router-link to="./moban" tag="span">模板原理</router-link>
+                       </MenuItem>
+                       <MenuItem name="6-2" >
+                          <router-link to="./yuangong" tag="span">员工管理</router-link>
+                       </MenuItem>
+                    
+                    
+                    <MenuItem name="6-3">
+                       <router-link to="./daili" tag="span">代理管理</router-link>
+                    
+                    </MenuItem>
+                    <MenuItem name="6-4">
+                        <router-link to="./fangwenyuan" tag="span">访问员管理</router-link>
+                    </MenuItem>
+
+                    <MenuItem name="6-5">
+                       <router-link to="./quanxian" tag="span">权限管理</router-link>
+                    </MenuItem>
+                    <MenuItem name="6-6">
+                        <router-link to="./dodata" tag="span">操作日志</router-link>
+                    </MenuItem>
                 </Submenu>
                 <Submenu name="7">
                     <template slot="title">
@@ -118,7 +143,18 @@
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  data(){
+      return{
+         
+      }
+  },
+  methods:{
+     aaa(){
+         console.log("222")
+        // this.$router.push("/home")
+     }
+  }
 }
 </script>
     

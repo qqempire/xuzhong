@@ -26,8 +26,9 @@
                                   placeholder="备注信息"
                                   v-model="textarea3">
                                 </el-input>
-                           <!-- 右边 -->
+                           
                              </div>
+                             <!-- 右边 -->
                              <div class="bbb">
                                <div class="tit">app功能</div>
                                <div class="content">
@@ -58,6 +59,7 @@
                                <div class="other">app其他功能</div>
                                <el-button type="success" size="small">&nbsp;&nbsp;导入&nbsp;&nbsp;</el-button>
                                <el-button type="info" size="small">&nbsp;&nbsp;下载导入模板&nbsp;&nbsp;</el-button>
+                               
                                 <!-- 表格 -->
                              <table border="1" width="100%" cellpadding='0' cellspacing='0'>
                                   <tr class="header">

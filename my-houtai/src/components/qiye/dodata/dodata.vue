@@ -10,7 +10,7 @@
                     <el-button type="danger" size="small">&nbsp;&nbsp;删&nbsp;除&nbsp;&nbsp;</el-button>
                 </Breadcrumb>
                 <Card>
-                    <div style="height: 600px">Content</div>
+                    <div style="height: 600px">操作日志</div>
                 </Card>
             </Content>
         </Layout>
@@ -19,7 +19,7 @@
 
 <script>
 export default {
-  name: 'Jiahua',
+  name: 'Dodata',
   data () {
     return {
        
