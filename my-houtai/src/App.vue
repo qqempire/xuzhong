@@ -85,18 +85,33 @@
                         <router-link to="./dodata" tag="span">操作日志</router-link>
                     </MenuItem>
                 </Submenu>
-                <Submenu name="7">
-                    <template slot="title">
-                       <Icon type="ios-create" />
-                        报告管理
-                    </template>
-                    <MenuItem name="7-1">业绩报告</MenuItem>
-                    <MenuItem name="7-2">报告模板</MenuItem>
-                    <MenuItem name="7-3">实效报告</MenuItem>
-                    <MenuItem name="7-4">家化报告</MenuItem>
-                    <MenuItem name="7-5">已生成报告</MenuItem>
-                    
-                </Submenu>
+               <Submenu name="7">
+                <template slot="title">
+                    <Icon type="ios-create" />
+                    报告管理
+                </template>
+                <MenuItem name="7-1">                  
+                    <router-link to="./performanceReportVisitor" tag="span">业绩报告</router-link>                  
+                    <!-- <MenuItem name="7-1-2">
+                        <router-link to="./performanceReport/agent" tag="span">代理绩效</router-link>
+                    </MenuItem>
+                    <MenuItem name="7-1-3">
+                        <router-link to="./performanceReport/examine" tag="span">审核绩效</router-link>
+                    </MenuItem>                                  -->
+                </MenuItem>
+                <MenuItem name="7-2">
+                    <router-link to="./reportTemplateList" tag="span">报告模板</router-link>
+                </MenuItem>
+                <MenuItem name="7-3">
+                    <router-link to="./prescriptionReportList" tag="span">实效报告</router-link>
+                </MenuItem>
+                <MenuItem name="7-4">
+                <router-link to="./familyReportList" tag="span"> 家化报告</router-link>
+                </MenuItem>
+                <MenuItem name="7-5">
+                    <router-link to="./generatedReportList" tag="span">已生成报告</router-link>
+                </MenuItem>               
+            </Submenu>
                 <Submenu name="8">
                     <template slot="title">
                         <Icon type="md-eye" />

@@ -36,13 +36,29 @@ import Quanxian from "../components/qiye/quanxian/quanxian.vue"
 import Dodata from "../components/qiye/dodata/dodata.vue" 
 // 新建
 import New from "../components/qiye/moban/new.vue" 
-// 家化
- //import Jiahua from "../components/qiye/moban/chakan_jia.vue" 
-// //实效
-// import Shixiao from "../components/qiye/moban/chakan_shi.vue" 
 
 
+// 报告模板
 
+// 业绩报告
+import performanceReportAgent from "../components/reportManagement/performanceReport/agent.vue"
+import performanceReportExamine from "../components/reportManagement/performanceReport/examine.vue"
+import performanceReportVisitor from "../components/reportManagement/performanceReport/visitor.vue"
+// 报告模板
+import reportTemplateAdd from "../components/reportManagement/reportTemplate/add.vue"
+import reportTemplateEdit from "../components/reportManagement/reportTemplate/edit.vue"
+import reportTemplateList from "../components/reportManagement/reportTemplate/list.vue"
+import reportTemplateProblem from "../components/reportManagement/reportTemplate/problem.vue"
+
+// 时效报告
+import prescriptionReportList from "../components/reportManagement/prescriptionReport/list.vue"
+import prescriptionReportTemplate from "../components/reportManagement/prescriptionReport/template.vue"
+import prescriptionReportDetailedList from "../components/reportManagement/prescriptionReport/detailedList.vue"
+
+// 家化报告
+import familyReportList from "../components/reportManagement/familyReport/familyReportList.vue"
+// 已生成报告
+import generatedReportList from "../components/reportManagement/generatedReport/generatedReportList.vue"
 
 
 
@@ -144,7 +160,60 @@ export default new Router({
   },
   
 
+// 报告管理(一级)
+// 绩效报告
+{
+  path: '/performanceReportAgent',
+  component: performanceReportAgent
+},
+{
+  path: '/performanceReportExamine',
+  component: performanceReportExamine
+},{
+  path: '/performanceReportVisitor',
+  component: performanceReportVisitor
+},
+// 报告模板
+{
+  path: '/reportTemplateAdd',
+  component: reportTemplateAdd
+},
+{
+  path: '/reportTemplateEdit',
+  component: reportTemplateEdit
+},
+{
+  path: '/reportTemplateList',
+  component: reportTemplateList
+},
+{
+  path: '/reportTemplateProblem',
+  component: reportTemplateProblem
+},
+// 时效报告
+{
+  path: '/prescriptionReportList',
+  component: prescriptionReportList
+},
+{
+  path: '/prescriptionReportTemplate',
+  component: prescriptionReportTemplate
+},
+{
+  path: '/prescriptionReportDetailedList',
+  component: prescriptionReportDetailedList
+},
 
+// 家化报告
+{
+  path: '/familyReportList',
+  component: familyReportList
+},
+// 已生成列表
+{
+  path: '/generatedReportList',
+  component: generatedReportList
+},
 
 
 
