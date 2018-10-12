@@ -34,6 +34,13 @@ import Fangwenyuan from "../components/qiye/fangwenyuan/fangwenyuan.vue"
 import Quanxian from "../components/qiye/quanxian/quanxian.vue" 
 //操作日志
 import Dodata from "../components/qiye/dodata/dodata.vue" 
+// 新建
+import New from "../components/qiye/moban/new.vue" 
+// 家化
+ //import Jiahua from "../components/qiye/moban/chakan_jia.vue" 
+// //实效
+// import Shixiao from "../components/qiye/moban/chakan_shi.vue" 
+
 
 
 
@@ -78,17 +85,20 @@ export default new Router({
     {
       path: '/moban',
       component: Moban,
+     
         //   children:[
         //     {
-        //     path:"/canpin",
-        //     component:Canpin
-        //    },
+        //       path: 'bianji',
+        //       component: Bianji
+        //     },
         //  ]
     },
-    {
-      path: '/bianji',
-      component: Bianji
-    },
+    
+      {
+        path: '/bianji',
+        component: Bianji
+      },
+   
     //查看
     {
       path: '/chakan_jia',
@@ -122,11 +132,17 @@ export default new Router({
     path: '/quanxian',
     component: Quanxian
   },
-//操作日志
-{
-  path: '/dodata',
-  component: Dodata
-},
+  //操作日志
+  {
+    path: '/dodata',
+    component: Dodata
+  },
+  //新建
+  {
+    path: '/new',
+    component: New
+  },
+  
 
 
 

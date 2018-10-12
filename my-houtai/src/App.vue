@@ -63,7 +63,7 @@
 
                     
                        <MenuItem name="6-1" >
-                          <router-link to="./moban" tag="span">模板原理</router-link>
+                          <router-link to="./moban" tag="span">模板管理</router-link>
                        </MenuItem>
                        <MenuItem name="6-2" >
                           <router-link to="./yuangong" tag="span">员工管理</router-link>

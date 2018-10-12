@@ -5,7 +5,7 @@
             <Content :style="{padding: '0 16px 16px'}">
                 <Breadcrumb :style="{margin: '16px 0'}">
                     
-                    <el-button type="info" size="small">&nbsp;&nbsp;返&nbsp;回&nbsp;&nbsp;</el-button>
+                    <el-button type="info" size="small" @click="backmoban">&nbsp;&nbsp;返&nbsp;回&nbsp;&nbsp;</el-button>
                     <el-button type="success" size="small">&nbsp;&nbsp;保&nbsp;存&nbsp;&nbsp;</el-button>
                     <el-button type="danger" size="small">&nbsp;&nbsp;删&nbsp;除&nbsp;&nbsp;</el-button>
                 </Breadcrumb>
@@ -124,7 +124,7 @@
 
 <script>
 export default {
-  name: 'Jiahua',
+  name: 'Shixiao',
   data () {
     return {
         cityList: [
@@ -150,6 +150,11 @@ export default {
                 single3: false,
        
   }
+ },
+ methods:{
+     backmoban(){
+         this.$router.push("/moban")
+     }
  }
 }
 </script>

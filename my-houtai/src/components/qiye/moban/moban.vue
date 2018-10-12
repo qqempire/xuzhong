@@ -83,7 +83,9 @@
                                     </el-select>
                                     &nbsp;&nbsp;
                                     <el-button type="success" >搜索</el-button>
-                                    <el-button type="success">添加模板</el-button>
+                                    <el-button type="success" @click="tobianji">添加模板</el-button>
+                                    <!-- <router-link to="/moban/bianji" ><el-button type="success" >添加模板</el-button></router-link> -->
+                                    
                                 </div>
                                 <!-- 表格 -->
                                 <el-table
@@ -117,8 +119,8 @@
                 </tab-pane>
 
 
-                <!-- 算法模板 -->
-                <tab-pane label="算法模板">
+                <!-- 算分模板 -->
+                <tab-pane label="算分模板">
                     <Content :style="{padding: '0 16px 16px'}">
                         
                         <Card>
@@ -136,7 +138,7 @@
                                         </el-select>
                                         &nbsp;&nbsp;
                                         <el-button type="success" >搜索</el-button>
-                                        <el-button type="success">添加模板</el-button>
+                                        <el-button type="success" @click="tonew">添加模板</el-button>
                                     </div>
                                     <!-- 表格 -->
                                     <el-table
@@ -278,6 +280,18 @@ export default {
 
 
       }
+  },
+  methods:{
+    tobianji(){
+      this.$router.push("/bianji")
+    },
+    tonew(){
+      this.$router.push("/new")
+
+    }
+    // addnew(){
+    //     this.$router.push("/chalan_jia")
+    // }
   }
 }
 </script>

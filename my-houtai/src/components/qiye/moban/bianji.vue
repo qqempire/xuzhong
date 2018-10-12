@@ -5,7 +5,7 @@
             <Content :style="{padding: '0 16px 16px'}">
                 <Breadcrumb :style="{margin: '16px 0'}">
                     
-                    <el-button type="info" size="small">&nbsp;&nbsp;返回&nbsp;&nbsp;</el-button>
+                    <el-button type="info" size="small" @click="backtomoban">&nbsp;&nbsp;返回&nbsp;&nbsp;</el-button>
                     <el-button type="success" size="small">&nbsp;&nbsp;保存&nbsp;&nbsp;</el-button>
                 </Breadcrumb>
                 <Card>
@@ -182,6 +182,11 @@ export default {
           social: ['facebook', 'github'],
           fruit: ['苹果']  
     }
+  },
+  methods:{
+      backtomoban(){
+          this.$router.push("./moban")
+      }
   }
 }
 </script>

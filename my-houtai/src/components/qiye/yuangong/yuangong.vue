@@ -101,7 +101,7 @@
 
                         <!-- 更新报告 -->
                         <div id="update">
-                             <div class="title title2"><span>状态列表</span><Button type="warning" >导出表格</Button></div>
+                             <div class="title title2"><span>状态列表</span><el-button type="info">导出表格</el-button></div>
                              
                              <!-- 表格 -->
                              <table border='1' width="100%" cellpadding='0' cellspacing='0'>
