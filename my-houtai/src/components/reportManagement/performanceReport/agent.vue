@@ -1,33 +1,157 @@
 <template>
-  <div class="hello">
-      <Layout :style="{marginLeft: '200px'}" >
-            <div>代理绩效</div>
+    <div class="visitor">
+      <Layout :style="{marginLeft: '200px'}" >            
             <Content :style="{padding: '0 16px 16px'}">
-                <Breadcrumb :style="{margin: '16px 0'}">                   
-                    <el-button type="info" size="small">&nbsp;&nbsp;返&nbsp;回&nbsp;&nbsp;</el-button>
-                    <el-button type="success" size="small">&nbsp;&nbsp;保&nbsp;存&nbsp;&nbsp;</el-button>
-                    <el-button type="danger" size="small">&nbsp;&nbsp;删&nbsp;除&nbsp;&nbsp;</el-button>
-                </Breadcrumb>
                 <Card>
-                    <div style="height: 600px">Content</div>
+                    <div style="height: 600px">
+                        <div class="title"><span>条件筛选</span></div>
+                        <div>                            
+                            <Select v-model="model1" style="width:150px" placeholder="省">
+                                <Option v-for="(item,index) in provinceLists" :value="item" :key="index">{{ item }}</Option>
+                            </Select>
+                            <Select v-model="model1" style="width:150px" placeholder="市">
+                                <Option v-for="(item,index) in cityLists" :value="item" :key="index">{{ item }}</Option>
+                            </Select>
+                            <Select v-model="model1" style="width:150px" placeholder="县/区">
+                                <Option v-for="(item,index) in areaLists" :value="item" :key="index">{{ item }}</Option>
+                            </Select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <Select v-model="model1" style="width:100px" placeholder="代理状态">
+                                <Option v-for="(item,index) in pLists" :value="item" :key="index">{{ item }}</Option>
+                            </Select>&nbsp;&nbsp;
+                            <Button type="success">&nbsp;&nbsp;搜索&nbsp;&nbsp;</Button>
+                        </div>
+                        <br/>
+                        <!-- 下表 -->
+                        <div class="title">
+                            <span>列表状态</span>
+                            <el-button type="info">导出表格</el-button>
+                        </div>
+                        <!-- 导航 -->
+                        <ul class="nav">
+                            <li @click="visitor">访问员绩效</li>
+                            <li @click="agent" class="active">代理绩效</li>
+                            <li @click="examine">审核绩效</li>
+                        </ul>
+
+                        <!-- 表格 -->
+                        <Table border :columns="columns10" :data="data10"></Table>
+
+                    </div>
                 </Card>
             </Content>
         </Layout>
-  </div> 
+    </div>
 </template>
 
 <script>
 export default {
-  name: 'Jiahua',
+  name: 'visitor',
   data () {
     return {
-       
-  }
- }
+       provinceLists:["河南","山东","黑龙江","辽宁"],
+       cityLists:["河南","山东","黑龙江","辽宁"],
+       areaLists:["河南","山东","黑龙江","辽宁"],
+       pLists:["河南","山东","黑龙江","辽宁"],
+        columns10: [
+            {
+                title: '区域',
+                key: '区域'
+            },
+            {
+                title: '代理名称',
+                key: '代理名称'
+            },
+            {
+                title: '项目名称',
+                key: '项目名称',
+                sortable: true
+            },
+            {
+                title: '开始时间',
+                key: '开始时间',
+                sortable: true
+            },
+                        {
+                title: '结束时间',
+                key: '结束时间',               
+            },
+            {
+                title: '每天完成数量',
+                key: '每天完成数量',
+                
+            },
+            {
+                title: '退回比例',
+                key: '退回比例',
+                             
+            },
+            {
+                title: '退回完成率',
+                key: '退回完成率',
+                
+            },
+                        {
+                title: '实际录入数量',
+                key: '实际录入数量',
+                
+            },
+            {
+                title: '修改数量',
+                key: '修改数量',               
+            }
+        ],
+        data10: [
+            {
+                区域: 'John Brown',
+                代理名称: 18,
+                项目名称: 'New York No. 1 Lake Park',
+                开始时间: 55,
+                结束时间: 23,
+                每天完成数量: 88,
+                退回比例:77,
+                退回完成率:9,
+                实际录入数量:88,
+                修改数量:8
+            },
+            {
+                区域: 'John Brown',
+                代理名称: 18,
+                项目名称: 'New York No. 1 Lake Park',
+                开始时间: 55,
+                结束时间: 23,
+                每天完成数量: 88,
+                退回比例:77,
+                退回完成率:9,
+                实际录入数量:88,
+                修改数量:8
+            },
+        ]
+    }
+  },
+  methods:{
+        visitor(){
+            this.$router.push("/performanceReportVisitor");            
+        },
+        agent(){
+            this.$router.push("/performanceReportAgent")
+        },
+        examine(){
+            this.$router.push("/performanceReportExamine")
+        }
+    }
 }
 </script>
-
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped  lang="scss">
-    
+    .title{width: 100%;height: 40px;background: #5BC0DE;line-height: 40px;color: #fff;padding-left:10px;display:flex;justify-content: space-between;align-items:center;margin-bottom: 10px;
+        span:nth-child(2){display: block;width: 100px;height: 30px;background: #C1C1C1;border-radius: 5px;line-height: 30px;text-align: center;}
+    }
+    table{text-align: center;
+   td{height: 25px}
+  }
+.header{background: #1D95C9;color: #fff}
+    .nav{display: flex; width: 600px; height: 40px; text-align: center; line-height: 40px; color: white}
+    .nav li{display:block; width: 200px; height: 40px; background: #cccccc;}
+    .nav li:hover{background: #5BB85D;}
+    .nav .active{background: #5BB85D;}  
 </style>

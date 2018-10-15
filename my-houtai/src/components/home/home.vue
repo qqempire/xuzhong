@@ -5,7 +5,7 @@
             <Content :style="{padding: '0 16px 16px'}" style="background:#fff;">
                 <Breadcrumb :style="{margin: '16px 0'}" >
                     
-                    <!-- <div class="back">返回</div> -->
+                    <div class="back">返回</div>
                 </Breadcrumb>
                 <Card style="background:#F2F4F4;">
                     <div style="height: 600px">

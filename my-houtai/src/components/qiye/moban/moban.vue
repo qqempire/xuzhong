@@ -22,6 +22,7 @@
                                     &nbsp;&nbsp;
                                     <el-button type="success" >搜索</el-button>
                                     <el-button type="success">产品类别管理</el-button>
+                                    <button @click="shu()">按钮</button>
                                 </div>
                                 <!-- 表格 -->
                                 <el-table
@@ -180,6 +181,9 @@
 </template>
 
 <script>
+import $ from "jquery"
+import axios from "axios"
+
 export default {
   name: 'Moban',
 //   methods: {
@@ -197,21 +201,14 @@ export default {
     return {
         //111
         options: [{
-          value: '选项1',
+          
           label: '黄金糕'
-        }, {
-          value: '选项2',
-          label: '双皮奶'
-        }, {
-          value: '选项3',
-          label: '蚵仔煎'
-        }, {
-          value: '选项4',
-          label: '龙须面'
-        }, {
-          value: '选项5',
-          label: '北京烤鸭'
-        }],
+         },
+        ],
+
+
+
+
         //222
         options2: [{
           value: '选项1',
@@ -288,11 +285,33 @@ export default {
     tonew(){
       this.$router.push("/new")
 
+    },
+    shu(){
+        	axios({
+            //    url:"http://jx.xuzhixiang.top/ap/api/productlist.php"
+                url:"http://192.168.0.134:8080/QueryByTypes"
+              
+			})
+			.then(function(data){
+				console.log(data.data)
+             this.options.push(data.data.tname)
+             console.log(this.options)
+			})
     }
-    // addnew(){
-    //     this.$router.push("/chalan_jia")
-    // }
+    
+    
+  },
+  mounted(){
+    //  var _this=this;
+	// 		axios({
+    //      url:"http://jx.xuzhixiang.top/ap/api/productlist.php"
+       
+	// 		})
+	// 		.then(function(data){
+	// 			console.log(data.data)
+	// 		})
   }
+
 }
 </script>
 

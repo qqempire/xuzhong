@@ -20,9 +20,14 @@ import Diaoyan from "../components/diaoyan/diaoyan.vue"
 
 
 //审核管理
-     import Shenhe from "../components/shenhe/shenanpai/shenhe.vue" 
-     import List from "../components/shenhe/shenlist/list.vue" 
 
+    //安排
+     import Shenhe from "../components/shenhe/shenanpai/shenhe.vue" 
+     import Anpai from "../components/shenhe/shenanpai/anpai.vue" 
+    //列表
+     import List from "../components/shenhe/shenlist/list.vue" 
+        
+    //退回
      import Tuihui from "../components/shenhe/shentui/tuihui.vue" 
 
 
@@ -68,6 +73,13 @@ import Diaoyan from "../components/diaoyan/diaoyan.vue"
 
       // 家化报告
       import familyReportList from "../components/reportManagement/familyReport/familyReportList.vue"
+      import customerReport from "../components/reportManagement/familyReport/customerReport.vue"
+      import detailsReport from "../components/reportManagement/familyReport/detailsReport.vue"
+      import districtReport from "../components/reportManagement/familyReport/districtReport.vue"
+      import provinceReport from "../components/reportManagement/familyReport/provinceReport.vue"
+      import salesPersonReport from "../components/reportManagement/familyReport/salesPersonReport.vue"
+      import subReport from "../components/reportManagement/familyReport/subReport.vue"
+
       // 已生成报告
       import generatedReportList from "../components/reportManagement/generatedReport/generatedReportList.vue"
 
@@ -110,6 +122,10 @@ export default new Router({
             {
               path: '/shenhe',
               component: Shenhe
+            },
+            {
+              path: '/anpai',
+              component: Anpai
             },
             
             {
@@ -229,6 +245,31 @@ export default new Router({
           path: '/familyReportList',
           component: familyReportList
         },
+        {
+          path: '/customerReport',
+          component: customerReport
+        },
+        {
+          path: '/detailsReport',
+          component: detailsReport
+        },
+        {
+          path: '/districtReport',
+          component: districtReport
+        },
+        {
+          path: '/provinceReport',
+          component: provinceReport
+        },
+        {
+          path: '/salesPersonReport',
+          component: salesPersonReport
+        },
+        {
+          path: '/subReport',
+          component: subReport
+        },
+
         // 已生成列表
         {
           path: '/generatedReportList',
@@ -236,6 +277,7 @@ export default new Router({
         },
          ]
     },
+
 
     
     

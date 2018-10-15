@@ -1,33 +1,124 @@
 <template>
-  <div class="hello">
-      <Layout :style="{marginLeft: '200px'}" >
-            <div>家化报告</div>
+    <div class="visitor">
+      <Layout :style="{marginLeft: '200px'}" >            
             <Content :style="{padding: '0 16px 16px'}">
-                <Breadcrumb :style="{margin: '16px 0'}">                   
-                    <el-button type="info" size="small">&nbsp;&nbsp;返&nbsp;回&nbsp;&nbsp;</el-button>
-                    <el-button type="success" size="small">&nbsp;&nbsp;保&nbsp;存&nbsp;&nbsp;</el-button>
-                    <el-button type="danger" size="small">&nbsp;&nbsp;删&nbsp;除&nbsp;&nbsp;</el-button>
-                </Breadcrumb>
                 <Card>
-                    <div style="height: 600px">Content</div>
+                    <div style="height: 600px">
+                        <div class="title"><span>条件筛选</span></div>
+                        <div>                            
+                            <Select v-model="model1" style="width:150px" placeholder="省">
+                                <Option v-for="(item,index) in provinceLists" :value="item" :key="index">{{ item }}</Option>
+                            </Select>
+                            <Select v-model="model1" style="width:150px" placeholder="市">
+                                <Option v-for="(item,index) in cityLists" :value="item" :key="index">{{ item }}</Option>
+                            </Select>
+                            <Select v-model="model1" style="width:150px" placeholder="县/区">
+                                <Option v-for="(item,index) in areaLists" :value="item" :key="index">{{ item }}</Option>
+                            </Select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <Select v-model="model1" style="width:100px" placeholder="代理状态">
+                                <Option v-for="(item,index) in pLists" :value="item" :key="index">{{ item }}</Option>
+                            </Select>&nbsp;&nbsp;
+                            <Button type="success">&nbsp;&nbsp;搜索&nbsp;&nbsp;</Button>
+                        </div>
+                        <br/>
+                        <!-- 下表 -->
+                        <div class="title">
+                            <span>列表状态</span>
+                            <el-button type="info">导出表格</el-button>
+                        </div>
+                        <!-- 表格 -->
+                        <Table border :columns="columns6" :data="data6" ></Table>                       
+                    </div>
                 </Card>
             </Content>
         </Layout>
-  </div> 
+    </div>
 </template>
 
 <script>
 export default {
-  name: 'Jiahua',
+  name: 'visitor',
   data () {
     return {
-       
-  }
- }
+       provinceLists:["河南","山东","黑龙江","辽宁"],
+       cityLists:["河南","山东","黑龙江","辽宁"],
+       areaLists:["河南","山东","黑龙江","辽宁"],
+       pLists:["河南","山东","黑龙江","辽宁"],
+        columns6: [
+            {
+                title: '项目名称',
+                key: '项目名称'
+            },
+            {
+                title: '报告状态',
+                key: '报告状态'
+            },
+            {
+                title: '得分状态',
+                key: '得分状态'
+            },
+            {
+                title: '调研对象数量',
+                key: '调研对象数量',               
+            },
+            {
+                title: '调研产品数量',
+                key: '调研产品数量',               
+            },
+            {
+                title: '详情',
+                key: '详情', 
+                render: (h, params) => {
+                        return h('div', [
+                            h('Button', {
+                                props: {
+                                    type: 'primary',
+                                    size: 'small'
+                                },
+                                style: {
+                                    marginRight: '5px'
+                                },
+                                on: {
+                                    click: () => {
+                                        this.show(params.index)
+                                    }
+                                }
+                            }, '查看')
+                    ])             
+                }
+            }
+        ],
+        data6: [
+            {
+                项目名称: 'John Brown',
+                报告状态: 18,
+                得分状态:999,
+                调研对象数量: 'New York No. 1 Lake Park',
+                调研产品数量: 55,
+                详情: "查看"
+            },
+        ]
+            
+    }
+  },
+    methods: {
+        show (index) {
+            this.$router.push("/districtReport")
+        }
+    }
 }
 </script>
-
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped  lang="scss">
-    
+    .title{width: 100%;height: 40px;background: #5BC0DE;line-height: 40px;color: #fff;padding-left:10px;display:flex;justify-content: space-between;align-items:center;margin-bottom: 10px;
+        span:nth-child(2){display: block;width: 100px;height: 30px;background: #C1C1C1;border-radius: 5px;line-height: 30px;text-align: center;}
+    }
+    table{text-align: center;
+   td{height: 25px}
+  }
+.header{background: #1D95C9;color: #fff}
+    .nav{display: flex; width: 600px; height: 40px; text-align: center; line-height: 40px; color: white}
+    .nav li{display:block; width: 200px; height: 40px; background: #cccccc;}
+    .nav li:hover{background: #5BB85D;}
+    .nav .active{background: #5BB85D;}  
 </style>

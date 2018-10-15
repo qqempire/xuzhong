@@ -43,9 +43,16 @@
                         <Icon type="md-checkbox-outline" />
                         审核管理
                     </template>
-                    <MenuItem name="4-1">审核安排</MenuItem>
-                    <MenuItem name="4-2">审核退回</MenuItem>
-                    <MenuItem name="4-3">审核列表</MenuItem>
+                    
+                    <MenuItem name="4-1">
+                        <router-link to="./shenhe" tag="span">审核安排</router-link>
+                    </MenuItem>    
+                    <MenuItem name="4-2">
+                        <router-link to="./tuihui" tag="span">审核退回</router-link>
+                    </MenuItem>    
+                    <MenuItem name="4-3">
+                        <router-link to="./list" tag="span">审核列表</router-link>
+                    </MenuItem>    
                 </Submenu>
                 <Submenu name="5">
                     <template slot="title">
@@ -93,7 +100,7 @@
                 </template>
                 <MenuItem name="7-1">                  
                     <router-link to="./performanceReportVisitor" tag="span">业绩报告</router-link>                  
-                                                  -->
+                                                
                 </MenuItem>
                 <MenuItem name="7-2">
                     <router-link to="./reportTemplateList" tag="span">报告模板</router-link>
