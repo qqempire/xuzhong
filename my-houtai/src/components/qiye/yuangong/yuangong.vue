@@ -14,13 +14,13 @@
 
                           <div class="title"><span>筛选条件</span></div>
                            <div class="ipt">
-                                <Select v-model="model1" style="width:200px" placeholder="部门">
+                                <Select v-model="model1" style="width:100px" placeholder="部门">
                                     <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
                                 </Select>
-                                <Select v-model="model1" style="width:200px" placeholder="职位">
+                                <Select v-model="model1" style="width:100px" placeholder="职位">
                                     <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
                                 </Select>
-                                <Select v-model="model1" style="width:200px" placeholder="员工状态">
+                                <Select v-model="model1" style="width:100px" placeholder="员工状态">
                                     <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
                                 </Select>
                                 <Button type="success">搜索</Button>

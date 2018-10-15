@@ -1,40 +1,35 @@
+
 <template>
   <div class="hello">
-     <Layout :style="{marginLeft: '200px'}">
+      <Layout :style="{marginLeft: '200px'}" >
             
             <Content :style="{padding: '0 16px 16px'}">
                 <Breadcrumb :style="{margin: '16px 0'}">
                     
-                    <div class="back">返回</div>
+                    <el-button type="info" size="small">&nbsp;&nbsp;返&nbsp;回&nbsp;&nbsp;</el-button>
+                    <el-button type="success" size="small">&nbsp;&nbsp;保&nbsp;存&nbsp;&nbsp;</el-button>
+                    <el-button type="danger" size="small">&nbsp;&nbsp;删&nbsp;除&nbsp;&nbsp;</el-button>
                 </Breadcrumb>
                 <Card>
-                    <div style="height: 600px">审核</div>
+                    <div style="height: 600px">列表</div>
                 </Card>
             </Content>
         </Layout>
-    
   </div> 
 </template>
 
 <script>
 export default {
-  name: 'Shenhe',
+  name: 'List',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
-    }
+       
   }
+ }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped  lang="scss">
-    .aaa{
-      color: red;
-      .bbb{
-        color: blue;
-      }
-
-    }
-
+    
 </style>

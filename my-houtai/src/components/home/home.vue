@@ -13,10 +13,15 @@
                         <div id="top">
 
                           <div class="title"><span>个人信息</span></div>
-                           <p>所属部门：  项目部</p>
-                           <p>职&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;位：  项目经理</p>
-                           <p>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：  王茂如</p>
+                           <!-- <p>所属部门：  项目部</p> -->
+                           <!-- <p>职&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;位：  项目经理</p> -->
+                           <!-- <p>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：  王茂如</p> -->
+                           <p>职&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;位：{{this.$store.state.count}}</p>
+                           <p>职&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;位：{{this.$store.state.name}}</p>
 
+                          <input type="text" v-model="user">
+                          <button @click="login()">看看</button>
+                          <button @click="jia()">jia</button>
                         </div>
 
                         <!-- 更新报告 -->
@@ -64,50 +69,7 @@
                                       <td>查看详情</td>
                                   </tr>
 
-                                  <tr>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                  </tr>
-                                  <tr>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                  </tr>
-                                  <tr>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                  </tr>
-                                  <tr>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                  </tr>
+                                  
                                   
 
                                   
@@ -132,10 +94,15 @@
 </template>
 
 <script>
+  import {mapGetters,mapActions} from "vuex"
+
+
 export default {
+
   name: 'Home',
    data() {
       return {
+        user:"",
         options: [{
           value: '选项1',
           label: '黄金糕'
@@ -155,7 +122,26 @@ export default {
         value: '',
         input: ''
       }
-    }
+    },
+
+     computed:{
+        //   count(){
+        //       return store.state.count
+        //   }
+     },
+
+    methods:{
+           jia(){
+              this.$store.commit("add")    //接收store里面的值        
+           },
+           
+           login(){
+             this.$store.commit("login",this.user)
+                
+           }
+ 
+    },
+
   
 }
 </script>

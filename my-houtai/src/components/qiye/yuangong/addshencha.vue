@@ -79,7 +79,7 @@
                                     <Select v-model="model1" style="width:100px" placeholder="项目名称">
                                             <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
                                         </Select>
-                                        <Input v-model="value" placeholder="调研编号" style="width: 300px;margin-right:10px" /><Button type="success">搜索</Button>
+                                        <Input v-model="value" placeholder="调研编号" style="width: 300px;margin-right:10px;margin-top:10px" /><Button type="success" style="margin-top:10px">搜索</Button>
                                 </div><br/>
                                 <!-- 批量操作 -->
                                 <div>

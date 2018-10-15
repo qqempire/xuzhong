@@ -12,6 +12,12 @@ import 'element-ui/lib/theme-chalk/index.css';
 import iView from 'iview';
 import 'iview/dist/styles/iview.css';
 
+//引入vuex
+import Vuex from 'vuex'
+import store from './store/store.js'
+
+
+Vue.use(Vuex)
 Vue.use(ElementUI);
 Vue.use(iView, {
   transfer: true,
@@ -27,6 +33,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

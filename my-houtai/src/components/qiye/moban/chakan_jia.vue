@@ -16,10 +16,10 @@
                                <div class="tit">配置模板信息</div>
                                <div class="sou">
                                   
-                                  <Select v-model="model1" style="width:400px;" placeholder="项目类型">
+                                  <Select v-model="model1" style="width:200px;" placeholder="项目类型">
                                         <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
                                   </Select>
-                                  <Select v-model="model1" style="width:400px;margin-left:60px" placeholder="模板名称">
+                                  <Select v-model="model1" style="width:200px;margin-left:60px" placeholder="模板名称">
                                         <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
                                   </Select>
                                </div>
