@@ -31,6 +31,11 @@ import Diaoyan from "../components/diaoyan/diaoyan.vue"
      import Tuihui from "../components/shenhe/shentui/tuihui.vue" 
 
 
+ // 门店管理
+     // 门店列表
+     import shopLists from "../components/shops/shopLists.vue"
+ 
+
 //企业管理
 
       //模板
@@ -39,6 +44,8 @@ import Diaoyan from "../components/diaoyan/diaoyan.vue"
       import Bianji from "../components/qiye/moban/bianji.vue" 
       import Jiahua from "../components/qiye/moban/chakan_jia.vue" 
       import Shixiao from "../components/qiye/moban/chakan_shi.vue" 
+      import Leibie from "../components/qiye/moban/leibie.vue" 
+
       //员工
       import Yuangong from "../components/qiye/yuangong/yuangong.vue" 
       import Addshencha from "../components/qiye/yuangong/addshencha.vue" 
@@ -83,7 +90,24 @@ import Diaoyan from "../components/diaoyan/diaoyan.vue"
       // 已生成报告
       import generatedReportList from "../components/reportManagement/generatedReport/generatedReportList.vue"
 
+// 我的任务
 
+
+      // 项目列表
+      import projectLists from "../components/myTasks/projectLists/projectLists.vue"
+      // 一审任务
+      import domestication1 from "../components/myTasks/firstInstance/domestication1.vue"
+      import prescription1 from "../components/myTasks/firstInstance/prescription1.vue" 
+      // 二审任务
+      import domestication2 from "../components/myTasks/secondInstance/domestication2.vue"
+      import prescription2 from "../components/myTasks/secondInstance/prescription2.vue"
+
+      // 算分任务
+      import domesticationC from "../components/myTasks/calculation/domesticationC.vue"
+      import prescriptionC from "../components/myTasks/calculation/prescriptionC.vue"      
+      // 消息反馈
+      import feedBack from "../components/myTasks/feedBack/feedBack.vue"
+      import accountError from "../components/myTasks/feedBack/accountError.vue"      
 
 
 
@@ -101,6 +125,8 @@ export default new Router({
       path: '/login',
       component: Login
     },
+
+
     {
       path:"/pub",
       component:Pub,
@@ -138,9 +164,18 @@ export default new Router({
               component: List,
              
             },
+    //门店管理（一级）
+            // 门店列表
+            {
+              path: '/shopLists',
+              component: shopLists           
+            },
+                
            
         
      //企业管理
+          //模板
+
             {
               path: '/moban',
               component: Moban,
@@ -150,6 +185,11 @@ export default new Router({
               {
                 path: '/bianji',
                 component: Bianji
+              },
+              {
+                path: '/leibie',
+                component: Leibie,
+               
               },
            
             //查看
@@ -226,6 +266,8 @@ export default new Router({
           path: '/reportTemplateProblem',
           component: reportTemplateProblem
         },
+        
+
         // 时效报告
         {
           path: '/prescriptionReportList',
@@ -275,6 +317,52 @@ export default new Router({
           path: '/generatedReportList',
           component: generatedReportList
         },
+
+//我的任务（一级）
+        // 项目列表
+        {
+          path: '/projectLists',
+          component: projectLists
+        },       
+        // 一审任务
+        {
+          path: '/domestication1',
+          component: domestication1
+        },
+        {
+          path: '/prescription1',
+          component: prescription1
+        },
+        // 二审任务
+        {
+          path: '/domestication2',
+          component: domestication2
+        },
+        {
+          path: '/prescription2',
+          component: prescription2
+        },
+        // 算分任务
+        {
+          path: '/domesticationC',
+          component: domesticationC
+        },
+        {
+          path: '/prescriptionC',
+          component: prescriptionC
+        },
+        // 消息反馈
+        {
+          path: '/feedBack',
+          component: feedBack
+        },
+        {
+          path: '/accountError',
+          component: accountError
+        },
+
+
+
          ]
     },
 

@@ -20,8 +20,8 @@
                            <p>职&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;位：{{this.$store.state.name}}</p>
 
                           <input type="text" v-model="user">
-                          <button @click="login()">看看</button>
-                          <button @click="jia()">jia</button>
+                          <button @click="login1()">看看</button>
+                          <button @click="add()">jia</button>
                         </div>
 
                         <!-- 更新报告 -->
@@ -95,8 +95,7 @@
 
 <script>
   import {mapGetters,mapActions} from "vuex"
-
-
+	
 export default {
 
   name: 'Home',
@@ -124,23 +123,16 @@ export default {
       }
     },
 
-     computed:{
-        //   count(){
-        //       return store.state.count
-        //   }
-     },
+     computed:mapGetters([]),
 
-    methods:{
-           jia(){
-              this.$store.commit("add")    //接收store里面的值        
-           },
-           
-           login(){
-             this.$store.commit("login",this.user)
-                
-           }
- 
-    },
+      methods:{
+          
+          ...mapActions(["login","add","jian"]), //mapActions（[]）为store里的函数名
+          
+          login1(){
+            this.login(this.user) //把this.user传参到store里的login
+          }
+        },
 
   
 }

@@ -17,12 +17,20 @@ var mutations={
         a.name=b
     }
 }
+
+
+var actions={
+	add:({commit})=>commit("add"),
+	jian:({commit})=>commit("jian"),
+	login:({commit},b)=>commit("login",b)
+}
  
 
 
 export default new Vuex.Store({
 	
 	state,
-	mutations
+	mutations,
+	actions
 	
 })

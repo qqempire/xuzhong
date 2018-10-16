@@ -5,18 +5,18 @@
                 <Card>
                     <div style="height: 600px">
                         <div class="title"><span>条件筛选</span></div>
-                        <div>                            
+                        <div>                             
                             <Select v-model="model1" style="width:150px" placeholder="省">
-                                <Option v-for="(item,index) in provinceLists" :value="item" :key="index">{{ item }}</Option>
+                                <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
                             </Select>
                             <Select v-model="model1" style="width:150px" placeholder="市">
-                                <Option v-for="(item,index) in cityLists" :value="item" :key="index">{{ item }}</Option>
+                                <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
                             </Select>
                             <Select v-model="model1" style="width:150px" placeholder="县/区">
-                                <Option v-for="(item,index) in areaLists" :value="item" :key="index">{{ item }}</Option>
+                                <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
                             </Select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <Select v-model="model1" style="width:100px" placeholder="代理状态">
-                                <Option v-for="(item,index) in pLists" :value="item" :key="index">{{ item }}</Option>
+                                <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
                             </Select>&nbsp;&nbsp;
                             <Button type="success">&nbsp;&nbsp;搜索&nbsp;&nbsp;</Button>
                         </div>
@@ -40,10 +40,27 @@ export default {
   name: 'visitor',
   data () {
     return {
-       provinceLists:["河南","山东","黑龙江","辽宁"],
-       cityLists:["河南","山东","黑龙江","辽宁"],
-       areaLists:["河南","山东","黑龙江","辽宁"],
-       pLists:["河南","山东","黑龙江","辽宁"],
+        // 选择列表
+       cityList: [
+                    {
+                        value: 'New York',
+                        label: 'New York'
+                    },
+                    {
+                        value: 'London',
+                        label: 'London'
+                    },
+                    {
+                        value: 'Sydney',
+                        label: 'Sydney'
+                    },
+                ],
+                model1: '',
+                textarea2: '',
+                textarea3: '',
+                value:"",
+                value2:"" ,
+        // 表格数据
         columns6: [
             {
                 title: '项目名称',

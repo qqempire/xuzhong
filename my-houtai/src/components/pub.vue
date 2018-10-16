@@ -54,13 +54,14 @@
                         <router-link to="./list" tag="span">审核列表</router-link>
                     </MenuItem>    
                 </Submenu>
-                <Submenu name="5">
+               <Submenu name="5">
                     <template slot="title">
                         <Icon type="md-pie" />
-                        门店管理
+                         门店管理
                     </template>
-                    <MenuItem name="5-1">添加门店</MenuItem>
-                    <MenuItem name="5-2">门店列表</MenuItem>
+                    <MenuItem name="5-1">
+                        <router-link to="./shopLists" tag="span">门店列表</router-link>
+                    </MenuItem>
                 </Submenu>
                 <Submenu name="6">
                     <template slot="title">                     
@@ -122,16 +123,26 @@
                     </template>
                    
                 </Submenu>
-                <Submenu name="9">
+               <Submenu name="9">
                     <template slot="title">
                         <Icon type="ios-contact" />
                         我的任务
                     </template>
-                    <MenuItem name="9-1">项目列表</MenuItem>
-                    <MenuItem name="9-2">一审任务</MenuItem>
-                    <MenuItem name="9-3">二审任务</MenuItem>
-                    <MenuItem name="9-4">算分任务</MenuItem>
-                    <MenuItem name="9-5">消息反馈</MenuItem>
+                    <MenuItem name="9-1">
+                        <router-link to="./projectLists" tag="span">项目列表</router-link>                    
+                    </MenuItem>
+                    <MenuItem name="9-2">
+                        <router-link to="./domestication1" tag="span">一审任务</router-link>                    
+                    </MenuItem>
+                    <MenuItem name="9-3">
+                        <router-link to="./domestication2" tag="span">二审任务</router-link>                    
+                    </MenuItem>
+                    <MenuItem name="9-4">
+                        <router-link to="./domesticationC" tag="span">算分任务</router-link>                                       
+                    </MenuItem>
+                    <MenuItem name="9-5">
+                        <router-link to="./feedBack" tag="span">消息反馈</router-link>
+                    </MenuItem>
                 </Submenu>
             </Menu>
         </Sider>

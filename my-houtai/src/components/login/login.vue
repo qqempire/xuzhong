@@ -35,14 +35,14 @@ export default {
 <style scoped lang="scss">
 
   html,body{height: 100%;}
-  .login{width:100%;height:100vh; min-width: 1100px; overflow: hidden; border: 1px solid red;
+  .login{width:100%;height:100vh; min-width: 1100px; overflow: hidden; 
      background-image: url("../../assets/img/login/bd.png"); background-repeat: no-repeat; background-size: cover; -webkit-background-size: cover;
      -o-background-size: cover; background-position: center 0;
-     .shang{border: 1px solid red;width:800px; height: 600px;position: absolute;  top: 0; left: 0; bottom: 0; right: 0;margin: auto;top:-300px;
+     .shang{width:700px; height: 550px;position: absolute;  top: 0; left: 0; bottom: 0; right: 0;margin: auto;top:-300px;right:50px;
           .earth{width: 100%;height: 100%} 
           }
      
-    .content{width: 500px; height: 250px; margin: 0 auto; border: 1px solid red;margin: auto;  position: absolute;  top: 0; left: 0; bottom: 0; right: 0;top:350px;
+    .content{width: 500px; height: 250px; margin: 0 auto;margin: auto;  position: absolute;  top: 0; left: 0; bottom: 0; right: 0;top:350px;
 
         .for{ box-sizing: border-box; width: 490px; height: 230px; padding: 10px 20px 0; background-color: #21202E; border: 1px solid #2d2c3c; 
             position: absolute; left: 0; right: 0; margin: auto; 
@@ -55,6 +55,6 @@ export default {
       }
     }
   }
-  .title{width: 380px; height: 50px; color: #56BACA; border: 1px solid blue;margin: auto;  position: absolute;  top: 0; left: 0; bottom: 0; right: 0;
+  .title{width: 350px; height: 50px; color: #56BACA; margin: auto;  position: absolute;  top: 0; left: 0; bottom: 0; right: 0;left:40px;
         font-size: 30px; background: url("../../assets/img/login/logo.png") no-repeat left center; top: 280px;text-align: center} 
 </style>

@@ -3,7 +3,7 @@
       <Layout :style="{marginLeft: '200px'}" >            
             <Content :style="{padding: '0 16px 16px'}">
                 <Breadcrumb :style="{margin: '16px 0'}">                   
-                    <el-button type="info" size="small">&nbsp;&nbsp;返&nbsp;回&nbsp;&nbsp;</el-button>
+                    <el-button type="info" size="small" @click="goBack">&nbsp;&nbsp;返&nbsp;回&nbsp;&nbsp;</el-button>
                     <el-button type="success" size="small">&nbsp;&nbsp;保&nbsp;存&nbsp;&nbsp;</el-button>
                     <el-button type="danger" size="small">&nbsp;&nbsp;导&nbsp;出    &nbsp;&nbsp;</el-button>
                 </Breadcrumb>   
@@ -33,10 +33,7 @@ export default {
   name: 'visitor',
   data () {
     return {
-       provinceLists:["河南","山东","黑龙江","辽宁"],
-       cityLists:["河南","山东","黑龙江","辽宁"],
-       areaLists:["河南","山东","黑龙江","辽宁"],
-       pLists:["河南","山东","黑龙江","辽宁"],
+        // 表格内容
         columns13: [
             {
                 title: '区域',
@@ -129,6 +126,10 @@ export default {
         },
         detail () {
             this.$router.push("/detailsReport")
+        },
+        // 返回按钮
+        goBack(){
+            this.$router.push("/familyReportList")
         }
     }
 }

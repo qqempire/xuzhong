@@ -10,57 +10,88 @@
                         <Card>
                             <div style="height: 600px">
                                 <div class="sou">
-                                    项目调查产品类别&nbsp;&nbsp;&nbsp;
-                                    <el-select v-model="value8" filterable placeholder="请选择" style="width:280px">
+                                    &nbsp;&nbsp;&nbsp;
+                                    <el-select v-model="value8" filterable  style="width:280px" @change="obtainValue" >
                                         <el-option
                                         v-for="item in options"
                                         :key="item.value"
                                         :label="item.label"
-                                        :value="item.value">
+                                        :value="item.value"
+                                        class="selectedval"
+                                        >
                                         </el-option>
                                     </el-select>
                                     &nbsp;&nbsp;
-                                    <el-button type="success" >搜索</el-button>
-                                    <el-button type="success">产品类别管理</el-button>
-                                    <button @click="shu()">按钮</button>
+                                    <el-button type="success" @click="search()">搜索</el-button>
+                                    <el-button type="success" @click="leibie()">产品类别管理</el-button>
+                                    
                                 </div>
                                 <!-- 表格 -->
+                                
                                 <el-table
-                                    :data="canpin"
+                                    :data="tableData"
                                     border
-                                    style="width: 100%;"
-                                    >
+                                    style="width: 100%">
                                     <el-table-column
-                                    prop="date"
-                                    label=""
-                                    width="180">
-                                    </el-table-column>
-                                    <el-table-column
+                                    fixed
                                     prop="name"
                                     label="名称"
-                                    width="180">
+                                    width="300">
+                                    </el-table-column>
+                                    
+                                    <el-table-column
+                                    prop="num"
+                                    label="编号"
+                                    width="100">
+                                    </el-table-column>
+                                    <el-table-column
+                                    prop="tiaoxingma"
+                                    label="条形码"
+                                    width="150">
                                     </el-table-column>
                                     <el-table-column
                                     prop="address"
-                                    label="编号">
-                                    </el-table-column>
-                                     <el-table-column
-                                    prop="tiaoxingma"
-                                    label="条形码">
-                                    </el-table-column>
-                                     <el-table-column
-                                    prop="price"
-                                    label="是否需要价格">
+                                    label="是否需要价格"
+                                    width="200">
                                     </el-table-column>
                                     <el-table-column
-                                    prop="sort"
-                                    label="排序">
+                                    prop="order"
+                                    label="排序"
+                                    width="80">
                                     </el-table-column>
                                     <el-table-column
-                                    prop="do"
-                                    label="操作/添加父类">
+                                    fixed="right"
+                                    label="操作/添加"
+                                    width="200">
+                                    <template slot-scope="scope">
+                                        <el-button @click="handleClick(scope.row)" type="text" size="small">编辑</el-button>
+                                        <el-button type="text" size="small"  @click="modal4 = true">添加子类</el-button>
+                                        
+                                    </template>
                                     </el-table-column>
                                 </el-table>
+
+                        <!-- 弹出层 -->
+
+                                <Modal
+                                    v-model="modal4"
+                                    title="Modal Title"
+                                    ok-text="OK"
+                                    cancel-text="Cancel">
+                                    <div class="tankuang">
+                                        <Select v-model="model1" style="width:300px" placeholder="请选择类别名称 ">
+                                            <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                                        </Select>
+                                    
+                                        <Input v-model="value5" type="textarea" :rows="4" placeholder="备注 / 描述"  class="beizhu"/>
+
+                                        <Input v-model="value" placeholder="请输入排序值:" style="width: 300px" />
+
+                                    </div>
+                                </Modal>
+                                
+
+
                             </div>
                         </Card>
                     </Content>
@@ -199,14 +230,30 @@ export default {
 
   data () {
     return {
+        cityList:[],
+        value5:"",
+        value:"",
         //111
-        options: [{
-          
-          label: '黄金糕'
-         },
+        options: [
+        //     {
+        //   value: '1',
+        //   label: '实化'
+        // }, {
+        //   value: '2',
+        //   label: '家化'
+        // }, {
+        //   value: '3',
+        //   label: '问卷'
+        // }
+         
         ],
+        value8: '项目调查产品类别',
+        select:"",
+        model1:"",
+       
 
-
+// 弹出
+       modal4: false,
 
 
         //222
@@ -234,28 +281,24 @@ export default {
 
 
 
-
-        value8: '',
-
         //表格
-        //111
-        canpin: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '222',
-          tiaoxingma:"222",
-          price:"555",
-          sort:"0",
-          do:56
-        }, {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '88888888888888',
-          tiaoxingma:"222",
-          price:"555",
-          sort:"0",
-           do:56
-        }],
+       //111
+        tableData: [{
+          
+          name: '高夫经典保湿系列',
+          num: '1',
+          tiaoxingma: '普陀',
+          address: "否",
+          order: 1
+        }, 
+        {
+          select: '',
+          name: '非必选-高夫容光焕采系列',
+          num: '2',
+          tiaoxingma: '普陀',
+          address: '否',
+          order: 2
+        }, ],
 
         // 222
         app: [{
@@ -274,43 +317,62 @@ export default {
           
         }],
 
-
-
       }
   },
   methods:{
-    tobianji(){
-      this.$router.push("/bianji")
-    },
-    tonew(){
-      this.$router.push("/new")
+      handleClick(row) {
+        console.log(row);
+      },
+       //才品类别管理
 
-    },
-    shu(){
+       leibie(){
+           this.$router.push("/leibie")
+       },
+
+        tobianji(){
+        this.$router.push("/bianji")
+        },
+        tonew(){
+        this.$router.push("/new")
+
+        },
+
+        search(){
+        
+            console.log(this.select)
+                var that = this;
+                axios({
+                    url:"http://192.168.0.134:8080/QueryByProduct",
+                    params:{pid:that.select}
+                })
+                .then(function(data){
+                    console.log(data.data)         
+                })
+        
+        },
+
+        obtainValue(value){   
+            console.log(value)
+            this.select=value     
+        }
+    
+    
+  },
+  mounted(){
+           var that = this
         	axios({
             //    url:"http://jx.xuzhixiang.top/ap/api/productlist.php"
                 url:"http://192.168.0.134:8080/QueryByTypes"
               
 			})
 			.then(function(data){
-				console.log(data.data)
-             this.options.push(data.data.tname)
-             console.log(this.options)
-			})
+                console.log(data.data)
+                var obj={label:data.data[0].tname,value:data.data[0].tid}
+                
+                that.options.push(obj)
+               
+            })
     }
-    
-    
-  },
-  mounted(){
-    //  var _this=this;
-	// 		axios({
-    //      url:"http://jx.xuzhixiang.top/ap/api/productlist.php"
-       
-	// 		})
-	// 		.then(function(data){
-	// 			console.log(data.data)
-	// 		})
-  }
 
 }
 </script>
@@ -327,4 +389,8 @@ export default {
   .el-table .success-row {
     background: #f0f9eb;
   }
+  .tankuang{
+        width: 100%;height: 220px;
+        .beizhu{margin: 20px 0}
+    }
 </style>
