@@ -24,9 +24,14 @@ import Diaoyan from "../components/diaoyan/diaoyan.vue"
     //安排
      import Shenhe from "../components/shenhe/shenanpai/shenhe.vue" 
      import Anpai from "../components/shenhe/shenanpai/anpai.vue" 
+     import Shenhe_shi from "../components/shenhe/shenanpai/shenhe_shi.vue" 
+     
     //列表
      import List from "../components/shenhe/shenlist/list.vue" 
-        
+     import Details_shi from "../components/shenhe/shenlist/details_jia.vue" 
+     import Details_jia from "../components/shenhe/shenlist/details_shi.vue" 
+
+       
     //退回
      import Tuihui from "../components/shenhe/shentui/tuihui.vue" 
 
@@ -45,6 +50,7 @@ import Diaoyan from "../components/diaoyan/diaoyan.vue"
       import Jiahua from "../components/qiye/moban/chakan_jia.vue" 
       import Shixiao from "../components/qiye/moban/chakan_shi.vue" 
       import Leibie from "../components/qiye/moban/leibie.vue" 
+      import Change from "../components/qiye/moban/change.vue"
 
       //员工
       import Yuangong from "../components/qiye/yuangong/yuangong.vue" 
@@ -145,6 +151,8 @@ export default new Router({
             },
 
     //审核管理
+
+        //安排
             {
               path: '/shenhe',
               component: Shenhe
@@ -153,15 +161,31 @@ export default new Router({
               path: '/anpai',
               component: Anpai
             },
-            
+            {
+              path: '/shenhe_shi',
+              component: Shenhe_shi
+            },
+
+         //退回   
             {
               path: '/tuihui',
               component: Tuihui,
              
             },
+          //列表  
             {
               path: '/list',
               component: List,
+             
+            },
+            {
+              path: '/details_shi',
+              component: Details_shi,
+             
+            },
+            {
+              path: '/details_jia',
+              component: Details_jia,
              
             },
     //门店管理（一级）
@@ -173,7 +197,7 @@ export default new Router({
                 
            
         
-     //企业管理
+   //企业管理
           //模板
 
             {
@@ -189,6 +213,11 @@ export default new Router({
               {
                 path: '/leibie',
                 component: Leibie,
+               
+              },
+              {
+                path: '/change',
+                component: Change,
                
               },
            

@@ -4,12 +4,12 @@
             
             <Content :style="{padding: '0 16px 16px'}">
                 <Breadcrumb :style="{margin: '16px 0'}">
-                    <router-link to="./yuangong" tag="span">
+                    <router-link to="./shenhe" tag="span">
                        <Button type="warning" >返回</Button>
                     </router-link>
                     
-                    <Button type="success">保存</Button>
-                    <Button type="error">删除</Button>
+                    <!-- <Button type="success">保存</Button>
+                    <Button type="error">删除</Button> -->
                 </Breadcrumb>
                 <Card>
                     <div style="height: 600px">

@@ -5,8 +5,9 @@
       <Layout :style="{marginLeft: '200px'}" >
             
             <Content :style="{padding: '0 16px 16px'}">
-                <Breadcrumb :style="{margin: '16px 0'}">
+                <Breadcrumb :style="{margin: '16px 0'}" class="tit">
                     <el-button type="info" size="small" @click="backtomoban()">&nbsp;&nbsp;返&nbsp;回&nbsp;&nbsp;</el-button>
+                    <el-button type="success" size="small"  @click="modal4 = true">添加类别</el-button>
                     
                 </Breadcrumb>
                 <Card>
@@ -20,8 +21,8 @@
                                     <el-table-column
                                     fixed
                                     prop="name"
-                                    label="名称"
-                                    width="300">
+                                    label="商品名称"
+                                    width="200">
                                     </el-table-column>
                                     
                                     <el-table-column
@@ -50,7 +51,7 @@
                                     width="200">
                                     <template slot-scope="scope">
                                         <el-button @click="handleClick(scope.row)" type="text" size="small">编辑</el-button>
-                                        <el-button type="text" size="small"  @click="modal4 = true">添加</el-button>
+                                        
                                         
                                     </template>
                                     </el-table-column>
@@ -158,6 +159,7 @@ export default {
       backtomoban(){
           this.$router.push("/moban")
       }
+      
    //checkbox
     //   handleCheckAll () {
     //             if (this.indeterminate) {
@@ -196,4 +198,5 @@ export default {
         width: 100%;height: 220px;
         .beizhu{margin: 20px 0}
     }
+    .tit{display: flex;justify-content: space-between}
 </style>

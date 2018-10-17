@@ -4,7 +4,7 @@
     <Sider :style="{position: 'fixed', height: '100vh', left: 0, overflow: 'auto'}" style="background:#39435B">
             <Menu active-name="1-2" theme="dark" width="auto" :open-names="['1']" accordion style="background:#39435B">
                
-               <div class="logo" >logo</div>
+               <div class="logo" >上海旭中调研系统</div>
 
                
 
@@ -146,7 +146,7 @@
                 </Submenu>
             </Menu>
         </Sider>
-        <Layout :style="{marginLeft: '200px'}" style="background:red">
+        <Layout :style="{marginLeft: '200px'}" style="background:red;" class="head">
             <Header :style="{background: '#fff', boxShadow: '0 2px 3px 2px rgba(0,0,0,.1)'}">
                <ul class="loader">
                   <li>【王茂如】</li>
@@ -155,9 +155,8 @@
                 </ul>
 
             </Header>
-            
-           
         </Layout>
+        <div class="kong"></div>
     <router-view/>
   </div>
 </template>
@@ -208,19 +207,23 @@ export default {
         box-shadow: 0 1px 1px rgba(0,0,0,.1);
     }
   .logo{
-     width: 200px;height: 40px;background:#293743
+     width: 200px;height: 40px;background:#293743;color: #02DAFD;text-align: center;line-height: 40px;font-weight: 500;font-size: 18px;
   }
    ul,li,ol{list-style:none;}
-
+.ivu-layout-header{height: 40px;}
   .loader{float:right;
-           width: 280px;
-           height: 65px;
+           width: 260px;
+           height: 40px;
            font-weight: bold;
            font-size: 14px;
            display: flex;
            justify-content: space-around;
+           margin-right:180px;
+           line-height: 40px;
+          
 
   }
   li {cursor: pointer;}
-
+.kong{height: 40px;width: 100%}
+.head{width: 100%;height: 40px;position: fixed;top:0;left: 0;z-index: 9999;}
 </style>

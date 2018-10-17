@@ -54,13 +54,13 @@
     export default {
         data () {
             return {
-                name: 'Shenhe',
+                name: 'Shenhe_shi',
                 cityList: [
-                    {
-                        value: 'New York',
-                        label: '家化'
-                    },
                    
+                    {
+                        value: 'London',
+                        label: '时效'
+                    },
                     
                 ],
                 model1: '000',

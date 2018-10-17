@@ -8,8 +8,8 @@
       <div class="content">
           
         <div class="for">
-          <input type="text" id="userName" placeholder="请输入账号"><br>
-          <input type="text" id="passWord" placeholder="请输入密码"><br>
+          <input type="text" id="userName" placeholder="请输入账号" autocomplete="off"><br>
+          <input type="password" id="passWord" placeholder="请输入密码"><br>
           <div id="box">
               <input type="submit" id="submit" value="登录">  
           </div>       

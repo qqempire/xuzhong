@@ -26,17 +26,35 @@
                                     <el-button type="success" @click="leibie()">产品类别管理</el-button>
                                     
                                 </div>
-                                <!-- 表格 -->
-                                
+                               
+                          <!-- 表格树 -->
+                                <el-tree
+                                    :data="data"
+                                    :props="defaultProps"
+                                    accordion
+                                    @node-click="handleNodeClick">
+                                    
+                                </el-tree>
+                           <!-- 表格 -->
                                 <el-table
                                     :data="tableData"
                                     border
                                     style="width: 100%">
+
+  <el-tree
+                                    :data="data"
+                                    :props="defaultProps"
+                                    accordion
+                                    @node-click="handleNodeClick">
+                                    
+                                </el-tree>
+
+
                                     <el-table-column
                                     fixed
                                     prop="name"
-                                    label="名称"
-                                    width="300">
+                                    label="商品名称"
+                                    width="200">
                                     </el-table-column>
                                     
                                     <el-table-column
@@ -64,14 +82,14 @@
                                     label="操作/添加"
                                     width="200">
                                     <template slot-scope="scope">
-                                        <el-button @click="handleClick(scope.row)" type="text" size="small">编辑</el-button>
-                                        <el-button type="text" size="small"  @click="modal4 = true">添加子类</el-button>
+                                        <el-button @click="handleClick(scope.row);tochange()" type="text" size="small">查看/编辑</el-button>
+                                        <el-button type="text" size="small"  @click="modal4 = true;handleClick(scope.row)" >添加子类</el-button>
                                         
                                     </template>
                                     </el-table-column>
                                 </el-table>
 
-                        <!-- 弹出层 -->
+                        <!-- 弹出层模板 -->
 
                                 <Modal
                                     v-model="modal4"
@@ -230,6 +248,62 @@ export default {
 
   data () {
     return {
+        // 表格树
+    data: [
+        //1111
+            {
+            label: '一级 1',
+            children: [
+                {
+                label: '二级 1-1',
+                children: [{
+                label: '三级 1-1-1'
+                }]
+            }
+            ]
+            }, 
+        //2222
+            {
+                label: '一级 2',
+                children: [
+                        {
+                        label: '二级 2-1',
+                        children: [{
+                        label: '三级 2-1-1'
+                        }
+                    ]
+                }, 
+                {
+                    label: '二级 2-2',
+                    children: [{
+                    label: '三级 2-2-1'
+                    }]
+                }]
+            }, 
+        //3333
+            // {
+            //     label: '一级 3',
+            //     children: [{
+            //         label: '二级 3-1',
+            //         children: [{
+            //         label: '三级 3-1-1'
+            //         }]
+            //     }, {
+            //         label: '二级 3-2',
+            //         children: [{
+            //         label: '三级 3-2-1'
+            //         }]
+            //     }]
+            //  }
+        
+        ],
+        defaultProps: {
+          children: 'children',
+          label: 'label'
+        },
+
+
+        
         cityList:[],
         value5:"",
         value:"",
@@ -354,6 +428,14 @@ export default {
         obtainValue(value){   
             console.log(value)
             this.select=value     
+        },
+        // 到查看编辑页面
+        tochange(){
+          this.$router.push("/change")
+        },
+        //树状
+        handleNodeClick(data) {
+            console.log(data);
         }
     
     
