@@ -1,9 +1,9 @@
 <template>
-    <div class="visitor">
+    <div class="familyReportList">
       <Layout :style="{marginLeft: '200px'}" >            
             <Content :style="{padding: '0 16px 16px'}">
                 <Card>
-                    <div style="height: 600px">
+                    <div class="content">
                         <div class="title"><span>条件筛选</span></div>
                         <div>                             
                             <Select v-model="model1" style="width:150px" placeholder="省">
@@ -37,7 +37,7 @@
 
 <script>
 export default {
-  name: 'visitor',
+  name: 'familyReportList',
   data () {
     return {
         // 选择列表
@@ -126,16 +126,12 @@ export default {
 }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped  lang="scss">
-    .title{width: 100%;height: 40px;background: #5BC0DE;line-height: 40px;color: #fff;padding-left:10px;display:flex;justify-content: space-between;align-items:center;margin-bottom: 10px;
-        span:nth-child(2){display: block;width: 100px;height: 30px;background: #C1C1C1;border-radius: 5px;line-height: 30px;text-align: center;}
+<style scoped lang="scss">
+.familyReportList{
+    .content{height: 600px;
+        .title{width: 100%;height: 40px;background: #5BC0DE;line-height: 40px;color: #fff;padding-left:10px;display:flex;justify-content: space-between;align-items:center;margin-bottom: 10px;
+            span:nth-child(2){display: block;width: 100px;height: 30px;background: #C1C1C1;border-radius: 5px;line-height: 30px;text-align: center;}
+        }
     }
-    table{text-align: center;
-   td{height: 25px}
-  }
-.header{background: #1D95C9;color: #fff}
-    .nav{display: flex; width: 600px; height: 40px; text-align: center; line-height: 40px; color: white}
-    .nav li{display:block; width: 200px; height: 40px; background: #cccccc;}
-    .nav li:hover{background: #5BB85D;}
-    .nav .active{background: #5BB85D;}  
+}
 </style>

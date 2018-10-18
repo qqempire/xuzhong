@@ -113,19 +113,24 @@ import Login from "../components/login/login.vue"
 
       // 项目列表
       import projectLists from "../components/myTasks/projectLists/projectLists.vue"
+      import projectDetail from "../components/myTasks/projectLists/projectDetail.vue"
       // 一审任务
+      import firstInstanceLists from "../components/myTasks/firstInstance/firstInstanceLists.vue"
       import domestication1 from "../components/myTasks/firstInstance/domestication1.vue"
       import prescription1 from "../components/myTasks/firstInstance/prescription1.vue" 
       // 二审任务
+      import secondInstanceLists from "../components/myTasks/secondInstance/secondInstanceLists.vue"
       import domestication2 from "../components/myTasks/secondInstance/domestication2.vue"
       import prescription2 from "../components/myTasks/secondInstance/prescription2.vue"
 
       // 算分任务
+      import calculationLists from "../components/myTasks/calculation/calculationLists.vue"
       import domesticationC from "../components/myTasks/calculation/domesticationC.vue"
       import prescriptionC from "../components/myTasks/calculation/prescriptionC.vue"      
       // 消息反馈
       import feedBack from "../components/myTasks/feedBack/feedBack.vue"
       import accountError from "../components/myTasks/feedBack/accountError.vue"      
+
 
 
 
@@ -387,13 +392,20 @@ export default new Router({
         },
 
 //我的任务（一级）
-
         // 项目列表
         {
           path: '/projectLists',
           component: projectLists
-        },       
+        }, 
+        {
+          path: '/projectDetail',
+          component: projectDetail
+        },      
         // 一审任务
+        {
+          path: '/firstInstanceLists',
+          component: firstInstanceLists
+        },
         {
           path: '/domestication1',
           component: domestication1
@@ -404,6 +416,10 @@ export default new Router({
         },
         // 二审任务
         {
+          path: '/secondInstanceLists',
+          component: secondInstanceLists
+        },
+        {
           path: '/domestication2',
           component: domestication2
         },
@@ -412,6 +428,10 @@ export default new Router({
           component: prescription2
         },
         // 算分任务
+        {
+          path: '/calculationLists',
+          component: calculationLists
+        },
         {
           path: '/domesticationC',
           component: domesticationC
@@ -429,6 +449,8 @@ export default new Router({
           path: '/accountError',
           component: accountError
         },
+
+
 
 
 

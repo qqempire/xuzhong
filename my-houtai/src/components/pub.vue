@@ -123,7 +123,7 @@
                     </template>
                    
                 </Submenu>
-               <Submenu name="9">
+              <Submenu name="9">
                     <template slot="title">
                         <Icon type="ios-contact" />
                         我的任务
@@ -132,13 +132,13 @@
                         <router-link to="./projectLists" tag="span">项目列表</router-link>                    
                     </MenuItem>
                     <MenuItem name="9-2">
-                        <router-link to="./domestication1" tag="span">一审任务</router-link>                    
+                        <router-link to="./firstInstanceLists" tag="span">一审任务</router-link>                    
                     </MenuItem>
                     <MenuItem name="9-3">
-                        <router-link to="./domestication2" tag="span">二审任务</router-link>                    
+                        <router-link to="./secondInstanceLists" tag="span">二审任务</router-link>                    
                     </MenuItem>
                     <MenuItem name="9-4">
-                        <router-link to="./domesticationC" tag="span">算分任务</router-link>                                       
+                        <router-link to="./calculationLists" tag="span">算分任务</router-link>                                       
                     </MenuItem>
                     <MenuItem name="9-5">
                         <router-link to="./feedBack" tag="span">消息反馈</router-link>

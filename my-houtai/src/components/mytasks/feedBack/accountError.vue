@@ -1,9 +1,9 @@
 <template>
-    <div class="visitor">
+    <div class="accountError">
       <Layout :style="{marginLeft: '200px'}" >            
             <Content :style="{padding: '0 16px 16px'}">
                 <Card>
-                    <div style="height: 600px">
+                    <div class="content">
                         <br/>
                         <!-- 下表 -->
                         <div class="title">
@@ -39,11 +39,11 @@
 
 <script>
 export default {
-  name: 'visitor',
+  name: 'accountError',
   data () {
     return {
     // 筛选框内容
-       cityList: [
+       reportList: [
                     {
                         value: 'New York',
                         label: 'New York'
@@ -128,17 +128,18 @@ export default {
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped  lang="scss">
-.title{width: 100%;height: 40px;background: #cccccc;line-height: 40px;color: #fff; display:flex;justify-content: space-between;align-items:center;margin-bottom: 10px;
-        span:nth-child{display: block;width: 100px;height: 30px;background: #C1C1C1;border-radius: 5px;line-height: 30px;text-align: center;}
+.accountError{
+    .content{
+        .title{width: 100%;height: 40px;background: #cccccc;line-height: 40px;color: #fff; display:flex;justify-content: space-between;align-items:center;margin-bottom: 10px;
+            span:nth-child{display: block;width: 100px;height: 30px;background: #C1C1C1;border-radius: 5px;line-height: 30px;text-align: center;}
+            .nav{display: flex; width: 600px; height: 40px; text-align: center; line-height: 40px; color: white;
+                li{display:block; width: 200px; height: 40px; background: #C1C1C1;}
+                li:hover{background: #5BB85D;}
+                .active{background: #5BB85D;}
+            }
+        }
+        .select{display: flex; width: 650px; justify-content: space-between; align-items: center; margin-bottom: 10px;}
     }
-    table{text-align: center;
-   td{height: 25px}
-  }
-  .select{display: flex; width: 650px; justify-content: space-between; align-items: center; margin-bottom: 10px;}
-.header{background: #1D95C9;color: #fff}
-    .nav{display: flex; width: 600px; height: 40px; text-align: center; line-height: 40px; color: white}
-    .nav li{display:block; width: 200px; height: 40px; background: #C1C1C1;}
-    .nav li:hover{background: #5BB85D;}
-    .nav .active{background: #5BB85D;}  
+}
 
 </style>

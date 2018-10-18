@@ -1,5 +1,5 @@
 <template>
-    <div class="visitor">
+    <div class="detailsReport">
       <Layout :style="{marginLeft: '200px'}" >            
             <Content :style="{padding: '0 16px 16px'}">
                 <Breadcrumb :style="{margin: '16px 0'}">                   
@@ -17,8 +17,7 @@
                         <li @click="detail" class="active">商店明细数据</li>
                     </ul>                           
                 <Card>
-                    <div style="height: 600px">大区报告
-
+                    <div class="table" >
                         <!-- 表格 -->
                         <Table border :columns="columns14" :data="data14" ></Table>                       
                     </div>
@@ -30,7 +29,7 @@
 
 <script>
 export default {
-  name: 'visitor',
+  name: 'detailsReport',
   data () {
     return {
         // 表格数据
@@ -138,15 +137,13 @@ export default {
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped  lang="scss">
-    .title{width: 100%;height: 40px;background: #5BC0DE;line-height: 40px;color: #fff;padding-left:10px;display:flex;justify-content: space-between;align-items:center;margin-bottom: 10px;
-        span:nth-child(2){display: block;width: 100px;height: 30px;background: #C1C1C1;border-radius: 5px;line-height: 30px;text-align: center;}
+.detailsReport{
+    .table{height: 600px;}
+    .nav{display: flex; width: 600px; height: 40px; text-align: center; line-height: 40px; color: white;
+        li{display:block; width: 100px; height: 40px; background: #cccccc; border-radius: 5px;}
+        li:hover{background: #5BB85D;}
+        .active{background: #5BB85D;} 
     }
-    table{text-align: center;
-   td{height: 25px}
-  }
-.header{background: #1D95C9;color: #fff}
-    .nav{display: flex; width: 600px; height: 40px; text-align: center; line-height: 40px; color: white}
-    .nav li{display:block; width: 100px; height: 40px; background: #cccccc; border-radius: 5px;}
-    .nav li:hover{background: #5BB85D;}
-    .nav .active{background: #5BB85D;}  
+}
+ 
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div class="addship">
+    <div class="shopLists">
       <Layout :style="{marginLeft: '200px'}" >            
             <Content :style="{padding: '0 16px 16px'}">
                 <Breadcrumb :style="{margin: '16px 0'}" class="add">                   
@@ -9,29 +9,29 @@
                             <Button icon="ios-cloud-upload-outline">批量上传</Button>
                         </Upload>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <el-button type="success" size="normal" :style="{marginTop:'-9px'}" @click="modal9 = true">&nbsp;&nbsp;单个添加&nbsp;&nbsp;</el-button>  
-                        <el-button type="success" size="normal" :style="{marginTop:'-9px'}" @click="modal9 = true">&nbsp;&nbsp;模板下载&nbsp;&nbsp;</el-button>  
+                        <el-button type="success" size="normal" :style="{marginTop:'-9px'}">&nbsp;&nbsp;模板下载&nbsp;&nbsp;</el-button>  
                     <Modal
                         title="单个添加"
                         v-model="modal9"
                         :styles="{top: '20px'}"
                         class-name="vertical-center-modal">                       
                             <div class="addshop"><br>
-                                <Select v-model="model1" style="width:133px;margin-top:5px" placeholder="省">
+                                <Select v-model="modal1" style="width:133px;margin-top:5px" placeholder="省">
                                     <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
                                 </Select>
-                                <Select v-model="model1" style="width:133px;margin-top:5px" placeholder="市">
+                                <Select v-model="modal1" style="width:133px;margin-top:5px" placeholder="市">
                                     <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
                                 </Select>
-                                <Select v-model="model1" style="width:133px;margin-top:5px" placeholder="区">
+                                <Select v-model="modal1" style="width:133px;margin-top:5px" placeholder="区">
                                     <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
                                 </Select><br>
-                                <Select v-model="model1" style="width:133px;margin-top:5px" placeholder="项目类别">
+                                <Select v-model="modal1" style="width:133px;margin-top:5px" placeholder="项目类别">
                                     <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
                                 </Select>  
-                                <Select v-model="model1" style="width:133px;margin-top:5px" placeholder="门店等级">
+                                <Select v-model="modal1" style="width:133px;margin-top:5px" placeholder="门店等级">
                                     <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
                                 </Select>
-                                <Select v-model="model1" style="width:133px;margin-top:5px" placeholder="门店面积">
+                                <Select v-model="modal1" style="width:133px;margin-top:5px" placeholder="门店面积">
                                     <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
                                 </Select><br><br><br>
                                 <Input v-model="value" placeholder="门店编号" style="width: 200px;margin-top:5px" />                                                                              
@@ -43,25 +43,25 @@
                     </Modal>
                 </Breadcrumb>
                 <Card>
-                    <div style="height: 600px">
+                    <div class="content">
                         <div class="title"><span>条件筛选</span></div>
-                        <div>                             
-                            <Select v-model="model1" style="width:150px" placeholder="省">
+                        <div class="select">                             
+                            <Select v-model="modal1" style="width:150px" placeholder="省">
                                 <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
                             </Select>
-                            <Select v-model="model1" style="width:150px" placeholder="市">
+                            <Select v-model="modal1" style="width:150px" placeholder="市">
                                 <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
                             </Select>
-                            <Select v-model="model1" style="width:150px" placeholder="县/区">
+                            <Select v-model="modal1" style="width:150px" placeholder="县/区">
                                 <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
                             </Select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <Select v-model="model1" style="width:100px" placeholder="门店名称">
+                            <Select v-model="modal1" style="width:100px" placeholder="门店名称">
                                 <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
                             </Select>&nbsp;&nbsp;
-                            <Select v-model="model1" style="width:100px" placeholder="门店等级">
+                            <Select v-model="modal1" style="width:100px" placeholder="门店等级">
                                 <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
                             </Select>&nbsp;&nbsp;
-                            <Select v-model="model1" style="width:100px" placeholder="面积范围">
+                            <Select v-model="modal1" style="width:100px" placeholder="面积范围">
                                 <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
                             </Select>&nbsp;&nbsp;
                             <Button type="success">&nbsp;&nbsp;搜索&nbsp;&nbsp;</Button>
@@ -82,7 +82,7 @@
 </template>
 <script>
 export default {
-  name: 'visitor',
+  name: 'shopLists',
   data () {
     return {
         // 选择列表
@@ -112,7 +112,7 @@ export default {
                         label: '122'
                     },
                 ],
-                model1: '',
+                modal1: '',
                 modal9: false,
                 textarea2: '',
                 textarea3: '',
@@ -199,10 +199,13 @@ export default {
 }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped  lang="scss">
-    .addshop{width: 700px; height: 300px;}
-    .add{width: 400px; height: 40px; display: flex; justify-content: space-around; align-items: center;}    
-    .title{width: 100%;height: 40px;background: #5BC0DE;line-height: 40px;color: #fff;padding-left:10px;display:flex;justify-content: space-between;align-items:center;margin-bottom: 10px;
-        span:nth-child(2){display: block;width: 100px;height: 30px;background: #C1C1C1;border-radius: 5px;line-height: 30px;text-align: center;}
+<style scoped lang="scss">
+    .shopLists{
+        .add{width: 400px; height: 40px; display: flex; justify-content: space-around; align-items: center;}  
+        .content{ height: 600px;
+            .title{width: 100%;height: 40px;background: #5BC0DE;line-height: 40px;color: #fff;padding-left:10px;display:flex;justify-content: space-between;align-items:center;margin-bottom: 10px;
+                span:nth-child(2){display: block;width: 100px;height: 30px;background: #C1C1C1;border-radius: 5px;line-height: 30px;text-align: center;}
+            }
+        }  
     }
 </style>
