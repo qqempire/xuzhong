@@ -4,7 +4,7 @@
     <Sider :style="{position: 'fixed', height: '100vh', left: 0, overflow: 'auto'}" style="background:#39435B">
             <Menu active-name="1-2" theme="dark" width="auto" :open-names="['1']" accordion style="background:#39435B">
                
-               <div class="logo" >上海旭中调研系统</div>
+               <div class="logo" :style ="logo" >上海旭中调研系统</div>
 
                
 
@@ -162,11 +162,18 @@
 </template>
 
 <script>
+
 export default {
   name: 'Pub',
   data(){
       return{
-         
+         logo:{
+          backgroundImage: "url(" + require("../../src/assets//img/login/logo.png") + ")",
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "auto",
+          backgroundPosition:"5px  ",
+          backgroundSize:"30px 30px"
+          }
       }
   },
   methods:{
@@ -207,7 +214,7 @@ export default {
         box-shadow: 0 1px 1px rgba(0,0,0,.1);
     }
   .logo{
-     width: 200px;height: 40px;background:#293743;color: #02DAFD;text-align: center;line-height: 40px;font-weight: 500;font-size: 18px;
+     width: 200px;height: 40px;background:#293743;color: #00ADEE;text-align: center;line-height: 40px;font-weight: 500;font-size: 14px;padding-left: 10px
   }
    ul,li,ol{list-style:none;}
 .ivu-layout-header{height: 40px;}

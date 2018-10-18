@@ -11,13 +11,24 @@ import Router from 'vue-router'
 //登录
 import Login from "../components/login/login.vue" 
 //首页
-import Home from "../components/home/home.vue" 
+      import Home from "../components/home/home.vue" 
 
 
-import Xiangmu from "../components/xiangmu/xiangmu.vue" 
+      
 
-import Diaoyan from "../components/diaoyan/diaoyan.vue" 
+      import Diaoyan from "../components/diaoyan/diaoyan.vue" 
+//项目管理
+    //添加
+     import Addjia from "../components/xiangmu/add/addjia.vue" 
+     import Addshi from "../components/xiangmu/add/addshi.vue" 
+    //列表
+     import Listjia from "../components/xiangmu/list/listjia.vue" 
+     import Listshi from "../components/xiangmu/list/listshi.vue"      
+    //消息
+     import Message from "../components/xiangmu/message/message.vue"      
 
+
+    
 
 //审核管理
 
@@ -28,8 +39,8 @@ import Diaoyan from "../components/diaoyan/diaoyan.vue"
      
     //列表
      import List from "../components/shenhe/shenlist/list.vue" 
-     import Details_shi from "../components/shenhe/shenlist/details_jia.vue" 
-     import Details_jia from "../components/shenhe/shenlist/details_shi.vue" 
+     import Details_jia from "../components/shenhe/shenlist/details_jia.vue" 
+     import Details_shi from "../components/shenhe/shenlist/details_shi.vue" 
 
        
     //退回
@@ -37,6 +48,7 @@ import Diaoyan from "../components/diaoyan/diaoyan.vue"
 
 
  // 门店管理
+
      // 门店列表
      import shopLists from "../components/shops/shopLists.vue"
  
@@ -141,10 +153,36 @@ export default new Router({
               path: '/home',
               component: Home
             },
-            {     
-              path: '/xiangmu',
-              component: Xiangmu
+
+    //项目管理
+
+          //添加项目
+            {
+              path: '/addjia',
+              component: Addjia
             },
+            {
+              path: '/addshi',
+              component: Addshi
+            },
+
+          //项目列表
+            {     
+              path: '/listjia',
+              component: Listjia
+            },
+            {     
+              path: '/listshi',
+              component: Listshi
+            },
+          //消息反馈
+            {     
+              path: '/message',
+              component: Message
+            },
+
+
+    //调研对象
             {
               path: '/diaoyan',
               component: Diaoyan
@@ -188,7 +226,7 @@ export default new Router({
               component: Details_jia,
              
             },
-    //门店管理（一级）
+  //门店管理（一级）
             // 门店列表
             {
               path: '/shopLists',
@@ -265,7 +303,8 @@ export default new Router({
             component: New
           },
           
-   // 报告管理(一级)
+  // 报告管理(一级)
+
         // 绩效报告
         {
           path: '/performanceReportAgent',
@@ -348,6 +387,7 @@ export default new Router({
         },
 
 //我的任务（一级）
+
         // 项目列表
         {
           path: '/projectLists',
@@ -405,7 +445,7 @@ export default new Router({
 
 
 
-
+//默认跳转
     {
       path:"/",
       redirect:"/home"
