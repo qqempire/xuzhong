@@ -25,9 +25,17 @@
                         <Icon type="md-list-box" />
                         项目管理
                     </template>
-                    <MenuItem name="2-1">添加醒目</MenuItem>
-                    <MenuItem name="2-2">项目列表</MenuItem>
-                    <MenuItem name="2-3">消息反馈</MenuItem>
+                    <!-- <div @click="toaddjia()">00000</div> -->
+                    <!-- <div @click="toaddjia()" style="border:1px solid red"><MenuItem name="2-1"  >添加项目</MenuItem></div> -->
+                    <MenuItem name="2-1"  >
+                        <router-link to="./addjia" tag="span">添加项目</router-link>
+                    </MenuItem>
+                    <MenuItem name="2-2">
+                        <router-link to="./listjia" tag="span">项目列表</router-link>                   
+                    </MenuItem>
+                    <MenuItem name="2-3">                    
+                        <router-link to="./message" tag="span">消息反馈</router-link>  
+                    </MenuItem>
                 </Submenu>
                
                 <Submenu name="3">
@@ -180,6 +188,9 @@ export default {
      aaa(){
          console.log("222")
         // this.$router.push("/home")
+     },
+     toaddjia(){
+         console.log("222")
      }
   }
 }
