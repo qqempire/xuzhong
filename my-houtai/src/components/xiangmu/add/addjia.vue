@@ -7,11 +7,12 @@
                 <Breadcrumb :style="{margin: '16px 0'}">
                    
                 </Breadcrumb>
-                <Card>
-                    <div style="height: 600px">
+               
                         <el-tabs v-model="activeName" @tab-click="handleClick">
                             <!-- 基本信息 -->
                             <el-tab-pane label="基本信息" name="first">
+                                 <Card>
+                                     <div style="height: 600px">
                                   <div class="shang">
                                       <div class="left">
                                           <div class="ipt">
@@ -52,7 +53,7 @@
                                               <div class="center2">
                                                   <Input v-model="value" placeholder="项目名称" style="width: 200px" />
                                                    <Input v-model="value" placeholder="项目编号" style="width: 200px;margin:10px 0" />
-                                                   <Button class="btn" size="small">搜索</Button>
+                                                   <Button class="btn" size="small">检测</Button>
                                               </div>
                                               
                                           </div>
@@ -72,91 +73,120 @@
                                             
                                        </div>
                                   </div>
+                                    </div>
+                
+                                 </Card>
                             </el-tab-pane>
                              <!-- 选择产品 -->
                             <el-tab-pane label="选择产品" name="second">
-                                选择产品
+                                <Card>
+                                    <div style="height: 600px">
+                                           <Select v-model="model1" style="width:300px" placeholder="请选择产品类别">
+                                             <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                                          </Select><br>
+                                          <Input v-model="value" placeholder="产品名称" style="width: 200px;margin:10px 0" /><br>
+                                          <Input v-model="value" placeholder="排序值" style="width: 100px;margin:10px 0" />
+                                          <Button type="success" > 提交 </Button><br><br><br><br><br><br><br><br>
+                                          <div class="btn1">
+                                            <Button type="error">取消</Button>
+                                            <Button type="success">上一步</Button>
+                                            <Button type="success">下一步</Button>
+                                          </div>
+                                    </div>
+                                    
+                
+                                </Card>
+                               
                             </el-tab-pane>
                              <!-- 导入信息 -->
                             <el-tab-pane label="导入信息" name="third">
-                                <div class="dao">
-                                    <el-button type="info" class="loadbtn">下载清单模板</el-button>
-                                    
-                                    <div >
-                                        <el-button size="small" type="primary">点击上传项目信息</el-button>
-                                        <div class="shangchuan">
-                                             <el-upload
-                                                class="upload-demo"
-                                                action="https://jsonplaceholder.typicode.com/posts/"
-                                                :on-preview="handlePreview"
-                                                :on-remove="handleRemove"
-                                                :before-remove="beforeRemove"
-                                                multiple
-                                                :limit="3"
-                                                :on-exceed="handleExceed"
-                                                :file-list="fileList">
-                                                
-                                                
-                                                </el-upload>
-                                         </div>
+                                <Card>
+                                     <div style="height: 600px">
+                                    <div class="dao">
+                                        <el-button type="info" class="loadbtn">下载清单模板</el-button>
                                         
-                                    </div>
-                                    
-                                    
-                                    <div >
-                                        <el-button size="small" type="primary">点击上传项目信息</el-button>
-                                        <div class="shangchuan">
-                                             <el-upload
-                                                class="upload-demo"
-                                                action="https://jsonplaceholder.typicode.com/posts/"
-                                                :on-preview="handlePreview"
-                                                :on-remove="handleRemove"
-                                                :before-remove="beforeRemove"
-                                                multiple
-                                                :limit="3"
-                                                :on-exceed="handleExceed"
-                                                :file-list="fileList">
-                                                
-                                                
-                                                </el-upload>
-                                         </div>
+                                        <div >
+                                            
+                                            <div class="shangchuan">
+                                                 <el-upload
+                                                    class="upload-demo"
+                                                    action="https://jsonplaceholder.typicode.com/posts/"
+                                                    :on-preview="handlePreview"
+                                                    :on-remove="handleRemove"
+                                                    :before-remove="beforeRemove"
+                                                    multiple
+                                                    :limit="3"
+                                                    :on-exceed="handleExceed"
+                                                    :file-list="fileList">
+                                                    <el-button size="small" type="primary">点击上传项目信息</el-button>
+                                                   
+                                                 </el-upload>
+                                            </div>
+                                            
+                                        </div>
                                         
+                                        
+                                        <div >
+                                           
+                                            <div class="shangchuan">
+                                                <el-upload
+                                                    class="upload-demo"
+                                                    action="https://jsonplaceholder.typicode.com/posts/"
+                                                    :on-preview="handlePreview"
+                                                    :on-remove="handleRemove"
+                                                    :before-remove="beforeRemove"
+                                                    multiple
+                                                    :limit="3"
+                                                    :on-exceed="handleExceed"
+                                                    :file-list="fileList">
+                                                    <el-button size="small" type="primary">点击上传项目信息</el-button>
+                                                   
+                                                 </el-upload>
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="beizhu">
+                                            <Input v-model="value6" type="textarea" :rows="4" placeholder="备注信息" />
+                                        </div>
+                                        <div class="btn1">
+                                            <Button type="error">取消</Button>
+                                            <Button type="success">上一步</Button>
+                                            <Button type="success">下一步</Button>
+                                        </div>
                                     </div>
-                                    <div class="beizhu">
-                                        <Input v-model="value6" type="textarea" :rows="4" placeholder="备注信息" />
-                                    </div>
-                                    <div class="btn1">
-                                        <Button type="error">取消</Button>
-                                        <Button type="success">上一步</Button>
-                                        <Button type="success">下一步</Button>
-                                    </div>
-                                </div>
+                                 </div>
+                
+                                </Card>
                             </el-tab-pane>
                              <!-- 编辑算法 -->
                             <el-tab-pane label="编辑算法" name="fourth">
-                                <div class="suan">
-                                    <div class="select1">
-                                         <Select v-model="model1" style="width:200px" placeholder="选择算分模板">
-                                        <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                                        </Select>
-                                        <Button type="success">确定</Button>
-                                    </div>
-                                   <div class="select1">
-                                       <Select v-model="model1" style="width:200px" placeholder="选择必备品牌">
-                                        <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                                        </Select>
-                                        <Checkbox v-model="single" style="margin-left:10px">必备</Checkbox>
-                                   </div>
-                                    <div class="btn1 btn2">
-                                        <Button type="error">取消</Button>
-                                        <Button type="success">上一步</Button>
-                                        <Button type="success">完成</Button>
-                                    </div>
-                                </div>
+                                 <Card>
+                                    <div style="height: 600px">
+                                        <div class="suan">
+                                            <div class="select1">
+                                                <Select v-model="model1" style="width:200px" placeholder="选择算分模板">
+                                                <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                                                </Select>
+                                                <Button type="success">确定</Button>
+                                            </div>
+                                        <div class="select1">
+                                            <Select v-model="model1" style="width:200px" placeholder="选择必备品牌">
+                                                <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                                                </Select>
+                                                <Checkbox v-model="single" style="margin-left:10px">必备</Checkbox>
+                                        </div>
+                                            <div class="btn1 btn2">
+                                                <Button type="error">取消</Button>
+                                                <Button type="success">上一步</Button>
+                                                <Button type="success">完成</Button>
+                                            </div>
+                                        </div>
+                                         </div>
+                
+                                </Card>
                             </el-tab-pane>
                         </el-tabs>
-                    </div>
-                </Card>
+                  
             </Content>
         </Layout>
   </div> 

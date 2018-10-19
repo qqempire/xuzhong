@@ -5,6 +5,7 @@ import Router from 'vue-router'
 
 
 //import HelloWorld from '@/components/HelloWorld'
+import Text from "../components/text.vue" 
 //全局
  import Pub from "../components/pub.vue" 
 
@@ -23,7 +24,8 @@ import Login from "../components/login/login.vue"
      import Addshi from "../components/xiangmu/add/addshi.vue" 
     //列表
      import Listjia from "../components/xiangmu/list/listjia.vue" 
-     import Listshi from "../components/xiangmu/list/listshi.vue"      
+     import Listshi from "../components/xiangmu/list/listshi.vue"     
+     import xm_details from "../components/xiangmu/list/xm_details.vue"  
     //消息
      import Message from "../components/xiangmu/message/message.vue"      
 
@@ -155,6 +157,10 @@ export default new Router({
       component:Pub,
           children:[
             {  
+              path: '/text',
+              component: Text
+            },
+            {  
               path: '/home',
               component: Home
             },
@@ -179,6 +185,10 @@ export default new Router({
             {     
               path: '/listshi',
               component: Listshi
+            },
+            {     
+              path: '/xm_details',
+              component: xm_details
             },
           //消息反馈
             {     

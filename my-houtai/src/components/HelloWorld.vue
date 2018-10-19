@@ -19,7 +19,7 @@
 
 <script>
 export default {
-  name: 'Jiahua',
+  name: 'HelloWorld',
   data () {
     return {
        
