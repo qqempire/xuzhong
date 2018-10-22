@@ -15,13 +15,23 @@ import Login from "../components/login/login.vue"
       import Home from "../components/home/home.vue" 
 
 
-      
-
       import Diaoyan from "../components/diaoyan/diaoyan.vue" 
+
 //项目管理
+
     //添加
      import Addjia from "../components/xiangmu/add/addjia.vue" 
+     import Base from "../components/xiangmu/add/addjia/base.vue" 
+     import Mess from "../components/xiangmu/add/addjia/mess.vue" 
+     import Select from "../components/xiangmu/add/addjia/select.vue" 
+     import Suanfa from "../components/xiangmu/add/addjia/suanfa.vue" 
+
      import Addshi from "../components/xiangmu/add/addshi.vue" 
+     import Base1 from "../components/xiangmu/add/addshi/base1.vue" 
+     import Bian from "../components/xiangmu/add/addshi/bian.vue" 
+     import Dao from "../components/xiangmu/add/addshi/dao.vue" 
+
+
     //列表
      import Listjia from "../components/xiangmu/list/listjia.vue" 
      import Listshi from "../components/xiangmu/list/listshi.vue"     
@@ -173,8 +183,38 @@ export default new Router({
               component: Addjia
             },
             {
+              path: '/base',
+              component: Base
+            },
+            {
+              path: '/mess',
+              component: Mess
+            },
+            {
+              path: '/select',
+              component: Select
+            },
+            {
+              path: '/suanfa',
+              component: Suanfa
+            },
+
+              
+            {
               path: '/addshi',
               component: Addshi
+            },
+            {
+              path: '/base1',
+              component: Base1
+            },
+            {
+              path: '/bian',
+              component: Bian
+            },
+            {
+              path: '/dao',
+              component: Dao
             },
 
           //项目列表

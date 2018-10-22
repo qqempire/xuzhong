@@ -9,7 +9,7 @@
                
 
                 
-                    <Submenu name="1" >
+                    <Submenu name="1"  >
                         <template slot="title">
                             <router-link to="./home" tag="span">
                                 <Icon type="ios-compass" />
@@ -28,7 +28,7 @@
                     <!-- <div @click="toaddjia()">00000</div> -->
                     <!-- <div @click="toaddjia()" style="border:1px solid red"><MenuItem name="2-1"  >添加项目</MenuItem></div> -->
                     <MenuItem name="2-1"  >
-                        <router-link to="./addjia" tag="span">添加项目</router-link>
+                        <router-link to="./base" tag="span">添加项目</router-link>
                     </MenuItem>
                     <MenuItem name="2-2">
                         <router-link to="./listjia" tag="span">项目列表</router-link>                   

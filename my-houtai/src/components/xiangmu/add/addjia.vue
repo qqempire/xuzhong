@@ -7,7 +7,7 @@
                 <Breadcrumb :style="{margin: '16px 0'}">
                    
                 </Breadcrumb>
-               
+                
                         <el-tabs v-model="activeName" @tab-click="handleClick">
                             <!-- 基本信息 -->
                             <el-tab-pane label="基本信息" name="first">
@@ -28,13 +28,13 @@
                                               <Input v-model="value" placeholder="项目编号" style="width: 180px" />
                                           </div>
                                           <div class="ipt ipt1">
-                                              <Col span="12" style="width: 120px">
+                                              <Col span="12" style="width: 120px" class="datawrop">
                                                 <DatePicker type="date" placeholder="调查日期" ></DatePicker>
                                               </Col>
-                                              <Col span="12" style="width: 120px">
+                                              <Col span="12" style="width: 120px" class="datawrop">
                                                 <DatePicker type="date" placeholder="截止日期"></DatePicker>
                                               </Col>
-                                              <Col span="12" style="width: 120px">
+                                              <Col span="12" style="width: 120px" class="datawrop">
                                                 <DatePicker type="date" placeholder="预警日期" ></DatePicker>
                                               </Col>
                                           </div>
@@ -66,9 +66,17 @@
                                               表格
                                        </div>
                                        <div class="but">
+                                           <div class="fen">
+                                               <el-pagination
+                                                    background
+                                                    layout="prev, pager, next"
+                                                    :total="100">
+                                                </el-pagination>
+                                           </div>
                                            <div class="btncen">
                                                <Button type="error" size="small"> 取 消 </Button>
-                                               <Button type="success" size="small"> 下 一 步 </Button>
+                                               
+                                                <Button type="success" size="small" > 下 一 步 </Button>  
                                            </div>
                                             
                                        </div>
@@ -81,17 +89,20 @@
                             <el-tab-pane label="选择产品" name="second">
                                 <Card>
                                     <div style="height: 600px">
-                                           <Select v-model="model1" style="width:300px" placeholder="请选择产品类别">
-                                             <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                                          </Select><br>
-                                          <Input v-model="value" placeholder="产品名称" style="width: 200px;margin:10px 0" /><br>
-                                          <Input v-model="value" placeholder="排序值" style="width: 100px;margin:10px 0" />
-                                          <Button type="success" > 提交 </Button><br><br><br><br><br><br><br><br>
-                                          <div class="btn1">
+                                        <div class="select">
+                                            <Select v-model="model1" style="width:300px" placeholder="请选择产品类别">
+                                              <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                                            </Select><br>
+                                            <Input v-model="value" placeholder="产品名称" style="width: 200px;margin:10px 0" /><br>
+                                            <Input v-model="value" placeholder="排序值" style="width: 100px;margin:10px 0" />
+                                            <Button type="success" > 提交 </Button><br><br><br>
+                                          <div class=" btnse">
                                             <Button type="error">取消</Button>
                                             <Button type="success">上一步</Button>
                                             <Button type="success">下一步</Button>
                                           </div>
+                                        </div>
+                                           
                                     </div>
                                     
                 
@@ -102,58 +113,58 @@
                             <el-tab-pane label="导入信息" name="third">
                                 <Card>
                                      <div style="height: 600px">
-                                    <div class="dao">
-                                        <el-button type="info" class="loadbtn">下载清单模板</el-button>
-                                        
-                                        <div >
+                                        <div class="dao">
+                                            <el-button type="info" class="loadbtn">下载清单模板</el-button>
                                             
-                                            <div class="shangchuan">
-                                                 <el-upload
-                                                    class="upload-demo"
-                                                    action="https://jsonplaceholder.typicode.com/posts/"
-                                                    :on-preview="handlePreview"
-                                                    :on-remove="handleRemove"
-                                                    :before-remove="beforeRemove"
-                                                    multiple
-                                                    :limit="3"
-                                                    :on-exceed="handleExceed"
-                                                    :file-list="fileList">
-                                                    <el-button size="small" type="primary">点击上传项目信息</el-button>
-                                                   
-                                                 </el-upload>
+                                            <div >
+                                                
+                                                <div class="shangchuan">
+                                                    <el-upload
+                                                        class="upload-demo"
+                                                        action="https://jsonplaceholder.typicode.com/posts/"
+                                                        :on-preview="handlePreview"
+                                                        :on-remove="handleRemove"
+                                                        :before-remove="beforeRemove"
+                                                        multiple
+                                                        :limit="3"
+                                                        :on-exceed="handleExceed"
+                                                        :file-list="fileList">
+                                                        <el-button size="small" type="primary">点击上传项目信息</el-button>
+                                                    
+                                                    </el-upload>
+                                                </div>
+                                                
                                             </div>
                                             
-                                        </div>
-                                        
-                                        
-                                        <div >
-                                           
-                                            <div class="shangchuan">
-                                                <el-upload
-                                                    class="upload-demo"
-                                                    action="https://jsonplaceholder.typicode.com/posts/"
-                                                    :on-preview="handlePreview"
-                                                    :on-remove="handleRemove"
-                                                    :before-remove="beforeRemove"
-                                                    multiple
-                                                    :limit="3"
-                                                    :on-exceed="handleExceed"
-                                                    :file-list="fileList">
-                                                    <el-button size="small" type="primary">点击上传项目信息</el-button>
-                                                   
-                                                 </el-upload>
-                                            </div>
                                             
-                                        </div>
-                                        <div class="beizhu">
-                                            <Input v-model="value6" type="textarea" :rows="4" placeholder="备注信息" />
-                                        </div>
-                                        <div class="btn1">
-                                            <Button type="error">取消</Button>
-                                            <Button type="success">上一步</Button>
-                                            <Button type="success">下一步</Button>
-                                        </div>
-                                    </div>
+                                            <div >
+                                            
+                                                <div class="shangchuan">
+                                                    <el-upload
+                                                        class="upload-demo"
+                                                        action="https://jsonplaceholder.typicode.com/posts/"
+                                                        :on-preview="handlePreview"
+                                                        :on-remove="handleRemove"
+                                                        :before-remove="beforeRemove"
+                                                        multiple
+                                                        :limit="3"
+                                                        :on-exceed="handleExceed"
+                                                        :file-list="fileList">
+                                                        <el-button size="small" type="primary">点击上传项目信息</el-button>
+                                                    
+                                                    </el-upload>
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="beizhu">
+                                                <Input v-model="value6" type="textarea" :rows="4" placeholder="备注信息" />
+                                            </div>
+                                            <div class="btn1">
+                                                <Button type="error">取消</Button>
+                                                <Button type="success">上一步</Button>
+                                                <Button type="success">下一步</Button>
+                                            </div>
+                                      </div>
                                  </div>
                 
                                 </Card>
@@ -181,7 +192,7 @@
                                                 <Button type="success">完成</Button>
                                             </div>
                                         </div>
-                                         </div>
+                                  </div>
                 
                                 </Card>
                             </el-tab-pane>
@@ -247,10 +258,8 @@ export default {
     .shang{
         width: 100%;height: 200px;display: flex;justify-content: space-between;
         .left{width: 60%;height: 200px;background:#F5F7F9;
-            .ipt{width: 100%;height: 50px;display: flex;align-items: center;justify-content: space-around;
-            
+            .ipt{width: 100%;height: 50px;display: flex;align-items: center;justify-content: space-between;padding: 0 20px;          
             }
-            .ipt1{justify-content: space-around;}
         }
         .right{width: 37%;height: 200px;background:#F5F7F9;
         
@@ -261,15 +270,17 @@ export default {
          }
         }
     }
-    .xia{width: 100%;height: 340px;border: 1px solid red;margin-top: 10px;
-       .tab{width: 100%;height: 260px;border: 1px solid greenyellow}
-       .but{width: 100%;height: 30px;border: 1px solid red;display: flex;justify-content: center;
-        .btncen{width: 120px;height: 30px;display: flex;justify-content: space-between}
+    .xia{width: 100%;height: 390px;border: 1px solid red;margin-top: 10px;
+       .tab{width: 100%;height: 260px;border: 1px solid blue}
+       .but{width: 100%;height: 100px;display: flex;justify-content: center;flex-direction:column;align-items: center;
+        .fen{width: 100%;height: 40px;display: flex;justify-content: center}
+        .btncen{width: 120px;height: 30px;display: flex;justify-content: space-between;}
         }
       
     }
     //222
-
+     .select{width: 100%;height: 300px;background: #F5F7F9;padding:30px}
+     .btnse{width: 300px;height: 35px;display: flex;justify-content: space-between;padding: 0;margin: 0}
     //333
     .dao{background: #F5F7F9;padding: 10px}
      .loadbtn{margin-bottom: 10px}
