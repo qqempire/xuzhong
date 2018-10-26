@@ -16,9 +16,9 @@
                                   <div class="shang">
                                       <div class="left">
                                           <div class="ipt">
-                                               <Select v-model="model1" style="width:180px" placeholder="项目类别">
-                                                    <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                                               </Select>
+                                               <Select v-model="model" style="width:200px" placeholder="权限组" @on-change="change">
+                                                    <Option v-for="item in xmlb" :value="item.value"  label-in-value='true' :key="item.value">{{ item.label }}</Option>
+                                                </Select>
                                                <Select v-model="model1" style="width:180px" placeholder="产品类别">
                                                     <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
                                                </Select>
@@ -90,26 +90,39 @@
 </template>
 
 <script>
+import $ from "jquery"
+import axios from "axios"
+
 export default {
   name: 'Addjia',
   data () {
     return {
+       
+       
         single: false,
         value6:"",
        activeName: 'first',
         value: '',
-        cityList: [
+        xmlb: [
                     {
-                        value: 'New York',
-                        label: 'New York'
+                        value: '家化',
+                        label: '家化'
+                    },
+                     {
+                        value: '时效',
+                        label: '时效'
                     },
                     
                 ],
-                model1: '',
+          model: '',
        cityList: [
                     {
                         value: 'New York',
                         label: 'New York'
+                    },
+                     {
+                        value: 'New k',
+                        label: 'New York2'
                     },
                     
                 ],
@@ -119,6 +132,16 @@ export default {
   }
  },
   methods: {
+       change(val){
+          console.log(val)
+          if(val=="时效"){
+              this.$router.push("/base1")
+          }else{
+              this.$router.push("/base")
+          }
+             
+       },
+     
       handleClick(tab, event) {
         console.log(tab, event);
       },
@@ -176,4 +199,5 @@ export default {
         }
       
     }
+    .title{width: 100%;height: 30px;background: #5BC0DE;line-height: 30px;color: #fff;padding:0 10px;}
 </style>

@@ -309,16 +309,16 @@ export default {
         value:"",
         //111
         options: [
-        //     {
-        //   value: '1',
-        //   label: '实化'
-        // }, {
-        //   value: '2',
-        //   label: '家化'
-        // }, {
-        //   value: '3',
-        //   label: '问卷'
-        // }
+            {
+          value: '1',
+          label: '实化'
+        }, {
+          value: '2',
+          label: '家化'
+        }, {
+          value: '3',
+          label: '问卷'
+        }
          
         ],
         value8: '项目调查产品类别',

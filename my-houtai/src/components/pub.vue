@@ -243,5 +243,5 @@ export default {
   }
   li {cursor: pointer;}
 .kong{height: 40px;width: 100%}
-.head{width: 100%;height: 40px;position: fixed;top:0;left: 0;z-index: 9999;}
+.head{width: 100%;height: 40px;position: fixed;top:0;left: 0;z-index: 99;}
 </style>

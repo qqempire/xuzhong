@@ -5,7 +5,7 @@ import Router from 'vue-router'
 
 
 //import HelloWorld from '@/components/HelloWorld'
-import Text from "../components/text.vue" 
+import aaa from "../components/aaa.vue" 
 //全局
  import Pub from "../components/pub.vue" 
 
@@ -167,8 +167,8 @@ export default new Router({
       component:Pub,
           children:[
             {  
-              path: '/text',
-              component: Text
+              path: '/aaa',
+              component: aaa
             },
             {  
               path: '/home',

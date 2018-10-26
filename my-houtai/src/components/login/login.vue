@@ -61,7 +61,7 @@ export default {
 
         .for{ box-sizing: border-box; width: 490px; height: 230px; padding: 10px 20px 0; background-color: #21202E; border: 1px solid #2d2c3c; 
             position: absolute; left: 0; right: 0; margin: auto; 
-            input{width: 450px; height: 75px; border: none; border-bottom: 1px solid #4d6a74; background: inherit; color: #4d6a74; font-size: 16px; text-align: center;outline-color:#524E89 }
+            input{width: 450px; height: 75px; border: none; border-bottom: 1px solid #4d6a74; background: inherit; color: #4d6a74; font-size: 16px; text-align: center;outline-color:#524E89;outline: none }
           
           #box{ width: 450px; height: 70px; 
             #submit{display: block; width: 160px; height: 40px; margin: 15px auto 0; border: none; font-size: 18px; color: #56BACA; text-align: center; line-height: 40px; background-color: #2d3c41;}

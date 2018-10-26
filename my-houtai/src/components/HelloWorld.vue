@@ -10,7 +10,12 @@
                     <el-button type="danger" size="small">&nbsp;&nbsp;删&nbsp;除&nbsp;&nbsp;</el-button>
                 </Breadcrumb>
                 <Card>
-                    <div style="height: 600px">Content</div>
+                    <div style="height: 600px">
+                        <Upload action="//jsonplaceholder.typicode.com/posts/">
+                            <Button icon="ios-cloud-upload-outline">上传</Button>
+                        </Upload>
+
+                    </div>
                 </Card>
             </Content>
         </Layout>
