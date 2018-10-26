@@ -5,10 +5,10 @@
             <Content :style="{padding: '0 16px 16px'}">
                 <Breadcrumb :style="{margin: '16px 0'}">
                     
-                    <el-button type="info" size="small" @click="tobase()">&nbsp;&nbsp;基本信息&nbsp;&nbsp;</el-button>
-                    <el-button type="info" size="small"  @click="toselect()">&nbsp;&nbsp;选择产品&nbsp;&nbsp;</el-button>
-                    <el-button type="success" size="small"  @click="tobmess()">&nbsp;&nbsp;导入信息&nbsp;&nbsp;</el-button>
-                    <el-button type="info" size="small"  @click="tosuanfa()">&nbsp;&nbsp;编辑算法&nbsp;&nbsp;</el-button>
+                    <el-button type="success" size="small" >&nbsp;&nbsp;基本信息&nbsp;&nbsp;</el-button>
+                    <el-button type="success" size="small" >&nbsp;&nbsp;选择产品&nbsp;&nbsp;</el-button>
+                    <el-button type="success" size="small"  >&nbsp;&nbsp;导入信息&nbsp;&nbsp;</el-button>
+                    <el-button type="info" size="small"  >&nbsp;&nbsp;编辑算法&nbsp;&nbsp;</el-button>
                 </Breadcrumb>
                 <Card>
                         <div style="height: 600px">
@@ -60,8 +60,8 @@
                             </div>
                             <div class="btn1">
                                 <Button type="error">取消</Button>
-                                <Button type="success">上一步</Button>
-                                <Button type="success">下一步</Button>
+                                <Button type="success"  @click="toselect()">上一步</Button>
+                                <Button type="success" @click="tosuanfa()">下一步</Button>
                             </div>
                         </div>
                     </div>
@@ -118,15 +118,11 @@ export default {
         return this.$confirm(`确定移除 ${ file.name }？`);
       },
       //头部导航
-      tobase(){
-          this.$router.push("/base")
-      },
+     
        toselect(){
           this.$router.push("/select")
       },
-       tobmess(){
-          this.$router.push("/mess")
-      },
+       
        tosuanfa(){
           this.$router.push("/suanfa")
       }

@@ -205,11 +205,11 @@ export default {
         modal1:false,
         modal2:'',
         cityList: [
-                        {
-                            value: 'New York',
-                            label: 'New York'
-                        }
-                    ],          
+                    {
+                        value: 'New York',
+                        label: 'New York'
+                    }
+                ],          
     }
   },
   methods:{
@@ -242,7 +242,7 @@ export default {
             td{height: 25px; text-align: center; line-height: 25px;}
         }               
     }
-    .table2{width: 100%;border-collapse: collapse; display: flex; justify-content: space-between;
+    .table2{width: 100%; display: flex; justify-content: space-between;
         .accessData{width: 48%; 
             .picture{width: 100%; border-collapse: collapse;
                 td{height: 25px; text-align: center; line-height: 25px;}

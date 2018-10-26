@@ -6,7 +6,6 @@
                     <el-button type="info" size="small" @click="goBack">&nbsp;&nbsp;返&nbsp;回&nbsp;&nbsp;</el-button>
                     <span>
                         <el-button  type="success" size="small">&nbsp;&nbsp;审核完成&nbsp;&nbsp;</el-button>
-                        <el-button type="success" size="small">&nbsp;&nbsp;保存草稿&nbsp;&nbsp;</el-button>
                         <el-button type="info" size="small">&nbsp;&nbsp;取&nbsp;消&nbsp;&nbsp;</el-button>                    
                     </span>
                 </Breadcrumb>                             

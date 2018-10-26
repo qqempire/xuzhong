@@ -5,10 +5,10 @@
             <Content :style="{padding: '0 16px 16px'}">
                 <Breadcrumb :style="{margin: '16px 0'}">
                     
-                    <el-button type="success" size="small" @click="tobase()">&nbsp;&nbsp;基本信息&nbsp;&nbsp;</el-button>
-                    <el-button type="info" size="small"  @click="toselect()">&nbsp;&nbsp;选择产品&nbsp;&nbsp;</el-button>
-                    <el-button type="info" size="small"  @click="tobmess()">&nbsp;&nbsp;导入信息&nbsp;&nbsp;</el-button>
-                    <el-button type="info" size="small"  @click="tosuanfa()">&nbsp;&nbsp;编辑算法&nbsp;&nbsp;</el-button>
+                    <el-button type="success" size="small" >&nbsp;&nbsp;基本信息&nbsp;&nbsp;</el-button>
+                    <el-button type="info" size="small"  >&nbsp;&nbsp;选择产品&nbsp;&nbsp;</el-button>
+                    <el-button type="info" size="small"  >&nbsp;&nbsp;导入信息&nbsp;&nbsp;</el-button>
+                    <el-button type="info" size="small"  >&nbsp;&nbsp;编辑算法&nbsp;&nbsp;</el-button>
                 </Breadcrumb>
 
                 <Card>
@@ -19,8 +19,8 @@
                                                <Select v-model="model" style="width:200px" placeholder="权限组" @on-change="change">
                                                     <Option v-for="item in xmlb" :value="item.value"  label-in-value='true' :key="item.value">{{ item.label }}</Option>
                                                 </Select>
-                                               <Select v-model="model1" style="width:180px" placeholder="产品类别">
-                                                    <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                                               <Select v-model="model2" style="width:180px" placeholder="产品类别">
+                                                    <Option v-for="item in product" :value="item.value" :key="item.value">{{ item.label }}</Option>
                                                </Select>
                                           </div>
                                           <div class="ipt">
@@ -40,10 +40,10 @@
                                           </div>
                                           <div class="ipt">
                                               <Select v-model="model1" style="width:180px" placeholder="调研产品类别">
-                                                    <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                                                    <Option v-for="item in diaoyan" :value="item.value" :key="item.value">{{ item.label }}</Option>
                                                </Select>
                                                <Select v-model="model1" style="width:180px" placeholder="选择项目模板">
-                                                    <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                                                    <Option v-for="item in select" :value="item.value" :key="item.value">{{ item.label }}</Option>
                                                </Select>
                                           </div>
                                       </div>
@@ -76,7 +76,7 @@
                                            <div class="btncen">
                                                <Button type="error" size="small"> 取 消 </Button>
                                                
-                                               <Button type="success" size="small" > 下 一 步 </Button>          
+                                               <Button type="success" size="small" @click="toselect()"> 下 一 步 </Button>          
                                            </div>
                                             
                                        </div>
@@ -114,6 +114,18 @@ export default {
                     },
                     
                 ],
+        product:[
+                    // {
+                    //     value: '家化',
+                    //     label: '家化'
+                    // },
+                    
+                    
+                ],  
+        diaoyan:[
+
+        ] ,      
+        select:[],       
           model: '',
        cityList: [
                     {
@@ -128,6 +140,7 @@ export default {
                 ],
 
         model1: '',
+        model2: '',
         fileList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}]
   }
  },
@@ -158,18 +171,74 @@ export default {
         return this.$confirm(`确定移除 ${ file.name }？`);
       },
       //头部导航
-      tobase(){
-          this.$router.push("/base")
-      },
+      
        toselect(){
           this.$router.push("/select")
       },
-       tobmess(){
-          this.$router.push("/mess")
-      },
-       tosuanfa(){
-          this.$router.push("/suanfa")
-      }
+    //    tobmess(){
+    //       this.$router.push("/mess")
+    //   },
+    //    tosuanfa(){
+    //       this.$router.push("/suanfa")
+    //   }
+  },
+  mounted(){
+         var that = this;
+       
+      //产品类别下拉
+          axios({ 
+                  url:"http://192.168.0.134:8080/queryproducttype",
+                   
+                })
+                .then(function(data){
+                    //console.log(data.data)       
+                    var arr = data.data;
+                    
+                   
+
+                    for(var i in arr){
+                        //  obj.value=arr[i].producttype
+                        //  obj.label=arr[i].producttype
+                         
+                      var obj={value:arr[i].producttype,label:arr[i].producttype}
+                       // console.log(obj)
+                       that.product.push(obj)
+                     }
+                     
+                   
+                })
+         //选择项目模板
+          axios({ 
+                  url:"http://192.168.0.134:8080/queryProjecttemp",
+                   
+                })
+                .then(function(data){
+                    //console.log(data.data)       
+                    var arr = data.data;
+            
+                    for(var i in arr){
+                       
+                      var obj={value:arr[i].projecttemp,label:arr[i].projecttemp}
+                       // console.log(obj)
+                        that.select.push(obj)
+                     }
+                })
+        //调研产品类别
+         axios({ 
+                  url:"http://192.168.0.134:8080/queryResearchprocag",
+                   
+                })
+                .then(function(data){
+                    console.log(data.data)       
+                    var arr = data.data;
+            
+                    for(var i in arr){
+                       
+                      var obj={value:arr[i].researchprocag,label:arr[i].researchprocag}
+                        console.log(obj)
+                        that.diaoyan.push(obj)
+                     }
+                })
   }
 }
 </script>

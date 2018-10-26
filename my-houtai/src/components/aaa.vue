@@ -28,8 +28,8 @@
                         　　</el-table-column>
                         </el-table>
                          
-                         <Page :total="pageTotal" :current="pageNum" show-elevator show-total 
-                               placement="top" @on-change="changePage" @on-page-size-change='handlePageSize'>
+                         <Page :total="pageTotal" :current="pageNum" :page-size="pageSize" show-elevator show-total 
+                               placement="bottom" @on-change="changePage" >
                          </Page>
 
                        
@@ -45,6 +45,9 @@ export default {
   name: 'aaa',
   data () {
     return {
+           pageTotal: 100,
+            pageNum: 1,
+            pageSize: 3,
             tableData:[
            {
                jid:"1",
@@ -78,9 +81,7 @@ export default {
            },
            
         ],
-            pageTotal: 100,
-            pageNum: 1,
-            pageSize: 3,
+           
 
   }
  },
@@ -93,8 +94,9 @@ export default {
            
          
           changePage(value) {
-            this.pageNum = value
+            // this.pageNum = value
             console.log(value)
+            
             },
           
 
