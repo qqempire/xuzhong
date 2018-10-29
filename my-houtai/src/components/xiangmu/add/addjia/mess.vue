@@ -13,22 +13,23 @@
                 <Card>
                         <div style="height: 600px">
                         <div class="dao">
-                            <el-button type="info" class="loadbtn">下载清单模板</el-button>
-                            
+                            <el-button type="info" class="loadbtn" @click="clearlist">下载清单模板</el-button>
+                            <el-button type="info" class="loadbtn"  @click="daili">下载代理指标模板</el-button>
                             <div >
                                 
                                 <div class="shangchuan">
                                     <el-upload
                                         class="upload-demo"
-                                        action="https://jsonplaceholder.typicode.com/posts/"
+                                        action="http://192.168.0.134:8080/uploadHousePjInfo"
                                         :on-preview="handlePreview"
                                         :on-remove="handleRemove"
                                         :before-remove="beforeRemove"
-                                        multiple
+                                        :on-success="success1"
+                                         multiple
                                         :limit="3"
                                         :on-exceed="handleExceed"
-                                        :file-list="fileList">
-                                        <el-button size="small" type="primary">点击上传项目信息</el-button>
+                                        >
+                                        <el-button size="small" type="primary">点击上传清单模板</el-button>
                                     
                                     </el-upload>
                                 </div>
@@ -41,15 +42,16 @@
                                 <div class="shangchuan">
                                     <el-upload
                                         class="upload-demo"
-                                        action="https://jsonplaceholder.typicode.com/posts/"
+                                        action="http://192.168.0.134:8080/uploadProxyIndic"
                                         :on-preview="handlePreview"
                                         :on-remove="handleRemove"
                                         :before-remove="beforeRemove"
-                                        multiple
+                                         :on-success="success2"
+                                         multiple
                                         :limit="3"
                                         :on-exceed="handleExceed"
-                                        :file-list="fileList">
-                                        <el-button size="small" type="primary">点击上传项目信息</el-button>
+                                        >
+                                        <el-button size="small" type="primary">点击上传代理指标模板</el-button>
                                     
                                     </el-upload>
                                 </div>
@@ -73,6 +75,9 @@
 </template>
 
 <script>
+import $ from "jquery"
+import axios from "axios"
+
 export default {
   name: 'Addjia',
   data () {
@@ -81,24 +86,8 @@ export default {
         value6:"",
        activeName: 'first',
         value: '',
-        cityList: [
-                    {
-                        value: 'New York',
-                        label: 'New York'
-                    },
-                    
-                ],
-                model1: '',
-       cityList: [
-                    {
-                        value: 'New York',
-                        label: 'New York'
-                    },
-                    
-                ],
-
-        model1: '',
-        fileList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}]
+       
+        // fileList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}]
   }
  },
   methods: {
@@ -125,7 +114,34 @@ export default {
        
        tosuanfa(){
           this.$router.push("/suanfa")
-      }
+      },
+      //下载清单按钮
+      clearlist(){
+          window.location.href="http://192.168.0.134:8080/housePJinfotemp";
+      },
+      success1(response, file, fileList){
+         console.log(response)
+         if(response.msg=="上传成功"){
+             alert("上传成功")
+         }
+      },
+      //下载代理按钮
+      daili(){
+          window.location.href="http://192.168.0.134:8080/proxyIndicatorTemp";
+        //    var that = this;
+        //    axios({ 
+        //          url:"http://192.168.0.134:8080/proxyIndicatorTemp", 
+        //         })
+        //         .then(function(data){
+                  
+        //         })
+      },
+       success2(response, file, fileList){
+         console.log(response)
+         if(response.msg=="上传成功"){
+             alert("上传成功")
+         }
+      },
   }
 }
 </script>

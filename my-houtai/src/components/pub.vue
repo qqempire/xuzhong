@@ -11,7 +11,7 @@
                 
                     <Submenu name="1"  >
                         <template slot="title">
-                            <router-link to="./home" tag="span">
+                            <router-link to="/home" tag="span">
                                 <Icon type="ios-compass" />
                                 旭中首页
                             </router-link>
@@ -28,13 +28,13 @@
                     <!-- <div @click="toaddjia()">00000</div> -->
                     <!-- <div @click="toaddjia()" style="border:1px solid red"><MenuItem name="2-1"  >添加项目</MenuItem></div> -->
                     <MenuItem name="2-1"  >
-                        <router-link to="./base" tag="span">添加项目</router-link>
+                        <router-link to="/base" tag="span">添加项目</router-link>
                     </MenuItem>
                     <MenuItem name="2-2">
-                        <router-link to="./listjia" tag="span">项目列表</router-link>                   
+                        <router-link to="/listjia" tag="span">项目列表</router-link>                   
                     </MenuItem>
                     <MenuItem name="2-3">                    
-                        <router-link to="./message" tag="span">消息反馈</router-link>  
+                        <router-link to="/message" tag="span">消息反馈</router-link>  
                     </MenuItem>
                 </Submenu>
                
@@ -43,8 +43,12 @@
                         <Icon type="md-pricetags" />
                         调研对象管理
                     </template>
-                    <MenuItem name="3-1">调研对象列表</MenuItem>
-                    <MenuItem name="3-2">更新记录</MenuItem>
+                    <MenuItem name="3-1">
+                        <router-link to="/researchObjectLists" tag="span">调研对象列表</router-link>                     
+                    </MenuItem>
+                    <MenuItem name="3-2">
+                        <router-link to="/updateRecordLists" tag="span">更新记录</router-link>                                        
+                    </MenuItem>
                 </Submenu>
                 <Submenu name="4">
                     <template slot="title">
@@ -53,13 +57,13 @@
                     </template>
                     
                     <MenuItem name="4-1">
-                        <router-link to="./shenhe" tag="span">审核安排</router-link>
+                        <router-link to="/shenhe" tag="span">审核安排</router-link>
                     </MenuItem>    
                     <MenuItem name="4-2">
-                        <router-link to="./tuihui" tag="span">审核退回</router-link>
+                        <router-link to="/tuihui" tag="span">审核退回</router-link>
                     </MenuItem>    
                     <MenuItem name="4-3">
-                        <router-link to="./list" tag="span">审核列表</router-link>
+                        <router-link to="/list" tag="span">审核列表</router-link>
                     </MenuItem>    
                 </Submenu>
                <Submenu name="5">
@@ -68,7 +72,7 @@
                          门店管理
                     </template>
                     <MenuItem name="5-1">
-                        <router-link to="./shopLists" tag="span">门店列表</router-link>
+                        <router-link to="/shopLists" tag="span">门店列表</router-link>
                     </MenuItem>
                 </Submenu>
                 <Submenu name="6">
@@ -79,49 +83,48 @@
 
                     
                        <MenuItem name="6-1" >
-                          <router-link to="./moban" tag="span">模板管理</router-link>
+                          <router-link to="/moban" tag="span">模板管理</router-link>
                        </MenuItem>
                        
                        <MenuItem name="6-2" >
-                          <router-link to="./yuangong" tag="span">员工管理</router-link>
+                          <router-link to="/yuangong" tag="span">员工管理</router-link>
                        </MenuItem>
                     
                     
                     <MenuItem name="6-3">
-                       <router-link to="./daili" tag="span">代理管理</router-link>
+                       <router-link to="/daili" tag="span">代理管理</router-link>
                        
                     </MenuItem>
                     <MenuItem name="6-4">
-                        <router-link to="./fangwenyuan" tag="span">访问员管理</router-link>
+                        <router-link to="/fangwenyuan" tag="span">访问员管理</router-link>
                     </MenuItem>
 
                     <MenuItem name="6-5">
-                       <router-link to="./quanxian" tag="span">权限管理</router-link>
+                       <router-link to="/quanxian" tag="span">权限管理</router-link>
                     </MenuItem>
                     <MenuItem name="6-6">
-                        <router-link to="./dodata" tag="span">操作日志</router-link>
+                        <router-link to="/dodata" tag="span">操作日志</router-link>
                     </MenuItem>
                 </Submenu>
-               <Submenu name="7">
+                <Submenu name="7">
                 <template slot="title">
                     <Icon type="ios-create" />
                     报告管理
                 </template>
                 <MenuItem name="7-1">                  
-                    <router-link to="./performanceReportVisitor" tag="span">业绩报告</router-link>                  
-                                                
+                    <router-link to="/performanceReport" tag="span">业绩报告</router-link>                                                                 
                 </MenuItem>
                 <MenuItem name="7-2">
-                    <router-link to="./reportTemplateList" tag="span">报告模板</router-link>
+                    <router-link to="/reportTemplateList" tag="span">报告模板</router-link>
                 </MenuItem>
                 <MenuItem name="7-3">
-                    <router-link to="./prescriptionReportList" tag="span">实效报告</router-link>
+                    <router-link to="/prescriptionReportList" tag="span">实效报告</router-link>
                 </MenuItem>
                 <MenuItem name="7-4">
-                <router-link to="./familyReportList" tag="span"> 家化报告</router-link>
+                <router-link to="/familyReportList" tag="span"> 家化报告</router-link>
                 </MenuItem>
                 <MenuItem name="7-5">
-                    <router-link to="./generatedReportList" tag="span">已生成报告</router-link>
+                    <router-link to="/generatedReportList" tag="span">已生成报告</router-link>
                 </MenuItem>               
             </Submenu>
                 <Submenu name="8">
@@ -137,19 +140,19 @@
                         我的任务
                     </template>
                     <MenuItem name="9-1">
-                        <router-link to="./projectLists" tag="span">项目列表</router-link>                    
+                        <router-link to="/projectLists" tag="span">项目列表</router-link>                    
                     </MenuItem>
                     <MenuItem name="9-2">
-                        <router-link to="./firstInstanceLists" tag="span">一审任务</router-link>                    
+                        <router-link to="/firstInstanceLists" tag="span">一审任务</router-link>                    
                     </MenuItem>
                     <MenuItem name="9-3">
-                        <router-link to="./secondInstanceLists" tag="span">二审任务</router-link>                    
+                        <router-link to="/secondInstanceLists" tag="span">二审任务</router-link>                    
                     </MenuItem>
                     <MenuItem name="9-4">
-                        <router-link to="./calculationLists" tag="span">算分任务</router-link>                                       
+                        <router-link to="/calculationLists" tag="span">算分任务</router-link>                                       
                     </MenuItem>
                     <MenuItem name="9-5">
-                        <router-link to="./feedBack" tag="span">消息反馈</router-link>
+                        <router-link to="/feedBack" tag="span">消息反馈</router-link>
                     </MenuItem>
                 </Submenu>
             </Menu>

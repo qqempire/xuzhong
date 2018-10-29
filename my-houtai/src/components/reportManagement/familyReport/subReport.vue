@@ -18,9 +18,9 @@
                     </ul>                           
                 <Card>
                     <div class="table">
-
                         <!-- 表格 -->
-                        <Table border :columns="columns13" :data="data13" ></Table>                       
+                        <Table border :columns="columns13" :data="data13" ></Table> 
+                        <Page :total="dataTotal" show-elevator :page-size=pageNum class-name="page" @on-change="changPage" />                       
                     </div>
                 </Card>
             </Content>
@@ -34,78 +34,14 @@ export default {
   data () {
     return {
         // 表格内容
-        columns13: [
-            {
-                title: '区域',
-                key: '区域'
-            },
-            {
-                title: '省份',
-                key: '省份'
-            },
-            {
-                title: 'DSR编号',
-                key: 'DSR编号'
-            },
-            {
-                title: '原始得分',
-                key: '原始得分',               
-            },
-            {
-                title: '标准得分',
-                key: '标准得分',               
-            },
-            {
-                title: '商店总数',
-                key: '商店总数', 
-            },
-            {
-                title: 'A+店数',
-                key: 'A'
-            },
-            {
-                title: 'A店数',
-                key: 'A', 
-            },
-            {
-                title: 'B店数',
-                key: 'B店数'
-            },
-            {
-                title: 'C店数',
-                key: 'C店数'
-            },
-            {
-                title: 'D店数',
-                key: 'D店数'
-            },
-            {
-                title: '样本总数',
-                key: '样本总数',               
-            },
-            {
-                title: 'DSR排名',
-                key: 'DSR排名', 
-            }
-        ],
-        data13: [
-            {
-                区域: 'John Brown',
-                省份: 18,
-                DSR编号:999,
-                原始得分: 'New York No. 1 Lake Park',
-                标准得分: 43,
-                A: 55,
-                商店总数: 88,
-                A店数: 88,
-                B店数: 43,
-                C店数: 99,
-                D店数: 55,
-                样本总数: 88,
-                DSR排名:8
-            },
-        ]
-            
+        columns13: [{title: '区域',key: '区域'},{title: '省份',key: '省份'},{title: 'DSR编号',key: 'DSR编号'},{title: '原始得分',key: '原始得分'},{title: '标准得分',key: '标准得分'},
+            {title: '商店总数',key: '商店总数'},{title: 'A+店数',key: 'A'},{title: 'A店数',key: 'A'},{title: 'B店数',key: 'B店数'},{title: 'C店数',key: 'C店数'},
+            {title: 'D店数',key: 'D店数'},{title: '样本总数',key: '样本总数'},{title: 'DSR排名',key: 'DSR排名'}],
+        data13: [{区域: 'John Brown',省份: 18,DSR编号:999,原始得分: 'New York No. 1 Lake Park',标准得分: 43,A: 55,商店总数: 88,A店数: 88,B店数: 43,C店数: 99,D店数: 55,样本总数: 88,DSR排名:8}],
+    // 分页数据
+        dataTotal:5,
+        pageNum:5,
+        dataPage:[]             
     }
   },
     methods: {
@@ -130,18 +66,29 @@ export default {
         // 返回按钮
         goBack(){
             this.$router.push("/familyReportList")
-        }
+        },
+        // // 换页操作
+        // changPage(page){
+        // //切换页码时更改表格相应数据
+        //     this.data9 = []
+        //     for (var index = (page-1)*5; index < (page)*5; index++) {
+        //         this.data9.push(this.dataPage[index])          
+        //     }       
+        // } 
+
     }
 }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped  lang="scss">
-    .subReport{
-        .table{height: 600px;}
+    .subReport{       
         .nav{display: flex; width: 600px; height: 40px; text-align: center; line-height: 40px; color: white;
             li{display:block; width: 100px; height: 40px; background: #cccccc; border-radius: 5px;}
             li:hover{background: #5BB85D;}
             .active{background: #5BB85D;} 
         }
+        .table{height: 600px;
+            .page{float: right; margin-top: 10px;}
+        }        
     }
 </style>

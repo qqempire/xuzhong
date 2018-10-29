@@ -37,6 +37,8 @@
                         </div>
                         <!-- 表格 -->
                         <Table border ref="selection" :columns="columns4" :data="data1"></Table>
+                        <!-- 换页 -->
+                        <Page :total="dataTotal" show-elevator :page-size=pageNum class-name="page" @on-change="changPage" />                            
                     </div>
                 </Card>
             </Content>
@@ -88,31 +90,40 @@ export default {
   },
   methods:{
     // 跳转相应的位置（家化或实效）
-    show (index) {
-            // this.$router.push("/domestication1")
-            this.$router.push("/prescription1")  // 跳转到相应项目的位置
-        }
-    },
-    // 搜索功能
-    sort(){
-        console.log('搜索功能')
-    },
+        show (index) {
+                // this.$router.push("/domestication1")
+                this.$router.push("/prescription1")  // 跳转到相应项目的位置
+            }
+        },
+    // 搜索
+        sort(){
+            console.log('搜索功能')
+        },
     // 批量通过
-    batchThrough(){
-        console.log("批量通过")
-    },
+        batchThrough(){
+            console.log("批量通过")
+        },
     // 下载资料
-    downloadData(){
-        console.log("下载资料")
-    },
+        downloadData(){
+            console.log("下载资料")
+        },
     // 下载照片
-    downloadPicture(){
-        console.log('下载照片')
-    },
+        downloadPicture(){
+            console.log('下载照片')
+        },
     // 下载录音录像
-    downloadAudioVideo(){
-        console.log('下载录音录像')
-    }
+        downloadAudioVideo(){
+            console.log('下载录音录像')
+        },
+    // 换页操作
+        changPage(page){
+        //切换页码时更改表格相应数据
+            this.secondInstanceData = []
+            for (var index = (page-1)*5; index < (page)*5; index++) {
+                this.secondInstanceData.push(this.dataPage[index])          
+            }       
+        } 
+
 
 }
 </script>
@@ -125,6 +136,7 @@ export default {
         .content{height: 600px; overflow: hidden;
             .power{margin-bottom: 10px; width: 100%; display: flex; justify-content: flex-end;}
             .title{width: 100%;height: 40px;background: #5BC0DE;line-height: 40px;color: #fff;padding-left:10px;display:flex;justify-content: space-between;align-items:center;margin-bottom: 10px;}
+            .page{float: right; margin-top: 10px;}
         }
     }
 </style>

@@ -15,7 +15,11 @@ import Login from "../components/login/login.vue"
       import Home from "../components/home/home.vue" 
 
 
-      import Diaoyan from "../components/diaoyan/diaoyan.vue" 
+// 调研对象管理
+    // 调研对象列表
+    import researchObjectLists from "../components/researchObject/researchObjectLists.vue"
+    // 更新记录
+      import updateRecordLists from "../components/researchObject/updateRecordLists.vue"
 
 //项目管理
 
@@ -94,6 +98,7 @@ import Login from "../components/login/login.vue"
 // 报告模板
 
       // 业绩报告
+      import performanceReport from "../components/reportManagement/performanceReport/performanceReport.vue"    
       import performanceReportAgent from "../components/reportManagement/performanceReport/agent.vue"
       import performanceReportExamine from "../components/reportManagement/performanceReport/examine.vue"
       import performanceReportVisitor from "../components/reportManagement/performanceReport/visitor.vue"
@@ -238,10 +243,16 @@ export default new Router({
 
 
     //调研对象
-            {
-              path: '/diaoyan',
-              component: Diaoyan
-            },
+          // 调研对象列表
+          {
+            path: '/researchObjectLists',
+            component: researchObjectLists
+          },
+        // 更新记录
+          {
+            path: '/updateRecordLists',
+            component: updateRecordLists
+          },            
 
     //审核管理
 
@@ -361,16 +372,21 @@ export default new Router({
   // 报告管理(一级)
 
         // 绩效报告
-        {
-          path: '/performanceReportAgent',
-          component: performanceReportAgent
-        },
-        {
-          path: '/performanceReportExamine',
-          component: performanceReportExamine
-        },{
-          path: '/performanceReportVisitor',
-          component: performanceReportVisitor
+        {path:'/performanceReport', component:performanceReport,
+          children:[
+            {
+              path: '/performanceReport/performanceReportAgent',
+              component: performanceReportAgent
+            },
+            {
+              path: '/performanceReport/performanceReportExamine',
+              component: performanceReportExamine
+            },{
+              path: '/performanceReport/performanceReportVisitor',
+              component: performanceReportVisitor
+            },
+            {path:'/performanceReport',redirect: '/performanceReport/performanceReportVisitor'}
+          ]
         },
         // 报告模板
         {

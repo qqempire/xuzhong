@@ -23,8 +23,8 @@
                                     <DatePicker type="date" placeholder="截止日期" style="width: 200px" @on-change="getOverTime"></DatePicker>
                                 </Col>
                             </Row>&nbsp;&nbsp;
-                            <Select v-model="sortList" style="width:100px" placeholder="报告名称">
-                                <Option v-for="(item,index) in sortLists" :value="item" :key="index">{{item}}</Option>
+                            <Select v-model="sortList.projectName" style="width:100px" placeholder="报告名称">
+                                <Option v-for="(item,index) in sortLists.projectNameLists" :value="item" :key="index">{{item}}</Option>
                             </Select>&nbsp;                           
                             <Button type="success" @click="sort">&nbsp;&nbsp;搜索&nbsp;&nbsp;</Button>
                         </div>
@@ -45,8 +45,10 @@ export default {
   data () {
     return {
     // 筛选框内容
-        sortLists:[],
-        sortList:{projectname:null,starttime:null,overtime:null},
+        sortLists:{
+            projectNameLists: ["河南","广东","江西","湖南","湖北","河北","东北"],
+        },
+        sortList:{projectName:null,startTime:null,overTime:null},
     //表格内容
         columns9: [{title: '项目名称',key: '项目名称'},{title: '地区',key: '地区'},{title: '调研对象',key: '调研对象',},{title: '调研编号',key: '调研编号'},{title: '区域代理人',key: '区域代理人'},
             {title: '录入人员',key: '录入人员'},{title: '录入人员IP数量',key: '录入人员IP数量'},{title: '绑定手机号',key: '绑定手机号'}],
@@ -73,10 +75,11 @@ export default {
        },
     // 获取搜索日期
         getStartTime(value){
-            console.log(value)
+            this.sortList.startTime = value
         },
         getOverTime(value){
-            console.log(value)
+            this.sortList.overTime = value
+            console.log(this.sortList)
         },
     // 搜索数据
         sort(){

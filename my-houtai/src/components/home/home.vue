@@ -31,7 +31,7 @@
                                 <p>
                                     <Row>
                                         <Col span="8">
-                                            <DatePicker type="date" placeholder="开始统计日期" style="width: 150px;"></DatePicker>
+                                            <DatePicker type="date" placeholder="开始统计日期" style="width: 150px;" @on-change="changedate"></DatePicker>
                                         </Col>
                                         
                                     </Row>
@@ -121,6 +121,11 @@ export default {
         value: '',
         input: ''
       }
+    },
+    methods:{
+      // changedate(a,b){
+      //     console.log(a,b)
+      // }
     },
 
      computed:mapGetters([]),

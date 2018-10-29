@@ -29,7 +29,7 @@
                                           </div>
                                           <div class="ipt ipt1">
                                               <Col span="12" style="width: 120px" class="datawrop">
-                                                <DatePicker type="date" placeholder="调查日期" ></DatePicker>
+                                                <DatePicker type="date" placeholder="调查日期" @on-change="handleChange"></DatePicker>
                                               </Col>
                                               <Col span="12" style="width: 120px" class="datawrop">
                                                 <DatePicker type="date" placeholder="截止日期"></DatePicker>
@@ -51,9 +51,9 @@
                                           <div class="title"><span>调用以往项目信息</span></div>
                                           <div class="center">
                                               <div class="center2">
-                                                  <Input v-model="value" placeholder="项目名称" style="width: 200px" />
-                                                   <Input v-model="value" placeholder="项目编号" style="width: 200px;margin:10px 0" />
-                                                   <Button class="btn" size="small">检测</Button>
+                                                  <Input v-model="proname" placeholder="项目名称" style="width: 200px" />
+                                                   <Input v-model="pronum" placeholder="项目编号" style="width: 200px;margin:10px 0" />
+                                                   <Button class="btn" size="small" @click="jiance()">检测</Button>
                                               </div>
                                               
                                           </div>
@@ -63,18 +63,19 @@
                                   <div class="xia">
                                        <div class="title"><span>以往项目信息</span></div>
                                        <div class="tab">
-                                              表格
+                                             <Button type="primary" @click="handleSelectAll(true);">全选</Button>
+                                             <Button type="primary" @click="handleSelectAll(false)">取消</Button>
+                                             <Button type="success">可见</Button>
+                                             <Table border ref="selection" :columns="columns4" :data="dataArr"></Table>
+                                             <Page :total="pageTotal" :current="pageNum" :page-size="pageSize" show-elevator  show-total placement="top" @on-change="handlePage" @on-page-size-change='handlePageSize'></Page>
                                        </div>
                                        <div class="but">
                                            <div class="fen">
-                                               <el-pagination
-                                                    background
-                                                    layout="prev, pager, next"
-                                                    :total="100">
-                                                </el-pagination>
+                                             
+
                                            </div>
                                            <div class="btncen">
-                                               <Button type="error" size="small"> 取 消 </Button>
+                                               <Button type="error" size="small" > 取 消 </Button>
                                                
                                                <Button type="success" size="small" @click="toselect()"> 下 一 步 </Button>          
                                            </div>
@@ -97,8 +98,98 @@ export default {
   name: 'Addjia',
   data () {
     return {
+        pageTotal: 10,
+        pageNum: 1,
+        pageSize: 3,
+
+        //检测
+        proname:"",
+        pronum:"",
+        columns4: [
+                    {
+                        type: 'selection',
+                        width: 60,
+                        align: 'center'
+                    },
+                    {
+                        title: '区',
+                        key: 'name',
+                        align: 'center',
+                    },
+                    {
+                        title: '调研对象',
+                        key: 'diaoyan',
+                        align: 'center',
+                    },
+                    {
+                        title: '照片类型',
+                        key: 'pic',
+                        align: 'center',
+                    },
+                     {
+                        title: '操作',
+                        key: 'action',
+                        align: 'center',
+                        render: (h, params) => {
+                            return h('div', [
+                                h('Button', {
+                                    props: {
+                                        type: 'primary',
+                                        size: 'small'
+                                    },
+                                    style: {
+                                        marginRight: '5px'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.show(params.index)
+                                        }
+                                    }
+                                }, '可见'),
+                                // h('Button', {
+                                //     props: {
+                                //         type: 'error',
+                                //         size: 'small'
+                                //     },
+                                //     on: {
+                                //         click: () => {
+                                //             this.remove(params.index)
+                                //         }
+                                //     }
+                                // }, 'Delete')
+                            ]);
+                        }
+                    
+                    }
+                ],
+                data1: [
+                   
+                     {
+                        name: 'John Brown',
+                        diaoyan: 18,
+                        pic: 'New York ',
+                       
+                        Action:""
+                    },
+                    {
+                        name: 'Jim Green',
+                        diaoyan: 24,
+                        pic: 'London ',
+                        
+                        Action:""
+                    },
+                    {
+                        name: 'Joe Black',
+                        diaoyan: 30,
+                        pic: 'Sydney',
+                       
+                        Action:""
+                    },
+                   
+                ],
+                dataArr : [],
        
-       
+       dataValue: null,
         single: false,
         value6:"",
        activeName: 'first',
@@ -145,14 +236,26 @@ export default {
   }
  },
   methods: {
+      show (index) {
+                this.$Modal.info({
+                    title: 'User Info',
+                    // content: `Name：${this.data6[index].name}<br>Age：${this.data6[index].age}<br>Address：${this.data6[index].address}`
+                })
+            },
+            remove (index) {
+                // this.data6.splice(index, 1);
+            },
+      //全选
+      handleSelectAll (status) {
+                this.$refs.selection.selectAll(status);
+        },
        change(val){
           console.log(val)
           if(val=="时效"){
               this.$router.push("/base1")
           }else{
               this.$router.push("/base")
-          }
-             
+          }        
        },
      
       handleClick(tab, event) {
@@ -175,16 +278,51 @@ export default {
        toselect(){
           this.$router.push("/select")
       },
-    //    tobmess(){
-    //       this.$router.push("/mess")
-    //   },
-    //    tosuanfa(){
-    //       this.$router.push("/suanfa")
-    //   }
+      //日期改变的函数
+         handleChange(daterange) {
+            this.dataValue = daterange;
+            console.log(daterange)
+        },
+
+     //检测
+        jiance(){
+            var that = this;
+            axios({ 
+                url:"http://192.168.0.134:8080/queryPastHousepj",
+                // params:{projectname:that.proname,projectnum:that.pronum}
+            })
+            .then(function(data){
+                console.log(data.data)       
+                var arr = data.data
+                 for(var i in arr){                      
+                      var obj={name:arr[i].producttype,diaoyan:arr[i].projectname,pic:arr[i].projectname}
+                       // console.log(obj)
+                       that.data1.push(obj)                                          
+                 }
+                   that.pageTotal = that.data1.length;
+                  //console.log(that.data1.length)
+                        var _start = ( that.pageNum - 1 ) * that.pageSize;  //pageNum 第几页  pageSize:每页几条数据
+                        var _end = that.pageNum * that.pageSize;
+                        that.dataArr = that.data1.slice(_start,_end);
+                       
+            })
+        },
+        //分页
+         handlePage(value){
+           console.log(value)
+           this.pageNum = value;
+           var _start = ( value - 1 ) * this.pageSize;
+           var _end = value * this.pageSize;
+           this.dataArr = this.data1 .slice(_start,_end);
+       },
+       handlePageSize(){
+           
+       }
+   
   },
   mounted(){
          var that = this;
-       
+      
       //产品类别下拉
           axios({ 
                   url:"http://192.168.0.134:8080/queryproducttype",
@@ -193,9 +331,6 @@ export default {
                 .then(function(data){
                     //console.log(data.data)       
                     var arr = data.data;
-                    
-                   
-
                     for(var i in arr){
                         //  obj.value=arr[i].producttype
                         //  obj.label=arr[i].producttype
@@ -260,7 +395,7 @@ export default {
          }
         }
     }
-    .xia{width: 100%;height: 390px;border: 1px solid red;margin-top: 10px;
+    .xia{width: 100%;height: 590px;border: 1px solid red;margin-top: 10px;
        .tab{width: 100%;height: 260px;border: 1px solid blue}
        .but{width: 100%;height: 100px;display: flex;justify-content: center;flex-direction:column;align-items: center;
         .fen{width: 100%;height: 40px;display: flex;justify-content: center}
