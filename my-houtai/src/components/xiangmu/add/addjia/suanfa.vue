@@ -14,25 +14,25 @@
                     <div style="height: 600px">
                         <div class="suan">
                             <div class="select1">
-                                <Select v-model="model1" style="width:200px" placeholder="选择算分模板">
-                                <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                                <Select v-model="model1" style="width:200px" placeholder="选择算分模板" @on-change="change">
+                                   <Option v-for="item in suanfen" :value="item.value" :key="item.value">{{ item.label }}</Option>
                                 </Select>
-                                <Button type="success">确定</Button>
+                                <!-- <Button type="success">确定</Button> -->
                             </div>
                         <div class="select1">
-                            <Select v-model="model1" style="width:200px" placeholder="选择必备品牌">
-                                <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                            <Select v-model="model2" style="width:200px" placeholder="选择必备品牌" @on-change="change2">
+                                <Option v-for="item in bibei" :value="item.value" :key="item.value">{{ item.label }}</Option>
                                 </Select>
                                 <Checkbox v-model="single" style="margin-left:10px">必备</Checkbox>
                         </div>
                             <div class="btn1 btn2">
                                 <Button type="error">取消</Button>
                                 <Button type="success" @click="tobmess()">上一步</Button>
-                                <Button type="success">完成</Button>
+                                <Button type="success" @click="end">完成</Button>
+                                
                             </div>
                         </div>
                     </div>
-
                 </Card>
             </Content>
         </Layout>
@@ -40,57 +40,91 @@
 </template>
 
 <script>
+import $ from "jquery"
+import axios from "axios"
+
 export default {
   name: 'Addjia',
   data () {
     return {
+        select:"",
         single: false,
         value6:"",
        activeName: 'first',
         value: '',
-        cityList: [
-                    {
-                        value: 'New York',
-                        label: 'New York'
-                    },
-                    
+        suanfen: [
+                   
                 ],
                 model1: '',
-       cityList: [
-                    {
-                        value: 'New York',
-                        label: 'New York'
-                    },
-                    
+         bibei: [
+                  
                 ],
-
-        model1: '',
+                model2: '',        
+      
         fileList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}]
   }
  },
   methods: {
-      handleClick(tab, event) {
-        console.log(tab, event);
-      },
-      handleRemove(file, fileList) {
-        console.log(file, fileList);
-      },
-      handlePreview(file) {
-        console.log(file);
-      },
-      handleExceed(files, fileList) {
-        this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
-      },
-      beforeRemove(file, fileList) {
-        return this.$confirm(`确定移除 ${ file.name }？`);
-      },
+   
       //头部导航
       
        tobmess(){
           this.$router.push("/mess")
       },
-       
+      //选择框1
+       change(val){
+          console.log(val)
+           this.model1=val    
+       },
+         //选择框2
+       change2(val){
+          console.log(val)
+           this.model2=val    
+       },
+       //完成
+       end(){
+           var that = this;
+          axios({
+                 method:"post",   
+                 url:"http://192.168.0.134:8080/addProductinfo",
+                 params:{scoretemplate:that.model1,brand:that.model2}
+                })
+                .then(function(data){
+                  console.log(data.data)
+                   this.$Message.success('资料保存成功');
+                })    
+       },
+     
+  },
+  mounted(){
+       var that = this;
+           axios({ 
+               
+                 url:"http://192.168.0.134:8080/fractionalTemplate",
+                
+                })
+                .then(function(data){
+                  console.log(data.data)
+                  var arr = data.data
+                  for(var i in arr){
+                      var obj={value:arr[i],label:arr[i]}
+                       that.suanfen.push(obj)
+                     }
+                });
+
+             axios({   
+                 url:"http://192.168.0.134:8080/queryBrand",
+                })
+                .then(function(data){
+                  console.log(data.data)
+                  var arr = data.data
+                  for(var i in arr){
+                      var obj={value:arr[i],label:arr[i]}
+                       that.bibei.push(obj)
+                     }
+                })    
   }
+   
 }
 </script>
 

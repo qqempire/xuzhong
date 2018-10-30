@@ -16,7 +16,7 @@
                             <Select v-model="model1" style="width:300px" placeholder="请选择产品类别" @on-change="change">
                                 <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
                             </Select><br>
-                            <Input v-model="productname" placeholder="产品名称" style="width: 200px;margin:10px 0" /><br>
+                            <Input v-model="productname" placeholder="产品名称" style="width: 200px;margin:10px 0" required /><br>
                             <Input v-model="sortnum" placeholder="排序值" style="width: 100px;margin:10px 0" />
                             <Button type="success" @click="tijiao()"> 提交 </Button><br><br><br>
                             <div class=" btnse">

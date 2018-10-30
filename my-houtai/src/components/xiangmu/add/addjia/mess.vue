@@ -150,7 +150,7 @@ export default {
 <style scoped  lang="scss">
     .dao{background: #F5F7F9;padding: 10px}
      .loadbtn{margin-bottom: 10px}
-     .shangchuan{width: 400px;height: 100px;border: 1px solid red;overflow: auto;margin:10px 0}
+     .shangchuan{width: 400px;height: 100px;border: 1px solid #ccc;border-radius: 5px;overflow: auto;margin:10px 0}
      .beizhu{width:400px }
      .btn1{width: 400px;height: 35px;margin: 10px;display: flex;justify-content: space-around}
 </style>

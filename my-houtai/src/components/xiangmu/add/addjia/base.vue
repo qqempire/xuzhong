@@ -16,7 +16,7 @@
                                   <div class="shang">
                                       <div class="left">
                                           <div class="ipt">
-                                               <Select v-model="model" style="width:200px" placeholder="权限组" @on-change="change">
+                                               <Select v-model="model" style="width:180px" placeholder="权限组" @on-change="change">
                                                     <Option v-for="item in xmlb" :value="item.value"  label-in-value='true' :key="item.value">{{ item.label }}</Option>
                                                 </Select>
                                                <Select v-model="model2" style="width:180px" placeholder="产品类别">
@@ -25,7 +25,7 @@
                                           </div>
                                           <div class="ipt">
                                               <Input v-model="value" placeholder="项目名称" style="width: 180px" />
-                                              <Input v-model="value" placeholder="项目编号" style="width: 180px" />
+                                              <Input v-model="bianhao" placeholder="项目编号" style="width: 180px" />
                                           </div>
                                           <div class="ipt ipt1">
                                               <Col span="12" style="width: 120px" class="datawrop">
@@ -67,7 +67,7 @@
                                              <Button type="primary" @click="handleSelectAll(false)">取消</Button>
                                              <Button type="success">可见</Button>
                                              <Table border ref="selection" :columns="columns4" :data="dataArr"></Table>
-                                             <Page :total="pageTotal" :current="pageNum" :page-size="pageSize" show-elevator  show-total placement="top" @on-change="handlePage" @on-page-size-change='handlePageSize'></Page>
+                                             <Page :total="pageTotal" :current="pageNum" :page-size="pageSize" show-elevator  show-total placement="top" @on-change="handlePage" ></Page>
                                        </div>
                                        <div class="but">
                                            <div class="fen">
@@ -98,6 +98,7 @@ export default {
   name: 'Addjia',
   data () {
     return {
+        bianhao:"110", //项目编号
         pageTotal: 10,
         pageNum: 1,
         pageSize: 3,
@@ -315,9 +316,7 @@ export default {
            var _end = value * this.pageSize;
            this.dataArr = this.data1 .slice(_start,_end);
        },
-       handlePageSize(){
-           
-       }
+      
    
   },
   mounted(){
