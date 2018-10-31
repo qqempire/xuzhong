@@ -11,16 +11,10 @@
                             <div style="height: 600px">
                                 <div class="sou">
                                     &nbsp;&nbsp;&nbsp;
-                                    <el-select v-model="value8" filterable  style="width:280px" @change="obtainValue" >
-                                        <el-option
-                                        v-for="item in options"
-                                        :key="item.value"
-                                        :label="item.label"
-                                        :value="item.value"
-                                        class="selectedval"
-                                        >
-                                        </el-option>
-                                    </el-select>
+                                    <Select v-model="model1" style="width:200px" @on-change="change">
+                                        <Option v-for="item in options" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                                    </Select>
+                                   
                                     &nbsp;&nbsp;
                                     <el-button type="success" @click="search()">搜索</el-button>
                                     <el-button type="success" @click="leibie()">产品类别管理</el-button>
@@ -168,7 +162,6 @@
                     </Content>
                 </tab-pane>
 
-
                 <!-- 算分模板 -->
                 <tab-pane label="算分模板">
                     <Content :style="{padding: '0 16px 16px'}">
@@ -232,7 +225,7 @@
 <script>
 import $ from "jquery"
 import axios from "axios"
-
+ import {mapGetters,mapActions} from "vuex"
 export default {
   name: 'Moban',
 //   methods: {
@@ -309,17 +302,10 @@ export default {
         value:"",
         //111
         options: [
-            {
-          value: '1',
-          label: '实化'
-        }, {
-          value: '2',
-          label: '家化'
-        }, {
-          value: '3',
-          label: '问卷'
-        }
-         
+            // {
+            //     value: '实化',
+            //     label: '实化'
+            // }, 
         ],
         value8: '项目调查产品类别',
         select:"",
@@ -394,12 +380,14 @@ export default {
       }
   },
   methods:{
+     ...mapActions(["login","add","jian"]), //mapActions（[]）为store里的函数名
       handleClick(row) {
         console.log(row);
       },
        //才品类别管理
 
        leibie(){
+           
            this.$router.push("/leibie")
        },
 
@@ -410,14 +398,17 @@ export default {
         this.$router.push("/new")
 
         },
-
+        //下拉框
+        change(val){
+          console.log(val)
+           this.value1=val
+        },
         search(){
         
-            console.log(this.select)
                 var that = this;
                 axios({
-                    url:"http://192.168.0.134:8080/QueryByProduct",
-                    params:{pid:that.select}
+                    url:"http://192.168.0.135:8080/QueryByProduct",
+                    params:{column1:that.value1}
                 })
                 .then(function(data){
                     console.log(data.data)         
@@ -436,23 +427,29 @@ export default {
         //树状
         handleNodeClick(data) {
             console.log(data);
-        }
-    
+        },
+       
+       
     
   },
   mounted(){
            var that = this
-        	axios({
-            //    url:"http://jx.xuzhixiang.top/ap/api/productlist.php"
-                url:"http://192.168.0.134:8080/QueryByTypes"
-              
-			})
-			.then(function(data){
-                console.log(data.data)
-                var obj={label:data.data[0].tname,value:data.data[0].tid}
-                
-                that.options.push(obj)
-               
+        	
+            axios({               
+                url:"http://192.168.0.135:8080/QueryByTypes",  
+                            
+            })
+            .then(function(data){
+                console.log(data.data)       
+                var arr = data.data;
+                for(var i in arr){
+                      var obj={value:arr[i].tid,label:arr[i].tname}
+                       that.options.push(obj)
+                }
+                //  that.pageTotal = that.data1.length;
+                // var _start = ( that.pageNum - 1 ) * that.pageSize;  //pageNum 第几页  pageSize:每页几条数据
+                // var _end = that.pageNum * that.pageSize;
+                // that.dataArr = that.data1.slice(_start,_end);
             })
     }
 

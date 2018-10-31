@@ -15,14 +15,18 @@ var mutations={
     },
     login(a,b){
         a.name=b
-    }
+	},
+	producttype(a,b){
+       a.arr=b
+	}
 }
 
 
 var actions={
 	add:({commit})=>commit("add"),
 	jian:({commit})=>commit("jian"),
-	login:({commit},b)=>commit("login",b)
+	login:({commit},b)=>commit("login",b),
+	producttype:({commit},b)=>commit("producttype",b),
 }
  
 

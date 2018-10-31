@@ -11,93 +11,64 @@
                     
                 </Breadcrumb>
                 <Card>
-                    <div style="height: 600px"> 
+                    <div style="height: 500px"> 
                         <!-- 表格 -->
-                                
-                                <el-table
-                                    :data="tableData"
-                                    border
-                                    style="width: 100%">
-                                    <el-table-column
-                                    fixed
-                                    prop="name"
-                                    label="商品名称"
-                                    width="200">
-                                    </el-table-column>
-                                    
-                                    <el-table-column
-                                    prop="num"
-                                    label="编号"
-                                    width="100">
-                                    </el-table-column>
-                                    <el-table-column
-                                    prop="tiaoxingma"
-                                    label="条形码"
-                                    width="150">
-                                    </el-table-column>
-                                    <el-table-column
-                                    prop="address"
-                                    label="是否需要价格"
-                                    width="200">
-                                    </el-table-column>
-                                    <el-table-column
-                                    prop="order"
-                                    label="排序"
-                                    width="80">
-                                    </el-table-column>
-                                    <el-table-column
-                                    fixed="right"
-                                    label="操作/添加"
-                                    width="200">
-                                    <template slot-scope="scope">
-                                        <el-button @click="handleClick(scope.row)" type="text" size="small">编辑</el-button>
-                                        
-                                        
-                                    </template>
-                                    </el-table-column>
-                                </el-table>
-
-                               <!-- 复选框 -->
-                                <!-- <div style="border-bottom: 1px solid #e9e9e9;padding-bottom:6px;margin-bottom:6px;">
-                                    <Checkbox
-                                        :indeterminate="indeterminate"
-                                        :value="checkAll"
-                                        @click.prevent.native="handleCheckAll">全选</Checkbox>
-                                </div>
-                                <CheckboxGroup v-model="checkAllGroup" @on-change="checkAllGroupChange">
-                                    <Checkbox label="香蕉"></Checkbox>
-                                    <Checkbox label="苹果"></Checkbox>
-                                    <Checkbox label="西瓜"></Checkbox>
-                                    <Checkbox label="冬瓜"></Checkbox>
-                                </CheckboxGroup> -->
-
-                                 <!-- 弹出层 -->
-
-                                <Modal
-                                    v-model="modal4"
-                                    title="基本信息"
-                                    ok-text="保存"
-                                    cancel-text="取消"
-                                    >
-                                    <div class="tankuang">
-                                        <Select v-model="model1" style="width:300px" placeholder="请选择类别名称 ">
-                                            <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                                        </Select>
-                                    
-                                        <Input v-model="value5" type="textarea" :rows="4" placeholder="备注 / 描述"  class="beizhu"/>
-
-                                        <Input v-model="value" placeholder="请输入排序值:" style="width: 300px" />
-
-                                    </div>
-                                    
-                                  </Modal>
-                                
-                                </div>
+                               
+                               <Modal
+                                    v-model="modal1"
+                                    title="修改"
+                                    @on-ok="ok"
+                                >
+                                    <p>类别名称 :  <Input v-model="value1" placeholder="Enter something..." style="width: 300px" /></p><br/>
+                                    <p>备注/描述 :  <Input v-model="value2" placeholder="Enter something..." style="width: 300px" /></p><br/>
+                                    <p>排 序 值 :  <Input v-model="value3" placeholder="Enter something..." style="width: 300px" /></p>
+                                </Modal>
+                        <!-- <Table border :columns="columns1" :data="data1"></Table>                         -->
+                              <el-table :data="dataArr" stripe border style="width:100%" highlight-current-row>
+                        　　<el-table-column prop="id" label="商品ID" align="center" min-width="40" max-height="10">
+                        　　</el-table-column>
+                        　　<el-table-column prop="name" label="类别名称" align="center" min-width="120" max-height="10">
+                        　　</el-table-column>
+                        　　<el-table-column prop="discribe" label="备注/描述" align="center" min-width="100">
+                        　　</el-table-column>
+                        　　<el-table-column prop="sort" label="排序值" align="center" min-width="100">
+                        　　</el-table-column>
+                        　　<el-table-column label="操作" align="center" min-width="100">
+                        　　　　<template slot-scope="scope">
+                      
+                        　　　　　　<el-button type="info" size="small" @click="modifyUser(scope.row.name,scope.row.discribe,scope.row.sort,scope.row.id);modal1 = true">修改</el-button>
+                        
+                        　　　　</template>
+                        　　</el-table-column>
+                        </el-table>
+                          <Page :total="pageTotal" :current="pageNum" :page-size="pageSize" 
+                            show-elevator  show-total placement="top" @on-change="handlePage" 
+                            style="margin:10px"
+                            >
+                            
+                         </Page>
 
 
+                     </div>
+                    <!-- 添加 -->
+                     <Modal
+                        v-model="modal4"
+                        title="基本信息"
+                        ok-text="保存"
+                        cancel-text="取消"
+                        @on-ok="save"
+                        >
+                        <div class="tankuang">
+                            <Input v-model="typename" placeholder="请输入类别名称:" style="width: 300px" />
+                        
+                            <Input v-model="beizhu" type="textarea" :rows="4" placeholder="备注 / 描述"  class="beizhu"/>
 
+                            <Input v-model="sortnum" placeholder="请输入排序值:" style="width: 300px" />
 
-
+                        </div>
+                        
+                    </Modal>
+                   
 
                 </Card>
             </Content>
@@ -106,14 +77,70 @@
 </template>
 
 <script>
+import $ from "jquery"
+import axios from "axios"
+
 export default {
   name: 'Leibie',
   data () {
     return {
-        //checkbox
-        // indeterminate: true,
-        // checkAll: false,
-        // checkAllGroup: ['香蕉', '西瓜'],
+        pageTotal: 10,  //数据总数
+        pageNum: 1,  //初始页
+        pageSize: 6,  //每页条数
+        dataArr:[],
+        value1:"",
+        value2:"",
+        value3:"",
+       modal1: false,
+       typename:"",
+       beizhu:"",
+       sortnum:"",
+       columns1: [
+                    {
+                        title: '类别名称',
+                        key: 'name'
+                    },
+                    {
+                        title: '备注/描述',
+                        key: 'discribe'
+                    },
+                    {
+                        title: '排序',
+                        key: 'sort'
+                    },
+                    {
+                        title: '操作',
+                        key: 'done',
+                        render: (h, params) => {
+                            return h('div', [
+                                h('Button', {
+                                    props: {
+                                        type: 'primary',
+                                        size: 'small',
+                                       
+                                    },
+                                    style: {
+                                        marginRight: '5px'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.show(params.index)
+                                        }                                    
+                                    }
+                                }, '编辑'),
+                                
+                            ]);
+                        }
+                    }
+                ],
+        data1: [
+                    // {   id:"0",
+                    //     name: 'John Brown',
+                    //     discribe: 18,
+                    //     sort: '1',
+                    // },
+                    
+                ],        
 
        // 弹出
        modal4: false,
@@ -136,20 +163,7 @@ export default {
           address: '否',
           order: 2
         }, ],
-        cityList: [
-                    {
-                        value: 'New York',
-                        label: 'New York'
-                    },
-                    {
-                        value: 'London',
-                        label: 'London'
-                    },
-                    
-                ],
-                model1: '',
-            
-        
+       
   }
  },
  methods:{
@@ -158,36 +172,134 @@ export default {
       },
       backtomoban(){
           this.$router.push("/moban")
-      }
-      
-   //checkbox
-    //   handleCheckAll () {
-    //             if (this.indeterminate) {
-    //                 this.checkAll = false;
-    //             } else {
-    //                 this.checkAll = !this.checkAll;
-    //             }
-    //             this.indeterminate = false;
+      },
+      show (index) {
+            console.log(this.$Modal.success)
+                this.$Modal.info({
+                    title: '修改',
+                    content: `类别名称：<input type="text" value="${this.data1[index].name}"/><br><br>
+                             备注/描述：<input type="text" value="${this.data1[index].discribe}"/><br><br>
+                             排&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;序：<input type="text" value="${this.data1[index].sort}"/>`
+                })
+      },
+       
+            // cancel () {
+            //     this.$Message.info('Clicked cancel');
+            // },
+      save(){
+         var that = this;
+           
+            axios({ 
+                method:"post",
+                url:"http://192.168.0.135:8080/SavaTypesProduct",
+                params:{tname:that.typename,
+                       mark:that.beizhu,
+                       tsort:that.sortnum
+                       }
+            })
+            .then(function(data){
+                that.data1=[];
+                console.log(data.data)       
+                if(data.data.msg=="添加成功"){
+                    alert("添加成功")
+                    axios({ 
+               
+                    url:"http://192.168.0.135:8080/QueryByTypes",
+                    
+                    })
+                    .then(function(data){
+                        //console.log(data.data)       
+                        var arr = data.data;
+                        for(var i in arr){
+                            var obj={name:arr[i].tname,discribe:arr[i].mark,sort:arr[i].tsort}
+                            
+                            that.data1.push(obj)
+                        }
+                    })
+                }else{
+                     alert("添加失败")
+                }              
+            })
+      },
+      //修改用户
+        modifyUser(name,dis,sort,id){
+        　　console.log(name)
+           this.value1=name;
+            this.value2 = dis;
+            this.value3= sort;
+            this.id = id
+        },
+        //确定修改
+       ok(){
+            var that = this;           
+            axios({      
+                method:"post",         
+                url:"http://192.168.0.135:8080/UpdateTypesProduct",
+                params:{tname:that.value1,
+                       mark:that.value2,
+                       tsort:that.value3,
+                       tid:that.id
+                       }                
+            })
+            .then(function(data){
+                console.log(data.data)       
+                var arr = data.data;
+                if(arr.msg=="修改成功"){
+                      that.$Message.info('修改成功');
+                     axios({               
+                      url:"http://192.168.0.135:8080/QueryByTypes",  
+                            
+                    })
+                    .then(function(data){
+                        that.data1=[];
+                        console.log(data.data)       
+                        var arr = data.data;
+                        for(var i in arr){
+                            var obj={name:arr[i].tname,discribe:arr[i].mark,sort:arr[i].tsort,id:arr[i].tid}
+                            that.data1.push(obj)
+                        }
+                        that.pageTotal = that.data1.length;
+                        var _start = ( that.pageNum - 1 ) * that.pageSize;  //pageNum 第几页  pageSize:每页几条数据
+                        var _end = that.pageNum * that.pageSize;
+                        that.dataArr = that.data1.slice(_start,_end);
 
-    //             if (this.checkAll) {
-    //                 this.checkAllGroup = ['香蕉', '苹果', '西瓜'];
-    //             } else {
-    //                 this.checkAllGroup = [];
-    //             }
-    //         },
-    //         checkAllGroupChange (data) {
-    //             if (data.length === 3) {
-    //                 this.indeterminate = false;
-    //                 this.checkAll = true;
-    //             } else if (data.length > 0) {
-    //                 this.indeterminate = true;
-    //                 this.checkAll = false;
-    //             } else {
-    //                 this.indeterminate = false;
-    //                 this.checkAll = false;
-    //             }
-    //         }
+                   })  
+                }else{
+                    that.$Message.info('修改失败');
+                }
+               
+            })
+                
+        }, 
+      //分页
+         handlePage(value){
+           //console.log(value)
+           this.pageNum = value;
+           var _start = ( value - 1 ) * this.pageSize;
+           var _end = value * this.pageSize;
+           this.dataArr = this.data1 .slice(_start,_end);
+       },
 
+   
+ },
+ mounted(){
+           var that = this;           
+            axios({               
+                url:"http://192.168.0.135:8080/QueryByTypes",  
+                            
+            })
+            .then(function(data){
+                console.log(data.data)       
+                var arr = data.data;
+                for(var i in arr){
+                      var obj={name:arr[i].tname,discribe:arr[i].mark,sort:arr[i].tsort,id:arr[i].tid}
+                       that.data1.push(obj)
+                }
+                 that.pageTotal = that.data1.length;
+                var _start = ( that.pageNum - 1 ) * that.pageSize;  //pageNum 第几页  pageSize:每页几条数据
+                var _end = that.pageNum * that.pageSize;
+                that.dataArr = that.data1.slice(_start,_end);
+            })
  }
 }
 </script>

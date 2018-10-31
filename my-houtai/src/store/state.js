@@ -2,7 +2,8 @@
 
 var state={
     count:0,
-    name:""
+    name:"",
+    arr:[]
 }
  
 export default state
