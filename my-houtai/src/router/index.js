@@ -18,9 +18,13 @@ import Login from "../components/login/login.vue"
 // 调研对象管理
     // 调研对象列表
     import researchObjectLists from "../components/researchObject/researchObjectLists.vue"
+    // 调研对象列表详情页
+      import researchObjectDetail from "../components/researchObject/researchObjectDetail.vue"
+
     // 更新记录
       import updateRecordLists from "../components/researchObject/updateRecordLists.vue"
-
+    // 更新记录详情页
+       import checkLists from "../components/researchObject/checkLists.vue"
 //项目管理
 
     //添加
@@ -243,16 +247,26 @@ export default new Router({
 
 
     //调研对象
-          // 调研对象列表
-          {
-            path: '/researchObjectLists',
-            component: researchObjectLists
-          },
-        // 更新记录
-          {
-            path: '/updateRecordLists',
-            component: updateRecordLists
-          },            
+        // 调研对象列表
+        {
+          path: '/researchObjectLists',
+          component: researchObjectLists
+        },
+      // 调研对象列表详情页
+        {
+          path: '/researchObjectDetail',
+          component: researchObjectDetail
+        },
+    // 更新记录
+        {
+          path: '/updateRecordLists',
+          component: updateRecordLists
+        },            
+      // 更新记录详情页
+      {
+        path: '/checkLists',
+        component: checkLists
+      }, 
 
     //审核管理
 

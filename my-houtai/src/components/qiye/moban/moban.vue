@@ -8,7 +8,7 @@
                     <Content :style="{padding: '0 16px 16px'}">
                         
                         <Card>
-                            <div style="height: 600px">
+                            <div style="height: 500px">
                                 <div class="sou">
                                     &nbsp;&nbsp;&nbsp;
                                     <Select v-model="model1" style="width:200px" @on-change="change">
@@ -22,67 +22,47 @@
                                 </div>
                                
                           <!-- 表格树 -->
-                                <el-tree
-                                    :data="data"
-                                    :props="defaultProps"
-                                    accordion
-                                    @node-click="handleNodeClick">
-                                    
-                                </el-tree>
-                           <!-- 表格 -->
-                                <el-table
-                                    :data="tableData"
-                                    border
-                                    style="width: 100%">
-
-  <el-tree
-                                    :data="data"
-                                    :props="defaultProps"
-                                    accordion
-                                    @node-click="handleNodeClick">
-                                    
-                                </el-tree>
-
-
-                                    <el-table-column
-                                    fixed
-                                    prop="name"
-                                    label="商品名称"
-                                    width="200">
-                                    </el-table-column>
-                                    
-                                    <el-table-column
-                                    prop="num"
-                                    label="编号"
-                                    width="100">
-                                    </el-table-column>
-                                    <el-table-column
-                                    prop="tiaoxingma"
-                                    label="条形码"
-                                    width="150">
-                                    </el-table-column>
-                                    <el-table-column
-                                    prop="address"
-                                    label="是否需要价格"
-                                    width="200">
-                                    </el-table-column>
-                                    <el-table-column
-                                    prop="order"
-                                    label="排序"
-                                    width="80">
-                                    </el-table-column>
-                                    <el-table-column
-                                    fixed="right"
-                                    label="操作/添加"
-                                    width="200">
-                                    <template slot-scope="scope">
-                                        <el-button @click="handleClick(scope.row);tochange()" type="text" size="small">查看/编辑</el-button>
-                                        <el-button type="text" size="small"  @click="modal4 = true;handleClick(scope.row)" >添加子类</el-button>
-                                        
-                                    </template>
-                                    </el-table-column>
-                                </el-table>
-
+                           <el-table  stripe border style="width:100%" empty-text="" height="50px">
+                        　　<el-table-column prop="id" label="名称" align="center" min-width="185" max-height="10">
+                        　　</el-table-column>
+                        　　<el-table-column prop="name" label="编号" align="center" min-width="120" max-height="10">
+                        　　</el-table-column>
+                        　　<el-table-column prop="discribe" label="条形码" align="center" min-width="145">
+                        　　</el-table-column>
+                        　　<el-table-column prop="sort" label="是否需要价格" align="center" min-width="120">
+                        　　</el-table-column>
+                        　　<el-table-column label="排序" align="center" min-width="100">
+                        　　</el-table-column>
+                            <el-table-column label="操作" align="center" min-width="80">
+                        　　</el-table-column>
+                            </el-table>
+                            <!-- <Table :columns="columns1"  no-data-text="" style="height:50px"> </Table>                    -->
+                            <div class="tree">
+                                 <Tree  :data="data5" :render="renderContent"></Tree>
+                            </div>  
+                           
+                            <!-- 添加弹出 -->
+                            <Modal
+                                title="添加子目录"
+                                v-model="modal10"
+                                class-name="vertical-center-modal">
+                                  <Select v-model="addchild" style="width:300px" placeholder="项目调查产品类别 " @on-ok="addchildselect">
+                                     <Option v-for="item in options" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                                  </Select><br/><br />
+                                 <Input v-model="productname" placeholder="产品名称" style="width: 300px" /><br><br />
+                                 <Input v-model="sortnum" placeholder="排 序 值 " style="width: 150px" />                                      
+                            </Modal>   
+                             <!-- 修改弹出 -->
+                            <Modal
+                                title="修改产品信息"
+                                v-model="modal11"
+                                class-name="vertical-center-modal">
+                                <Select v-model="xiugai" style="width:300px" placeholder="项目调查产品类别 " @on-ok="xiugaiselect">
+                                     <Option v-for="item in options" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                                  </Select><br/><br />
+                                 <Input v-model="productname2" placeholder="产品名称" style="width: 300px" /><br><br />
+                                 <Input v-model="sortnum2" placeholder="排 序 值 " style="width: 150px" />               
+                            </Modal>                    
                         <!-- 弹出层模板 -->
 
                                 <Modal
@@ -241,38 +221,47 @@ export default {
 
   data () {
     return {
+        addchild:"",
+        sortnum2:"",
+        productname2:"",
+        sortnum:"",
+        productname:"",
+        addchild:"",
+        xiugai:"",
+       modal10: false,  
+       modal11: false,  
         // 表格树
     data: [
         //1111
-            {
-            label: '一级 1',
-            children: [
-                {
-                label: '二级 1-1',
-                children: [{
-                label: '三级 1-1-1'
-                }]
-            }
-            ]
-            }, 
-        //2222
-            {
-                label: '一级 2',
-                children: [
-                        {
-                        label: '二级 2-1',
-                        children: [{
-                        label: '三级 2-1-1'
-                        }
-                    ]
-                }, 
-                {
-                    label: '二级 2-2',
-                    children: [{
-                    label: '三级 2-2-1'
-                    }]
-                }]
-            }, 
+        //     {
+        //     label: '一级 1',
+        //     children: [
+        //         {
+        //         label: '二级 1-1',
+        //         children: [{
+        //         label: '三级 1-1-1'
+        //         }]
+        //     }
+        //     ]
+        //     }, 
+        // //2222
+        //     {
+        //         label: '一级 2',
+        //         children: [
+        //                 {
+        //                 label: '二级 2-1',
+        //                 children: [{
+        //                 label: '三级 2-1-1'
+        //                 }
+        //             ]
+        //         }, 
+        //         {
+        //             label: '二级 2-2',
+        //             children: [{
+        //             label: '三级 2-2-1'
+        //             }]
+        //         }]
+        //     }, 
         //3333
             // {
             //     label: '一级 3',
@@ -290,10 +279,10 @@ export default {
             //  }
         
         ],
-        defaultProps: {
-          children: 'children',
-          label: 'label'
-        },
+        // defaultProps: {
+        //   children: 'children',
+        //   label: 'label'
+        // },
 
 
         
@@ -341,29 +330,150 @@ export default {
 
 
 
-        //表格
+        //表格树
        //111
-        tableData: [{
-          
-          name: '高夫经典保湿系列',
-          num: '1',
-          tiaoxingma: '普陀',
-          address: "否",
-          order: 1
-        }, 
-        {
-          select: '',
-          name: '非必选-高夫容光焕采系列',
-          num: '2',
-          tiaoxingma: '普陀',
-          address: '否',
-          order: 2
-        }, ],
+        data5: [
+                    {
+                        pname: "树根",
+                        expand: true,
+                        render: (h, { root, node, data }) => {
+                            return h(
+                                
+                                'span', {
+                                style: {
+                                    display: 'inline-block',
+                                    width: '100%',
+                                    
+                                }
+                              }, 
+                            [
+                                h('span', [
+                                    h('Icon', {
+                                        props: {
+                                            type: 'ios-egg'
+                                        },
+                                        style: {
+                                            marginRight: '8px'
+                                        }
+                                    }),
+                                    h('span', data.pname)
+                                ]),
+                                h('span', {
+                                    style: {
+                                        display: 'inline-block',
+                                        float: 'right',
+                                        marginRight: '32px'
+                                    }
+                                },
+                                 [
+                                    h('Button', {
+                                        props: Object.assign({}, this.buttonProps, {
+                                            icon: 'ios-add',
+                                            type: 'primary'
+                                        }),
+                                        style: {
+                                            width: '64px',
+                                            height:"30px"
+                                        },
+                                        on: {
+                                            click: () => { this.append(data) }
+                                        }
+                                    })
+                                ]
+                                )
+                            ]
+                            );
+                        },
+                        children: [
+                            {   pid:"0",
+                                pname: '一级',
+                                pprice:"是",
+                                psort:"0",
+                                expand: false,
+                                children: [
+                                    {   pid:"0",
+                                       
+                                        pprice:"是",
+                                        ptid:"ptid",
+                                        ptname:"ptname",
+                                        ptprice:"ptprice",
+                                        ptsort:"1",
+                                        expand: false,
+                                        children:[
+                                             {   pid:"0",
+                                               
+
+                                                ptid:"ptid",
+                                               pprice:"是",
+                                                sid:"sid",
+                                                sname:"第三个V第三帝国",
+                                                snumber:"6666",
+                                                sprice:"sprice",
+                                                ssort:"ssort",
+                                                barcode:"barcode",
+                                                 expand: false,
+                                                //  ccc:[
+                                                //     {   pid:"0",
+                                                //         pname: '444级',
+                                                //         pprice:"是",
+                                                //         psort:"0",
+
+                                                //         ptid:"ptid",
+                                                //         ptname:"ptname",
+                                                //         ptprice:"ptprice",
+                                                //         ptsort:"",
+
+                                                //         sid:"sid",
+                                                //         sname:"第三个V第三帝国",
+                                                //         snumber:"6669999",
+                                                //         sprice:"sprice",
+                                                //         ssort:"ssort",
+                                                //         barcode:"barcode",
+
+                                                //         expand: false,
+                                                        
+                                                //     }
+                                                // ]
+                                              }
+                                        ]
+                                    },
+                                    // {   id:"2",
+                                    //     pname: '二级',
+                                    //      pprice:"是",
+                                    //     psort:"1",
+                                    //     expand: false
+                                    // }
+                                ]
+                            },
+                            // {
+                            //     id:"1",
+                            //     pname: '一级',
+                            //      pprice:"是",
+                            //     psort:"1",
+                            //     expand: false,
+                            //     children: [
+                            //         {   id:"2",
+                            //             pname: '二级',
+                            //              pprice:"是",
+                            //             psort:"1",                                   
+                            //             expand: false
+                            //         },
+                            //         {   id:"2",
+                            //             pname: '二级',
+                            //              pprice:"是",
+                            //             psort:"1",                                                                
+                            //             expand: false
+                            //         }
+                            //     ]
+                            // }
+                        ]
+                    }
+                ],
 
         // 222
         app: [{
           type: '2016-05-02',
-          title: '但vs方法是拜拜',
+          pname: '但vs方法是拜拜',
           miaoshu: '496288+65656',
           caozuo:"编辑",
           
@@ -371,7 +481,7 @@ export default {
         //333
         suanfa: [{
           type: 'adfdafdfd',
-          title: 'ggggggggg',
+          pname: 'ggggggggg',
           miaoshu: 'ggggg+65656',
           caozuo:"编辑",
           
@@ -404,14 +514,18 @@ export default {
            this.value1=val
         },
         search(){
-        
+            console.log(this.data5[0].children)      
                 var that = this;
                 axios({
                     url:"http://192.168.0.135:8080/QueryByProduct",
                     params:{column1:that.value1}
                 })
                 .then(function(data){
-                    console.log(data.data)         
+                    //console.log(data.data[0]) 
+                   
+                    var arr = data.data;
+                    var aaa = that.data5[0].children.push(arr[0])
+                   // console.log(that.data5[0].children)
                 })
         
         },
@@ -429,15 +543,212 @@ export default {
             console.log(data);
         },
        
-       
+       //树状表
+        renderContent (h, { root, node, data }) {
+                return h('div', 
+                {
+                    style: {
+                        display: 'inline-block',
+                        width: '100%',
+                        border:"1px solid #D7D7D7"
+                    }
+                }, 
+                [
+                    //图标
+                    h('span', [
+                        h('Icon', {
+                            props: {
+                                type: 'md-albums'
+                            },
+                            style: {                         
+                                marginRight: '8px',            
+                            }
+                        }),
+                        //文字 
+                        h('span', data.pname)
+                    ]),
+
+
+                   //加减样式
+                    h('span', 
+                    {
+                        style: {
+                            display: 'inline-block',
+                            float: 'right',
+                            marginRight: '32px',
+                            border:"1px solid red"
+                        }
+                    }, 
+                    //加减按钮                  
+                    [
+                        h('Button',
+                         {
+                            props: Object.assign({}, this.buttonProps, {
+                                icon: 'md-add'
+                            }),
+                            style: {
+                                marginRight: '8px',
+                                border:"1px solid #515A6E",
+                                textAlign:"center",
+                               
+                            },
+                            on: {
+                                click: () => { this.append(data) }
+                            }
+                        }),
+                        h('Button', 
+                        {
+                            props: Object.assign({}, this.buttonProps, {
+                                icon: 'ios-create-outline'
+                            }),
+                            style: {
+                               
+                                border:"1px solid #515A6E"
+                            },
+                            on: {
+                                click: () => { this.remove(root, node, data) }
+                            }
+                        }),
+                        
+                    ],
+                    
+                    
+                    ),
+
+
+                    //  h('span', [
+                    //     h('Icon', {
+                    //         props: {
+                    //             type: 'md-albums'
+                    //         },
+                    //         style: {                         
+                    //             marginRight: '8px',            
+                    //         }
+                    //     }),
+                    //     //文字 
+                    //     h('span', data.title)
+                    // ]),
+                    // 0000000000000000
+                     h('div', 
+                        {
+                            style: {
+                                width:'15%',
+                                height:"26px",
+                                display: 'inline-block',
+                                float: 'right',
+                                marginRight: '32px',
+                                border:"1px solid #D7D7D7",
+                                textAlign:"center"
+                            },
+                           
+                         },   
+                          [
+                            h('span', [
+                                //排序
+                                h('span', data.psort)
+                            ]),
+                         ],                 
+                    
+                     ),
+                     
+                      h('div', 
+                        {
+                            style: {
+                                width:'15%',
+                                height:"26px",
+                                display: 'inline-block',
+                                float: 'right',
+                                marginRight: '0px',
+                                border:"1px solid #D7D7D7",
+                                textAlign:"center"
+                            }
+                         },  
+                         [
+                            h('span', [
+                                //是否需要价格 
+                                h('span', data.pprice)
+                            ]),
+                         ],              
+                    
+                     ),
+                      h('div', 
+                        {
+                            style: {
+                                width:'20%',
+                                height:"26px",
+                                display: 'inline-block',
+                                float: 'right',
+                                marginRight: '0px',
+                                border:"1px solid #D7D7D7",
+                                textAlign:"center"
+                            }
+                         }, 
+                           [
+                            h('span', [
+                                //条形码 
+                                h('span', data.barcode)
+                            ]),
+                     ],                      
+                    
+                     ),
+                      h('div', 
+                        {
+                            style: {
+                                width:'16%',
+                                height:"26px",
+                                display: 'inline-block',
+                                float: 'right',
+                                marginRight: '0px',
+                                border:"1px solid #D7D7D7",
+                                textAlign:"center"
+                            }
+                         }, 
+                           [
+                            h('span', [
+                                //编码
+                                h('span', data.snumber)
+                            ]),
+                     ],                      
+                    
+                     ),
+
+
+
+
+
+                ]);
+            },
+
+            //弹出框添加
+            addchildselect(val){
+                console.log(val)
+            },
+            xiugaiselect(val){
+                console.log(val)
+            },
+            //添加
+            append (data) {             
+                console.log(data)
+                this.modal10=true;
+            },
+
+            //修改
+            remove(root, node, data) {
+                console.log( data.pname)
+                this.productname2=data.pname
+                this.sortnum2 = data.psort;
+                this.xiugai = this.model1
+                this.modal11=true;
+                console.log( data.pname)
+            }
+        
     
   },
   mounted(){
            var that = this
         	
             axios({               
-                url:"http://192.168.0.135:8080/QueryByTypes",  
-                            
+                url:"http://192.168.0.135:8080/QueryByTypes",                    
             })
             .then(function(data){
                 console.log(data.data)       
@@ -458,6 +769,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped  lang="scss">
+   .tree{border: 1px solid red;height: 350px;overflow: auto}
     .sou{
         width: 100%;height: 50px;display: flex;align-items: center;margin-bottom: 25px
     }

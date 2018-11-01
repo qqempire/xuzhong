@@ -11,7 +11,7 @@
                         @on-ok="ok"
                         @on-cancel="cancel">
                         <Select v-model="modal2" style="width:300px;margin-top:5px" placeholder="选择账户">
-                            <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                            <Option v-for="item in accounts" :value="item.value" :key="item.value">{{ item.label }}</Option>
                         </Select>
                     </Modal>                    
                 </Breadcrumb> 
@@ -165,8 +165,7 @@
                                     <td>dfgb</td>
                                     <td>argfsd</td>                                    
                                 </tr>
-                                <tr>
-                                    
+                                <tr>                                    
                                     <td>gdsg</td>
                                     <td>gfh</td>
                                     <td>dfgb</td>
@@ -200,29 +199,23 @@ export default {
   name: 'projectDetail',
   data () {
     return {
+        // 
+        modal1:false,modal2:'',
         // 表格数据
-        img: img,
-        modal1:false,
-        modal2:'',
-        cityList: [
-                    {
-                        value: 'New York',
-                        label: 'New York'
-                    }
-                ],          
+        img: img,         
     }
   },
   methods:{
     // 返回按钮
     goBack(){
-          this.$router.push('/firstInstanceLists')
+          this.$router.push('/projectLists')
       },
     //指派人员
     ok () {
-        this.$Message.info('Clicked ok');
+        this.$Message.info('指派成功');
     },
     cancel () {
-        this.$Message.info('Clicked cancel');
+        this.$Message.info('指派失败');
     }
 
   }

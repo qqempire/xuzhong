@@ -25,7 +25,7 @@
                             <el-table-column label="操作" align="center" min-width="80">
                         　　</el-table-column>
                         </el-table>
-                         <!-- <Table :columns="columns1"  no-data-text="" style="height:50px"> </Table>                    -->
+                         <!-- <Table :columns="columns1"  no-data-text="" style="height:50px"> </Table>      -->
                          <Tree  :data="data5" :render="renderContent"></Tree>
                        
                        
@@ -77,25 +77,21 @@ export default {
                     // },
                    
                 ],
-                data5: [
+               data5: [
                     {
-                        title: "树根",
+                        title: 'parent 1',
                         expand: true,
                         render: (h, { root, node, data }) => {
-                            return h(
-                                
-                                'span', {
+                            return h('span', {
                                 style: {
                                     display: 'inline-block',
-                                    width: '100%',
-                                    
+                                    width: '100%'
                                 }
-                              }, 
-                            [
+                            }, [
                                 h('span', [
                                     h('Icon', {
                                         props: {
-                                            type: 'ios-egg'
+                                            type: 'ios-folder-outline'
                                         },
                                         style: {
                                             marginRight: '8px'
@@ -109,8 +105,7 @@ export default {
                                         float: 'right',
                                         marginRight: '32px'
                                     }
-                                },
-                                 [
+                                }, [
                                     h('Button', {
                                         props: Object.assign({}, this.buttonProps, {
                                             icon: 'ios-add',
@@ -123,36 +118,17 @@ export default {
                                             click: () => { this.append(data) }
                                         }
                                     })
-                                ]
-                                )
-                            ]
-                            );
+                                ])
+                            ]);
                         },
                         children: [
                             {
-                                title: '一级',
-                                sort:"0",
+                                title: 'child 1-1',
                                 expand: true,
                                 children: [
                                     {
-                                        title: '二级',
-                                        sort:"1",
-                                        expand: true,
-                                        children:[
-                                             {
-                                                 title: '三级',
-                                                 sort:"2",
-                                                 expand: true,
-                                                 children:[
-                                                    {
-                                                        title: '四级',
-                                                        sort:"3",
-                                                        expand: true,
-                                                        
-                                                    }
-                                                 ]
-                                              }
-                                        ]
+                                        title: 'leaf 1-1-1',
+                                        expand: true
                                     },
                                     {
                                         title: 'leaf 1-1-2',
@@ -161,28 +137,35 @@ export default {
                                 ]
                             },
                             {
-                                title: 'child 1-2',
+                                id:"1",
+                                title: '一级',
+                                sort:"1",
                                 expand: true,
                                 children: [
                                     {
-                                        title: 'leaf 1-2-1',
-                                        expand: true
+                                       id:"1",
+                                        title: '二级',
+                                        sort:"1",
+                                        expand: true,
                                     },
                                     {
-                                        title: 'leaf 1-2-1',
-                                        expand: true
+                                       id:"1",
+                                        title: '2级',
+                                        sort:"1",
+                                        expand: true,
                                     }
                                 ]
                             }
                         ]
                     }
                 ],
-
                 buttonProps: {
                     type: 'default',
                     size: 'small',
                 }
             }
+
+               
         },
         methods: {
             renderContent (h, { root, node, data }) {
@@ -369,7 +352,9 @@ export default {
                 const parentKey = root.find(el => el === node).parent;
                 const parent = root.find(el => el.nodeKey === parentKey).node;
                 const index = parent.children.indexOf(data);
-                parent.children.splice(index, 1);
+                console.log(data)
+                console.log(index)
+               // parent.children.splice(index, 1);
             }
         }
 
