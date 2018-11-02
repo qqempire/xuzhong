@@ -41,61 +41,70 @@
 
 <script>
 export default {
-  name: 'feedBack',
-  data () {
-    return {
-    // 筛选框内容
-        sortLists:{
-            projectNameLists: ["河南","广东","江西","湖南","湖北","河北","东北"],
-        },
-        sortList:{projectName:null,startTime:null,overTime:null},
-    //表格内容
-        columns9: [{title: '项目名称',key: '项目名称'},{title: '地区',key: '地区'},{title: '调研对象',key: '调研对象'},{title: '调研编号',key: '调研编号'},{title: '区域代理人',key: '区域代理人'},
-            {title: '发送消息人姓名',key: '发送消息人姓名'},{title: '联系方式',key: '联系方式'},{title: '反馈类型',key: '反馈类型'},{title: '时间',key: '时间'}],
-        data9: [{项目名称: 'John Brown',地区: 18,调研对象: 'New York No. 1 Lake Park',调研编号: 55,区域代理人:'jack',发送消息人姓名: 23,联系方式: 88,反馈类型:77,时间:9,}],
-    //分页数据
-            dataTotal:5,
-            pageNum:5,
-            dataPage:[]          
-    }
-  },
-  methods:{
-    // 切换反馈
-        feedBack(){
-            this.$router.push("/feedBack");            
-        },
-    // 切换账号异常
-        accountError(){
-            this.$router.push("/accountError")
-        },
-    // 导出数据
-       exportData(){
-           console.log("导出数据")
-            // window.location.href=""
-       },
-    // 获取搜索日期
-        getStartTime(value){
-            this.sortList.startTime = value
-        },
-        getOverTime(value){
-            this.sortList.overTime = value
-            console.log(this.sortList)
-        },
-    // 搜索数据
-        sort(){
-            console.log("搜索数据")
-        },
+    name: 'feedBack',
+    data () {
+        return {
+        // 筛选框内容
+            sortLists:{
+                projectNameLists: ["河南","广东","江西","湖南","湖北","河北","东北"],
+            },
+            sortList:{projectName:null,startTime:null,overTime:null},
+        //表格内容
+            columns9: [{title: '项目名称',key: '项目名称'},{title: '地区',key: '地区'},{title: '调研对象',key: '调研对象'},{title: '调研编号',key: '调研编号'},{title: '区域代理人',key: '区域代理人'},
+                {title: '发送消息人姓名',key: '发送消息人姓名'},{title: '联系方式',key: '联系方式'},{title: '反馈类型',key: '反馈类型'},{title: '时间',key: '时间'}],
+            data9: [{项目名称: 'John Brown',地区: 18,调研对象: 'New York No. 1 Lake Park',调研编号: 55,区域代理人:'jack',发送消息人姓名: 23,联系方式: 88,反馈类型:77,时间:9,}],
+        //分页数据
+                dataTotal:5,
+                pageNum:5,
+                dataPage:[]          
+        }
+    },
+    mounted(){        
+        //表格信息
+            // axios({
+            //     url:"http://192.168.0.134:8080/queryMyTask",  
+            //     method:'get'                           
+            // }).then((res)=>{
+            //     // 初始页面数据
+            //     this.secondInstanceData = res.data       
+            // });
+    },     
+    methods:{
+        // 切换反馈
+            feedBack(){
+                this.$router.push("/feedBack");            
+            },
+        // 切换账号异常
+            accountError(){
+                this.$router.push("/accountError")
+            },
+        // 导出数据
+            exportData(){
+                console.log("导出数据")
+                    // window.location.href=""
+            },
+        // 获取搜索日期
+            getStartTime(value){
+                this.sortList.startTime = value
+            },
+            getOverTime(value){
+                this.sortList.overTime = value
+                console.log(this.sortList)
+            },
+        // 搜索数据
+            sort(){
+                console.log("搜索数据")
+            },
 
-    // 换页操作
-        changPage(page){
-        //切换页码时更改表格相应数据
-            // this.data9 = []
-            // for (var index = (page-1)*5; index < (page)*5; index++) {
-            //     this.data9.push(this.dataPage[index])          
-            // }       
-        }         
-
-    }
+        // 换页操作
+            changPage(page){
+            //切换页码时更改表格相应数据
+                // this.data9 = []
+                // for (var index = (page-1)*5; index < (page)*5; index++) {
+                //     this.data9.push(this.dataPage[index])          
+                // }       
+            }         
+        }
 }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->

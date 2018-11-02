@@ -10,8 +10,8 @@
                         title="重新指派"
                         @on-ok="ok"
                         @on-cancel="cancel">
-                        <Select v-model="modal2" style="width:300px;margin-top:5px" placeholder="选择账户">
-                            <Option v-for="item in accounts" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                        <Select v-model="account" style="width:300px;margin-top:5px" placeholder="选择账户">
+                            <Option v-for="(item,index) in accounts" :value="item" :key="index">{{ item }}</Option>
                         </Select>
                     </Modal>                    
                 </Breadcrumb> 
@@ -199,8 +199,10 @@ export default {
   name: 'projectDetail',
   data () {
     return {
-        // 
-        modal1:false,modal2:'',
+        //选择账户
+        modal1:false,
+        accounts:['jj','dd'],
+        account:'', 
         // 表格数据
         img: img,         
     }

@@ -44,6 +44,9 @@ export default {
           backgroundPosition:"left "
       }
     }
+  },
+  methods:{
+
   }
 }
 </script>

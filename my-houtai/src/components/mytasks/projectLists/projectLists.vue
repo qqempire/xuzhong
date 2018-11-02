@@ -33,11 +33,11 @@
                                 <div class="title">
                                     <Button type="success" @click="open(index)">&nbsp;&nbsp;{{item.tip}}&nbsp;&nbsp;</Button>
                                     <Button type="success" @click="downloadAccount(index)">下载访问员账号</Button>
-                                    <Button type="info" >项目名称：&nbsp;{{item.projectName}}</Button>
+                                    <Button type="info" >项目名称：&nbsp;{{item.projectname}}</Button>
                                     <Button type="info" >DSR进度：&nbsp;{{item.DSR}}</Button>
                                 </div>
                                 <!-- 数据表 -->
-                                <Table v-show="item.boo" :columns="columns7" :data="data[index]"></Table>
+                                <Table v-show=item.boo :columns="columns7" :data="data[index]"></Table>
                             </div>
                         </div>
                     </div>
@@ -63,12 +63,10 @@ export default {
             // 点击查询按钮发送的参数 
             sortList:{regionalAgency:'',projectName:'',taskState:'',auditStatus:''},
         // table数据
-            // 是否展开
-            boo:'展开', 
             // 表头数据
-            dataTitle:[{projectName:'家化项目',DSR:"69%",boo:true,tip:'展开'},{projectName:'家化项目bgdfg',DSR:"44%",boo:false,tip:'展开'},],
+            dataTitle:[{projectname:'家化项目',DSR:"69%",boo:false,tip:'展开'},{projectname:'家化项目bgdfg',DSR:"44%",boo:false,tip:'展开'},],
             // 表格数据
-            columns7: [{title: '调研对象',key: 'researchObject'},{title: '调研编号',key: 'researchNumber'},{title: '访问员账号',key: 'visitorAccount',},{title: '任务状态',key: 'taskState'},{title: '审核状态',key: 'auditStatus'},{title: '截至日期',key: 'deadline',sortable: true},
+            columns7: [{title: '调研对象',key: 'researchobject'},{title: '调研编号',key: 'researchnum'},{title: '访问员账号',key: 'entryaccountnum',},{title: '任务状态',key: 'taskstates'},{title: '审核状态',key: 'auditstate'},{title: '截至日期',key: 'deadline',sortable: true},
                 {title: '操作',key: '操作', 
                     render: (h, params) => {
                             return h('div', [
@@ -90,7 +88,7 @@ export default {
                     }                              
                 }
             ],
-            data: [[{researchObject: 'John Brown',researchNumber: 18,visitorAccount: 999999,taskState: "完成",auditStatus: "未完成",deadline: "18-12"}],[{researchObject: 'John Brown',researchNumber: 18,visitorAccount: 999999,taskState: "完成",auditStatus: "未完成",deadline: "18-12"}]],
+            data:[]
         }
     },
 
@@ -98,19 +96,14 @@ export default {
     // 动态
     mounted(){        
         //表格信息
-            // axios({
-            //     url:"http://192.168.0.134:8080/queryMyTask",  
-            //     method:'get'                           
-            // }).then((res)=>{
-            //     // 初始页面数据
-            //     console.log(res.data)
-            //     this.dataTitle = res.data.title;
-            //     for(var i = 0;i<this.dataTitle.length;i++){
-            //         this.dataTitle[i]['boo']=false;
-            //         this.dataTitle[i]["tip"]="展开";
-            //     }
-            //     this.data = res.data.data        
-            // });
+            axios({
+                url:"http://192.168.0.134:8080/queryMyTask",  
+                method:'get'                           
+            }).then((res)=>{
+                // 初始页面数据
+                this.dataTitle = res.data.title;              
+                this.data = res.data.data   
+            });
     },
     methods:{
         //   展示相应的detail
@@ -130,36 +123,34 @@ export default {
 
     // 表格操作
         // 展开收缩
-        open(index){
+        open(index){  
             if (this.dataTitle[index].boo == false) {
                 this.dataTitle[index].boo = true;
                 this.dataTitle[index].tip = "收起"
             } else {
                this.dataTitle[index].boo = false;
                this.dataTitle[index].tip = "展开"
-            }           
+            }          
         },
         // 下载访问员账号
         downloadAccount(index){
             console.log(index)
         }
-    },
-        
+    },       
 }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-
-    .projectLists{
-        .title{width: 100%;height: 40px;background: #5BC0DE;line-height: 40px;color: #fff;padding-left:10px;display:flex;justify-content: space-between;align-items:center;margin-bottom: 10px;
-            span:nth-child(2){display: block;width: 100px;height: 30px;background: #C1C1C1;border-radius: 5px;line-height: 30px;text-align: center;}
-        } 
-        .content{overflow: hidden;
-            .tables{overflow: hidden;
-                #table{border: 1px solid #cccccc; border-radius: 5px; margin-bottom: 10px; 
-                    .title{width: 50%; display: flex; justify-content: space-between; align-items: center; border-radius: 5px; background: white;}
-                }
-            } 
-        }  
+.projectLists{
+    .title{width: 100%;height: 40px;background: #5BC0DE;line-height: 40px;color: #fff;padding-left:10px;display:flex;justify-content: space-between;align-items:center;margin-bottom: 10px;
+        span:nth-child(2){display: block;width: 100px;height: 30px;background: #C1C1C1;border-radius: 5px;line-height: 30px;text-align: center;}
     } 
+    .content{overflow: hidden;
+        .tables{overflow: hidden;
+            #table{border: 1px solid #cccccc; border-radius: 5px; margin-bottom: 10px; 
+                .title{width: 50%; display: flex; justify-content: space-between; align-items: center; border-radius: 5px; background: white;}
+            }
+        } 
+    }  
+} 
 </style>

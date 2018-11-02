@@ -6,21 +6,21 @@
                     <div class="title"><span>条件筛选</span></div>
                     <div class="select">                             
                         <Select v-model="sortList.regionalAgency" style="width:150px" placeholder="项目名称">
-                            <Option v-for="(item,index) in regionalAgencyLists" :value="item" :key="index">{{ item }}</Option>
+                            <Option v-for="(item,index) in sortLists.regionalAgencyLists" :value="item" :key="index">{{ item }}</Option>
                         </Select>&nbsp;
                         <Select v-model="sortList.projectName" style="width:150px" placeholder="任务状态">
-                            <Option v-for="(item,index) in projectNameLists" :value="item" :key="index">{{ item }}</Option>
+                            <Option v-for="(item,index) in sortLists.projectNameLists" :value="item" :key="index">{{ item }}</Option>
                         </Select>&nbsp;
                         <Select v-model="sortList.taskState" style="width:150px" placeholder="一审状态">
-                            <Option v-for="(item,index) in taskStateLists" :value="item" :key="index">{{ item }}</Option>
+                            <Option v-for="(item,index) in sortLists.taskStateLists" :value="item" :key="index">{{ item }}</Option>
                         </Select>&nbsp;
                         <Select v-model="sortList.auditStatus" style="width:150px" placeholder="二审状态">
-                            <Option v-for="(item,index) in auditStatusLists" :value="item" :key="index">{{ item }}</Option>
+                            <Option v-for="(item,index) in sortLists.auditStatusLists" :value="item" :key="index">{{ item }}</Option>
                         </Select>&nbsp;
                         <Select v-model="sortList.researchNumber" style="width:200px" placeholder="调研编号">
-                            <Option v-for="(item,index) in researchNumberLists" :value="item" :key="index">{{ item }}</Option>
+                            <Option v-for="(item,index) in sortLists.researchNumberLists" :value="item" :key="index">{{ item }}</Option>
                         </Select>&nbsp;&nbsp;
-                        <Button type="success" @click="sort">&nbsp;&nbsp;搜索&nbsp;&nbsp;</Button>
+                        <Button type="success" @click="sortData">&nbsp;&nbsp;搜索&nbsp;&nbsp;</Button>
                     </div>
                 </Breadcrumb>                
                 <Card>
@@ -49,8 +49,8 @@
 
 <script>
 export default {
-  name: 'secondInstanceLists',
-   data () {
+    name: 'secondInstanceLists',
+    data () {
         return {
     // 筛选框内容
         // 查询功能
@@ -93,40 +93,51 @@ export default {
             pageNum:5,
             dataPage:[]   
         }
-   },
-  methods:{
-    //跳转
-        show (index) {
-            this.$router.push("/domestication2") //跳转到相应项目的位置
-        },
-    // 搜索
-        sort(){
-            console.log('搜索功能')
-        },
-    // 批量通过
-        batchThrough(){
-            console.log("批量通过")
-        },
-    // 下载资料
-        downloadData(){
-            console.log("下载资料")
-        },
-    // 下载照片
-        downloadPicture(){
-            console.log('下载照片')
-        },
-    // 下载录音录像
-        downloadAudioVideo(){
-            console.log('下载录音录像')
-        },
-    // 换页操作
-        changPage(page){
-        //切换页码时更改表格相应数据
-            this.secondInstanceData = []
-            for (var index = (page-1)*5; index < (page)*5; index++) {
-                this.secondInstanceData.push(this.dataPage[index])          
-            }       
-        } 
+    },
+    //预加载数据
+    mounted(){        
+        //表格信息
+            // axios({
+            //     url:"http://192.168.0.134:8080/queryMyTask",  
+            //     method:'get'                           
+            // }).then((res)=>{
+            //     // 初始页面数据
+            //     this.secondInstanceData = res.data       
+            // });
+    },    
+    methods:{
+        //跳转
+            show (index) {
+                this.$router.push("/domestication2") //跳转到相应项目的位置
+            },
+        // 搜索
+            sortData(){
+                console.log('搜索功能')
+            },
+        // 批量通过
+            batchThrough(){
+                console.log("批量通过")
+            },
+        // 下载资料
+            downloadData(){
+                console.log("下载资料")
+            },
+        // 下载照片
+            downloadPicture(){
+                console.log('下载照片')
+            },
+        // 下载录音录像
+            downloadAudioVideo(){
+                console.log('下载录音录像')
+            },
+        // 换页操作
+            changPage(page){
+            //切换页码时更改表格相应数据
+                this.secondInstanceData = []
+                for (var index = (page-1)*5; index < (page)*5; index++) {
+                    this.secondInstanceData.push(this.dataPage[index])          
+                }       
+            } 
 
     }
 }
