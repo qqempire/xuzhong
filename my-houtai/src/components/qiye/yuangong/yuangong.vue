@@ -5,6 +5,7 @@
             <Content :style="{padding: '0 16px 16px'}" style="background:#fff;">
                 <Breadcrumb :style="{margin: '16px 0'}" >
                     <!-- <div class="back">返回</div> -->
+                    
                 </Breadcrumb>
                 <Card style="background:#F2F4F4;">
                     <div style="height: 600px">
@@ -23,7 +24,6 @@
                                     <Option v-for="item in yuanstatus" :value="item.value" :key="item.value">{{ item.label }}</Option>
                                 </Select>
                                 <Button type="success" @click="search">搜索</Button>
-
                                 <Button type="success" @click="modal10 = true">添加部门</Button>
                                 
                                     <Modal
@@ -114,38 +114,18 @@
                         <!-- 更新报告 -->
                         <div id="update">
                              <div class="title title2"><span>状态列表</span><el-button type="info">导出表格</el-button></div>
-                             
+                            
                              <!-- 表格 -->
                              <Table border :columns="columns1" :data="data1"></Table>
-                             <!-- <table border='1' width="100%" cellpadding='0' cellspacing='0'>
-                                  <tr class="header">
-                                      <td>员工编号</td>
-                                      <td>员工姓名</td>
-                                      <td>账户</td>
-                                      <td>所在部门</td>
-                                      <td>员工职位</td>
-                                      <td>手机号</td>
-                                      <td>员工状态</td>
-                                      <td>权限类型</td>
-                                      <td>操作</td>
-                                  </tr>
 
-                                  <tr>
-                                      <td></td>
-                                      <td></td>
-                                      <td>无后台</td>
-                                      <td>无</td>
-                                      <td>审查访问员</td>
-                                      <td></td>
-                                      <td>在职</td>
-                                      <td>无后台权限</td>
-                                      <td>编辑</td>
-                                  </tr>
-                                 
-                                  
-
-                                  
-                              </table> -->
+                             <Modal
+                                title="Title"
+                                v-model="tablebianji"
+                                class-name="vertical-center-modal">
+                                <p>Content of dialog</p>
+                                <p>Content of dialog</p>
+                                <p>Content of dialog</p>
+                            </Modal>
 
 
                         </div>
@@ -174,6 +154,7 @@ export default {
   name: 'Addshencha',
    data() {
       return {
+          tablebianji:false,
           columns1: [
                     {
                         title: '员工编号',
@@ -331,11 +312,37 @@ export default {
       }
     },
     methods:{
+        show (index) {
+                // this.$Modal.info({
+                //     title: 'User Info',
+                //     content: `Name：${this.data6[index].name}<br>Age：${this.data6[index].age}<br>Address：${this.data6[index].address}`
+                // })
+                console.log(index)
+                this.tablebianji=true;
+         },
         instance (type) {
                 const title = '注意';
                 const content = '<p>输入框值不能为空</p>';
                 switch (type) {
                    
+                   case 'info':
+                        this.$Modal.info({
+                            title: title,
+                            content: "<p>部门/职位/账户名称不能重复</p>"
+                        });
+                        break;
+                    case 'success':
+                        this.$Modal.success({
+                            title: "ok",
+                            content: '<p>添加成功</p>'
+                        });
+                        break;
+                    case 'warning':
+                        this.$Modal.warning({
+                            title: title,
+                            content: content
+                        });
+                        break;
                     case 'error':
                         this.$Modal.error({
                             title: title,
@@ -471,39 +478,50 @@ export default {
         addok(){
              var that = this;
              var em = that.email;
-            
-          if(that.addvalue1&&that.addvalue2that.addvalue2&&that.addvalue3&&that.addvalue4&&that.intime&&that.intime &&that.intime &&that.outtime &&that.email &&that.yname &&that.ysex &&that.yage&&that.yxueli&&that.yphone&&that.yzhang&&that.ymima){
-              console.log("222")
-                 axios({
-                method:"post",               
-                url:"http://192.168.0.135:8080/SavaUser",
-                params:{
-                    did:that.addvalue1,
-                    pid:that.addvalue2,
-                    jid:that.addvalue3,
-                    utype:that.addvalue4,
-                    starttime:that.intime,
-                    overtime:that.outtime,
-                    email:that.email,
-                    uname: that.yname,
-                    sex: that.ysex,
-                    age:that.yage,
-                    education:that.yxueli,
-                    iphone:that.yphone,
-                    account:that.yzhang,
-                    password: that.ymima
-                }
-            })
-            .then(function(data){
-                console.log(data.data)
-                if(data.data.msg=="添加成功"){
-                    alert("添加成功")
-                }
-            });
-          }else{
-              console.log("333")
-             this.instance('error') 
-          }
+             axios({          
+                        url:"http://192.168.0.135:8080/QueryByAccount",
+                        params:{account:that.yzhang}
+                    })
+                    .then(function(data){
+                        console.log(data.data)
+                        if(data.data.msg=="账号可用"){
+                            if(that.addvalue1&&that.addvalue2&&that.addvalue2&&that.addvalue3&&that.addvalue4&&that.intime&&that.intime &&that.intime &&that.outtime &&that.email &&that.yname &&that.ysex &&that.yage&&that.yxueli&&that.yphone&&that.yzhang&&that.ymima){
+                               console.log("222")
+                                axios({
+                                        method:"post",               
+                                        url:"http://192.168.0.135:8080/SavaUser",
+                                        params:{
+                                            did:that.addvalue1,
+                                            pid:that.addvalue2,
+                                            jid:that.addvalue3,
+                                            utype:that.addvalue4,
+                                            starttime:that.intime,
+                                            overtime:that.outtime,
+                                            email:that.email,
+                                            uname: that.yname,
+                                            sex: that.ysex,
+                                            age:that.yage,
+                                            education:that.yxueli,
+                                            iphone:that.yphone,
+                                            account:that.yzhang,
+                                            password: that.ymima
+                                        }
+                                    })
+                                    .then(function(data){
+                                        console.log(data.data)
+                                        if(data.data.msg=="添加成功"){
+                                            alert("添加成功")
+                                        }
+                                    });
+                            }else{
+                                console.log("333")
+                                that.instance('error') 
+                            }
+                        }else{
+                           that.instance('info') 
+                        }
+                    });
+          
 
         
         },
@@ -512,37 +530,62 @@ export default {
             
             var that = this;
             console.log(that.addbumen)
-           axios({ 
-                method:"post",               
-                url:"http://192.168.0.135:8080/SavaDepartment",
+            axios({       
+                url:"http://192.168.0.135:8080/QueryByDname",
                 params:{dname:that.addbumen}
             })
-            .then(function(data){
-                that.addbumen=""
+            .then(function(data){         
                 console.log(data.data)
-                if(data.data.msg=="添加成功"){
-                    alert("添加成功")
+                if(data.data.msg=="部门已被占用"){
+                    that.instance('info')
+                }else{
+                    axios({ 
+                            method:"post",               
+                            url:"http://192.168.0.135:8080/SavaDepartment",
+                            params:{dname:that.addbumen}
+                        })
+                        .then(function(data){
+                            that.addbumen=""
+                            console.log(data.data)
+                            if(data.data.msg=="添加成功"){
+                                that.instance('success')
+                            }
+                        });
                 }
             });
+
+       
         }  ,
         //添加职位
         success(){
            var that = this;
             console.log(that.addzhi,that.model1)
-           axios({ 
-                method:"post",               
-                url:"http://192.168.0.135:8080/SavaPosition",
-                params:{did:that.model1,pname:that.addzhi}
+             axios({                
+                url:"http://192.168.0.135:8080/QueryByPname",
+                params:{pname:that.addzhi}
             })
             .then(function(data){
-                that.addzhi=""
-                that.modal1=""
                 console.log(data.data)
-                if(data.data.msg="添加成功"){
-                    // alert("添加成功")
-                    that.$Message.success('添加成功啦');
+                if(data.data.msg=="职位已被占用"){
+                    that.instance('info');
+                }else if(data.data.msg=="职位可用"){
+                   axios({ 
+                        method:"post",               
+                        url:"http://192.168.0.135:8080/SavaPosition",
+                        params:{did:that.model1,pname:that.addzhi}
+                    })
+                    .then(function(data){
+                        that.addzhi=""
+                        that.modal1=""
+                        console.log(data.data)
+                        if(data.data.msg="添加成功"){
+                            // alert("添加成功")
+                            that.$Message.success('添加成功啦');
+                        }
+                    });
                 }
             });
+           
         },
         //搜索
         search(){

@@ -4,8 +4,14 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 Vue.use(Vuex)
  
-import state from './state'
- 
+// import state from './state'
+var state={
+    count:0,
+    name:"",
+    arr:[],
+    user:"",
+    job:""
+}
 var mutations={
 	add(a){
 		a.count++
@@ -18,6 +24,9 @@ var mutations={
 	},
 	producttype(a,b){
        a.arr=b
+	},
+	username(a,b){
+       a.user=b
 	}
 }
 
@@ -27,6 +36,7 @@ var actions={
 	jian:({commit})=>commit("jian"),
 	login:({commit},b)=>commit("login",b),
 	producttype:({commit},b)=>commit("producttype",b),
+	username:({commit},b)=>commit("username",b),
 }
  
 

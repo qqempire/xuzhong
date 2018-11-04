@@ -122,11 +122,6 @@ export default {
         input: ''
       }
     },
-    methods:{
-      // changedate(a,b){
-      //     console.log(a,b)
-      // }
-    },
 
      computed:mapGetters([]),
 
@@ -136,8 +131,21 @@ export default {
           
           login1(){
             this.login(this.user) //把this.user传参到store里的login
-          }
+          },
+         changedate(a){
+            console.log(a)
+         }
         },
+      
+     mounted(){
+       const loading = this.$loading({
+          lock: true,
+          text: 'Loading',
+          spinner: 'el-icon-loading',
+          background: 'rgba(0, 0, 0, .9)'
+        });
+       loading.close();
+     } 
 
   
 }

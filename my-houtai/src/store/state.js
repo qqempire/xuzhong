@@ -3,7 +3,9 @@
 var state={
     count:0,
     name:"",
-    arr:[]
+    arr:[],
+    user:"",
+    job:""
 }
  
 export default state

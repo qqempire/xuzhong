@@ -1,71 +1,158 @@
 <template>
-  <div class="login" :style ="bj">
-     <div class="shang" >
-           <img :src="earth" alt="旭中调研系统" class="earth">
+  <div class="login" >
+      <div class="shang" >
+          
           
       </div>
 
-      <div class="title" v-text="companyName" :style ="logo"></div>
+      <div class="title" v-text="companyName" ></div>
 
       <div class="content">
         <div class="for">
-          <input type="text" id="userName" placeholder="请输入账号" autocomplete="off"><br>
-          <input type="password" id="passWord" placeholder="请输入密码"><br>
+          <input type="text" v-model="loginuser" placeholder="请输入账号" autocomplete="off"><br>
+          <!-- <Input v-model="value" placeholder="请输入账号" style="width: 450px;" size="large" class="ipt"/>
+          <Input v-model="value" placeholder="请输入账号" style="width: 450px;75px" class="ipt"/> -->
+          <input type="password" v-model="loginpassword" placeholder="请输入密码"><br>
+          <!-- <Select v-model="model1" style="width:450px;margin-top:10px;text-align:center;">
+              <Option v-for="item in cityList" :value="item.value" :key="item.value" style="background:#11182D">{{ item.label }}</Option>
+          </Select> -->
+          <select id="mySelect">
+            <option>Apple</option>
+            <option>Pear</option>
+            <option>Banana</option>
+            <option>Orange</option>
+          </select>
           <div id="box">
-              <input type="submit" id="submit" value="登录">  
+              <input type="submit" id="submit" value="登录" @click="login">  
+              <p>{{this.$store.state.user}}</p>
           </div>       
         </div>
       </div>
+      
 
   </div> 
 </template>
 
 <script>
-import earth from "../../../src/assets/img/login/earth.png"
+import $ from "jquery"
+import axios from "axios"
+import {mapGetters,mapActions} from "vuex"
+
 
 export default {
   name: 'Login',
   data () {
     return {
-     
-      earth:earth,
+      aaa:[],
+
+      cityList: [
+                    {
+                        value: 'New York',
+                        label: 'New York'
+                    },
+                    {
+                        value: 'London',
+                        label: 'London'
+                    },
+                    
+                    {
+                        value: 'Canberra',
+                        label: 'Canberra'
+                    }
+                ],
+                model1: '',
+      fullscreenLoading: false,
       companyName:"上海旭中调研系统",
-      //登录页面大背景
-      bj: {
-          backgroundImage: "url(" + require("../../assets/img/login/bd.png") + ")",
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",        
-      },
-      //logo
-      logo:{
-          backgroundImage: "url(" + require("../../../src/assets//img/login/logo.png") + ")",
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "auto",
-          backgroundPosition:"left "
-      }
+      loginuser:"",
+      loginpassword:""
+ 
     }
   },
   methods:{
+    ...mapActions(["login","add","jian","username"]), //mapActions（[]）为store里的函数名
+   
+    openFullScreen2() {
+        const loading = this.$loading({
+          lock: true,
+          text: 'Loading',
+          spinner: 'el-icon-loading',
+          background: 'rgba(0, 0, 0, .9)'
+        });
+        // setTimeout(() => {
+        //   loading.close();
+        // }, 2000);
+    },
+    instance (type) {
+            const title = 'Title';
+            const content = '<p>Content of dialog</p><p>Content of dialog</p>';
+            switch (type) {
+               
+                case 'warning':
+                    this.$Modal.warning({
+                        title: "提示",
+                        content: "<div>帐户名或密码错误</div>"
+                    });
+                    break;
+            }
+        },
+     login(){
+     
 
+      var b = $('#mySelect') .val();//选中的值
+
+      var c = $("#mySelect").get(0).selectedIndex;;//选中的索引
+      
+      console.log(b,c)
+        // var that = this;
+        // console.log(that.loginuser,that.loginpassword)
+        // axios({
+        //     url:"http://192.168.0.135:8080/login",
+        //     params:{account:that.loginuser,password:that.loginpassword,id:1}
+        // })
+        // .then(function(data){
+        //     console.log(data.data)
+        //     if(data.data==""){
+        //       that.instance('warning')
+        //     }else{
+        //       //console.log(data.data.uname)
+        //       localStorage.setItem('username',data.data.uname)
+        //       localStorage.setItem('job',data.data.pname)
+        //       console.log(localStorage.getItem('job'))
+        //        //that.openFullScreen2()
+        //       // that.username(data.data.uname) //把this.user传参到store里的login
+        //       //  that.$router.push("/home")
+        //     }
+        // })
+     }
+  },
+  mounted(){
+    //  $("#mySelect").change(function(){
+    //        console.log($(this).val());
+    //    });
   }
 }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+ .ivu-select-selection{background: red}
+
 
   html,body{height: 100%;}
-  .login{width:100%;height:100vh; min-width: 1100px; overflow: hidden; 
+  .login{width:100%;height:100vh; min-width: 1100px; overflow: hidden; background:url(../../assets/img/login/bd.png) no-repeat center/cover;
     
      .shang{width:700px; height: 550px;position: absolute;  top: 0; left: 0; bottom: 0; right: 0;margin: auto;top:-300px;right:50px;
-          .earth{width: 100%;height: 100%;} 
+            background: url(../../assets/img/login/earth.png) no-repeat center/cover;
+          .earth{width: 30px;height: 30px;} 
           }
      
     .content{width: 500px; height: 250px; margin: 0 auto;margin: auto;  position: absolute;  top: 0; left: 0; bottom: 0; right: 0;top:350px;
 
-        .for{ box-sizing: border-box; width: 490px; height: 230px; padding: 10px 20px 0; background-color: #21202E; border: 1px solid #2d2c3c; 
+        .for{ box-sizing: border-box; width: 500px; height: 240px; padding: 10px 20px 0; background-color: #21202E; border: 1px solid #2d2c3c; 
             position: absolute; left: 0; right: 0; margin: auto; 
-            input{width: 450px; height: 75px; border: none; border-bottom: 1px solid #4d6a74; background: inherit; color: #4d6a74; font-size: 16px; text-align: center;outline-color:#524E89;outline: none }
-          
+            input{width: 450px; height: 40px;margin-top: 5px;border-radius: 5px; border: 0; border-bottom: 1px solid#4d6a74; background:#11182D; color: #56BACA; font-size: 16px; text-align: center;outline: none }
+            #mySelect{width: 450px; height: 40px;background:#11182D;text-align: center;text-align-last: center;color: #56BACA;border-radius: 5px;outline: none;margin-top: 5px;border:none;border: 1px solid#4d6a74;
+              option{width: 450px; height: 40px;text-align: center;}
+            }
           #box{ width: 450px; height: 70px; 
             #submit{display: block; width: 160px; height: 40px; margin: 15px auto 0; border: none; font-size: 18px; color: #56BACA; text-align: center; line-height: 40px; background-color: #2d3c41;}
             #submit:hover{background-color: #3F3E41;cursor: pointer;}
@@ -74,6 +161,6 @@ export default {
     }
   }
   .title{width: 350px; height: 50px; color: #56BACA; margin: auto;  position: absolute;  top: 0; left: 0; bottom: 0; right: 0;left:40px;font-size: 30px; 
-        
+        background: url(../../assets/img/login/logo.png) no-repeat left center;
         text-align: center} 
 </style>

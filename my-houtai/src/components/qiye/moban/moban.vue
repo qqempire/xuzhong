@@ -22,7 +22,7 @@
                                 </div>
                                
                           <!-- 表格树 -->
-                           <el-table  stripe border style="width:100%" empty-text="" height="50px">
+                           <!-- <el-table  stripe border style="width:100%" empty-text="" height="50px">
                         　　<el-table-column prop="id" label="名称" align="center" min-width="185" max-height="10">
                         　　</el-table-column>
                         　　<el-table-column prop="name" label="编号" align="center" min-width="120" max-height="10">
@@ -35,10 +35,10 @@
                         　　</el-table-column>
                             <el-table-column label="操作" align="center" min-width="80">
                         　　</el-table-column>
-                            </el-table>
+                            </el-table> -->
                             <!-- <Table :columns="columns1"  no-data-text="" style="height:50px"> </Table>                    -->
                             <div class="tree">
-                                 <Tree  :data="data5" :render="renderContent"></Tree>
+                                <table-tree :columns="columns" :tree-structure="true" :data-source="menuData" ></table-tree>
                             </div>  
                            
                             <!-- 添加弹出 -->
@@ -205,6 +205,7 @@
 <script>
 import $ from "jquery"
 import axios from "axios"
+import tableTree from './tableTree'
  import {mapGetters,mapActions} from "vuex"
 export default {
   name: 'Moban',
@@ -221,6 +222,115 @@ export default {
 
   data () {
     return {
+        columns: [{
+          text: '名称',
+          dataIndex: 'event',
+          textAlign:"center"
+        },
+        {
+          text: '编号',
+          dataIndex: 'id'
+        },
+        {
+          text: '条形码',
+          dataIndex: 'timeLine'
+        },
+        {
+          text: '是否需要价格',
+          dataIndex: 'comment'
+        },
+        {
+          text: '排序',
+          dataIndex: 'num1'
+        }
+      ],
+      menuData: [
+        {
+          id: 0,
+          event: "事件1",
+          timeLine: 50,
+          comment: "否",
+          num1:60
+        },
+        {
+          id: 1,
+          event: "事件1",
+          timeLine: 100,
+          comment: "否",
+           num1:60,
+          children: [
+            {
+              id: 2,
+              event: "事件2",
+              timeLine: 10,
+              comment: "否",
+               num1:60
+            },
+            {
+              id: 3,
+              event: "事件3",
+              timeLine: 90,
+              comment: "否",
+                num1:60,
+              children: [
+                {
+                  id: 4,
+                  event: "事件4",
+                  timeLine: 5,
+                  comment: "否",
+                    num1:60
+                },
+                {
+                  id: 5,
+                  event: "事件5",
+                  timeLine: 10,
+                  comment: "否",
+                    num1:60
+                },
+                {
+                  id: 6,
+                  event: "事件6",
+                  timeLine: 75,
+                  comment: "否",
+                    num1:60,
+                  children: [
+                    {
+                      id: 7,
+                      event: "事件7",
+                      timeLine: 50,
+                      comment: "否",
+                        num1:60,
+                      children: [
+                        {
+                          id: 71,
+                          event: "事件71",
+                          timeLine: 25,
+                          comment: "xx",
+                            num1:60
+                        },
+                        {
+                          id: 72,
+                          event: "事件72",
+                          timeLine: 5,
+                          comment: "xx",
+                            num1:60
+                        }
+                      ]
+                    },
+                    {
+                      id: 8,
+                      event: "事件8",
+                      timeLine: 25,
+                      comment: "否",
+                        num1:60
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
         addchild:"",
         sortnum2:"",
         productname2:"",
@@ -332,143 +442,7 @@ export default {
 
         //表格树
        //111
-        data5: [
-                    {
-                        pname: "树根",
-                        expand: true,
-                        render: (h, { root, node, data }) => {
-                            return h(
-                                
-                                'span', {
-                                style: {
-                                    display: 'inline-block',
-                                    width: '100%',
-                                    
-                                }
-                              }, 
-                            [
-                                h('span', [
-                                    h('Icon', {
-                                        props: {
-                                            type: 'ios-egg'
-                                        },
-                                        style: {
-                                            marginRight: '8px'
-                                        }
-                                    }),
-                                    h('span', data.pname)
-                                ]),
-                                h('span', {
-                                    style: {
-                                        display: 'inline-block',
-                                        float: 'right',
-                                        marginRight: '32px'
-                                    }
-                                },
-                                 [
-                                    h('Button', {
-                                        props: Object.assign({}, this.buttonProps, {
-                                            icon: 'ios-add',
-                                            type: 'primary'
-                                        }),
-                                        style: {
-                                            width: '64px',
-                                            height:"30px"
-                                        },
-                                        on: {
-                                            click: () => { this.append(data) }
-                                        }
-                                    })
-                                ]
-                                )
-                            ]
-                            );
-                        },
-                        children: [
-                            {   pid:"0",
-                                pname: '一级',
-                                pprice:"是",
-                                psort:"0",
-                                expand: false,
-                                children: [
-                                    {   pid:"0",
-                                       
-                                        pprice:"是",
-                                        ptid:"ptid",
-                                        ptname:"ptname",
-                                        ptprice:"ptprice",
-                                        ptsort:"1",
-                                        expand: false,
-                                        children:[
-                                             {   pid:"0",
-                                               
-
-                                                ptid:"ptid",
-                                               pprice:"是",
-                                                sid:"sid",
-                                                sname:"第三个V第三帝国",
-                                                snumber:"6666",
-                                                sprice:"sprice",
-                                                ssort:"ssort",
-                                                barcode:"barcode",
-                                                 expand: false,
-                                                //  ccc:[
-                                                //     {   pid:"0",
-                                                //         pname: '444级',
-                                                //         pprice:"是",
-                                                //         psort:"0",
-
-                                                //         ptid:"ptid",
-                                                //         ptname:"ptname",
-                                                //         ptprice:"ptprice",
-                                                //         ptsort:"",
-
-                                                //         sid:"sid",
-                                                //         sname:"第三个V第三帝国",
-                                                //         snumber:"6669999",
-                                                //         sprice:"sprice",
-                                                //         ssort:"ssort",
-                                                //         barcode:"barcode",
-
-                                                //         expand: false,
-                                                        
-                                                //     }
-                                                // ]
-                                              }
-                                        ]
-                                    },
-                                    // {   id:"2",
-                                    //     pname: '二级',
-                                    //      pprice:"是",
-                                    //     psort:"1",
-                                    //     expand: false
-                                    // }
-                                ]
-                            },
-                            // {
-                            //     id:"1",
-                            //     pname: '一级',
-                            //      pprice:"是",
-                            //     psort:"1",
-                            //     expand: false,
-                            //     children: [
-                            //         {   id:"2",
-                            //             pname: '二级',
-                            //              pprice:"是",
-                            //             psort:"1",                                   
-                            //             expand: false
-                            //         },
-                            //         {   id:"2",
-                            //             pname: '二级',
-                            //              pprice:"是",
-                            //             psort:"1",                                                                
-                            //             expand: false
-                            //         }
-                            //     ]
-                            // }
-                        ]
-                    }
-                ],
+       
 
         // 222
         app: [{
@@ -544,180 +518,7 @@ export default {
         },
        
        //树状表
-        renderContent (h, { root, node, data }) {
-                return h('div', 
-                {
-                    style: {
-                        display: 'inline-block',
-                        width: '100%',
-                        border:"1px solid #D7D7D7"
-                    }
-                }, 
-                [
-                    //图标
-                    h('span', [
-                        h('Icon', {
-                            props: {
-                                type: 'md-albums'
-                            },
-                            style: {                         
-                                marginRight: '8px',            
-                            }
-                        }),
-                        //文字 
-                        h('span', data.pname)
-                    ]),
-
-
-                   //加减样式
-                    h('span', 
-                    {
-                        style: {
-                            display: 'inline-block',
-                            float: 'right',
-                            marginRight: '32px',
-                            border:"1px solid red"
-                        }
-                    }, 
-                    //加减按钮                  
-                    [
-                        h('Button',
-                         {
-                            props: Object.assign({}, this.buttonProps, {
-                                icon: 'md-add'
-                            }),
-                            style: {
-                                marginRight: '8px',
-                                border:"1px solid #515A6E",
-                                textAlign:"center",
-                               
-                            },
-                            on: {
-                                click: () => { this.append(data) }
-                            }
-                        }),
-                        h('Button', 
-                        {
-                            props: Object.assign({}, this.buttonProps, {
-                                icon: 'ios-create-outline'
-                            }),
-                            style: {
-                               
-                                border:"1px solid #515A6E"
-                            },
-                            on: {
-                                click: () => { this.remove(root, node, data) }
-                            }
-                        }),
-                        
-                    ],
-                    
-                    
-                    ),
-
-
-                    //  h('span', [
-                    //     h('Icon', {
-                    //         props: {
-                    //             type: 'md-albums'
-                    //         },
-                    //         style: {                         
-                    //             marginRight: '8px',            
-                    //         }
-                    //     }),
-                    //     //文字 
-                    //     h('span', data.title)
-                    // ]),
-                    // 0000000000000000
-                     h('div', 
-                        {
-                            style: {
-                                width:'15%',
-                                height:"26px",
-                                display: 'inline-block',
-                                float: 'right',
-                                marginRight: '32px',
-                                border:"1px solid #D7D7D7",
-                                textAlign:"center"
-                            },
-                           
-                         },   
-                          [
-                            h('span', [
-                                //排序
-                                h('span', data.psort)
-                            ]),
-                         ],                 
-                    
-                     ),
-                     
-                      h('div', 
-                        {
-                            style: {
-                                width:'15%',
-                                height:"26px",
-                                display: 'inline-block',
-                                float: 'right',
-                                marginRight: '0px',
-                                border:"1px solid #D7D7D7",
-                                textAlign:"center"
-                            }
-                         },  
-                         [
-                            h('span', [
-                                //是否需要价格 
-                                h('span', data.pprice)
-                            ]),
-                         ],              
-                    
-                     ),
-                      h('div', 
-                        {
-                            style: {
-                                width:'20%',
-                                height:"26px",
-                                display: 'inline-block',
-                                float: 'right',
-                                marginRight: '0px',
-                                border:"1px solid #D7D7D7",
-                                textAlign:"center"
-                            }
-                         }, 
-                           [
-                            h('span', [
-                                //条形码 
-                                h('span', data.barcode)
-                            ]),
-                     ],                      
-                    
-                     ),
-                      h('div', 
-                        {
-                            style: {
-                                width:'16%',
-                                height:"26px",
-                                display: 'inline-block',
-                                float: 'right',
-                                marginRight: '0px',
-                                border:"1px solid #D7D7D7",
-                                textAlign:"center"
-                            }
-                         }, 
-                           [
-                            h('span', [
-                                //编码
-                                h('span', data.snumber)
-                            ]),
-                     ],                      
-                    
-                     ),
-
-
-
-
-
-                ]);
-            },
+        
 
             //弹出框添加
             addchildselect(val){
@@ -762,14 +563,18 @@ export default {
                 // var _end = that.pageNum * that.pageSize;
                 // that.dataArr = that.data1.slice(_start,_end);
             })
-    }
+    },
+  components: {
+    tableTree
+  },
+
 
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped  lang="scss">
-   .tree{border: 1px solid red;height: 350px;overflow: auto}
+   .tree{border: 1px solid red;height: 420px;overflow: auto}
     .sou{
         width: 100%;height: 50px;display: flex;align-items: center;margin-bottom: 25px
     }

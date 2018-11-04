@@ -160,8 +160,8 @@
         <Layout :style="{marginLeft: '200px'}" style="background:red;" class="head">
             <Header :style="{background: '#fff', boxShadow: '0 2px 3px 2px rgba(0,0,0,.1)'}">
                <ul class="loader">
-                  <li>【王茂如】</li>
-                  <li>【项目经理】</li>
+                  <li class="username">【】</li>
+                  <li class="zhiwei">【项目经理】</li>
                   <li>【修改密码】</li>
                 </ul>
 
@@ -173,6 +173,9 @@
 </template>
 
 <script>
+import $ from "jquery"
+import axios from "axios"
+import {mapGetters,mapActions} from "vuex"
 
 export default {
   name: 'Pub',
@@ -195,6 +198,11 @@ export default {
      toaddjia(){
          console.log("222")
      }
+  },
+  mounted(){
+      console.log( localStorage.getItem('username'))
+       $(".username").text("【"+localStorage.getItem('username')+"】")
+       $(".zhiwei").text("【"+localStorage.getItem('job')+"】")
   }
 }
 </script>
