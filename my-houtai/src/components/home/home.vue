@@ -7,6 +7,7 @@
                     
                     <div class="back">返回</div>
                 </Breadcrumb>
+                 
                 <Card style="background:#F2F4F4;">
                     <div style="height: 600px">
                       <!-- 个人信息 -->
@@ -55,6 +56,20 @@
                                 
                                 <p ><el-input v-model="input" placeholder="请输入调研编号"></el-input>  <span class="search">搜索</span></p>
                              </div>
+              <!-- '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''' -->
+
+                 <div style="border-bottom: 1px solid #e9e9e9;padding-bottom:6px;margin-bottom:6px;">
+                      <Checkbox
+                          :parindex="parindex"
+                          :value="checkany"
+                          @click.prevent.native="parent">全选</Checkbox>
+                  </div>
+                  <CheckboxGroup v-model="quanxuan" @on-change="child">
+                      <Checkbox label="香蕉"></Checkbox>
+                      <Checkbox label="苹果"></Checkbox>
+                      <Checkbox label="西瓜"></Checkbox>
+                  </CheckboxGroup>
+               <!-- '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''' -->
                              <!-- 表格 -->
                              <table border='1' width="100%" cellpadding='0' cellspacing='0'>
                                   <tr class="header">
@@ -74,11 +89,11 @@
 
                                   
                               </table>
-
+                               
 
                         </div>
 
-
+                        
 
 
 
@@ -101,6 +116,9 @@ export default {
   name: 'Home',
    data() {
       return {
+                parindex: false,
+                checkany: false,
+                quanxuan: [],
         user:"",
         options: [{
           value: '选项1',
@@ -127,14 +145,40 @@ export default {
 
       methods:{
           
-          ...mapActions(["login","add","jian"]), //mapActions（[]）为store里的函数名
+          ...mapActions(["login","add","jian","username"]), //mapActions（[]）为store里的函数名
           
           login1(){
             this.login(this.user) //把this.user传参到store里的login
           },
          changedate(a){
             console.log(a)
-         }
+         },
+        //  ''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+         parent () {
+          
+                if (this.parindex) {
+                    this.checkany = false;
+                } else {
+                    this.checkany = !this.checkany;
+                }
+                this.parindex = false;
+
+                // if (this.checkany) {
+                //     this.quanxuan = ['香蕉', '苹果', '西瓜'];
+                // } else {
+                //     this.quanxuan = [];
+                // }
+            },
+            child (data) {
+                if (data.length > 0) {
+                     this.parindex = false;
+                    this.checkany = true;
+                } else{
+                    // this.indeterminate = true;
+                    this.checkany = false;
+                }
+            }
         },
       
      mounted(){

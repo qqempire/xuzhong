@@ -15,7 +15,7 @@
                           <div class="title"><span>筛选条件</span></div>
                            <div class="ipt">
                                 <Select v-model="model" style="width:200px" placeholder="权限组" @on-change="change">
-                                    <Option v-for="item in cityList" :value="item.value"  label-in-value='true' :key="item.value">{{ item.label }}</Option>
+                                    <Option v-for="item in cityList" :value="item.value"  label-in-value='true' :key="item.index">{{ item.label }}</Option>
                                 </Select>
                                 
                                 <Button type="success" @click="search">&nbsp;&nbsp;搜索&nbsp;&nbsp;</Button>
@@ -41,56 +41,85 @@
                                                  <div class="fenpei"> 分配权限</div>
                                                  <div class="check">
                                                       <!-- 首页 -->
-                                                    <Checkbox v-model="single1" class="tit">首页</Checkbox>
-                                                    <CheckboxGroup v-model="checked" @on-change="son1" class="padding">
-                                                        <Checkbox label="查看详情功能"></Checkbox>                                                      
+                                                    <span  class="tit">首页</span>
+                                                    <hr>
+                                                      <!-- 项目管理 -->
+                                                     <span class="tit">项目管理</span>
+                                                     <CheckboxGroup v-model="checked" @on-change="son1" class="padding">
+                                                        <Checkbox label="添加项目"></Checkbox>
+                                                        <Checkbox label="项目列表"></Checkbox> 
+                                                        <Checkbox label="消息反馈"></Checkbox>                                                       
                                                      </CheckboxGroup><hr>
                                                       <!-- 调研对象管理 -->
-                                                     <Checkbox v-model="single2" class="tit">调研对象管理</Checkbox><hr>
-                                                      <!-- 调研对象列表 -->
-                                                    <Checkbox v-model="single3" class="tit">调研对象列表</Checkbox>
+                                                    <span class="tit">调研对象管理</span>
                                                     <CheckboxGroup v-model="checked" @on-change="son3" class="padding">
-                                                        <Checkbox label="查看详情功能(调研)"></Checkbox> 
-                                                        <Checkbox label="导入调研对象功能"></Checkbox> 
-                                                        <Checkbox label="生成二维码功能"></Checkbox>                                                      
+                                                        <Checkbox label="调研对象管理"></Checkbox> 
+                                                        <Checkbox label="更新记录"></Checkbox>                                          
                                                     </CheckboxGroup><hr>
-                                                       <!-- 更新记录 -->
-                                                    <Checkbox v-model="single4" class="tit">更新记录</Checkbox>
+                                                       <!-- 审核管理 -->
+                                                    <span class="tit">审核管理</span>
                                                     <CheckboxGroup v-model="checked" @on-change="son4" class="padding">
-                                                        <Checkbox label="查看功能"></Checkbox> 
-                                                         <Checkbox label="认证功能"></Checkbox>                                                 
+                                                        <Checkbox label="审核安排"></Checkbox> 
+                                                         <Checkbox label="审核退回"></Checkbox> 
+                                                          <Checkbox label="审核列表"></Checkbox>                                                     
+                                                    </CheckboxGroup><hr>
+                                                       <!-- 门店管理 -->
+                                                    <span class="tit">门店管理</span>
+                                                    <CheckboxGroup v-model="checked" @on-change="son5" class="padding">
+                                                        <Checkbox label="门店列表"></Checkbox>                                                     
                                                     </CheckboxGroup><hr>
                                                        <!-- 企业管理 -->
-                                                    <Checkbox v-model="single5" class="tit">更新记录</Checkbox><hr>
-                                                       <!-- 员工管理 -->
-                                                    <Checkbox v-model="single6" class="tit">员工管理</Checkbox>
+                                                    <span class="tit">企业管理</span>
                                                     <CheckboxGroup v-model="checked" @on-change="son6" class="padding">
-                                                         <Checkbox label="添加部门"></Checkbox> 
-                                                         <Checkbox label="添加职位"></Checkbox> 
-                                                         <Checkbox label="添加员工"></Checkbox> 
-                                                         <Checkbox label="编辑员工"></Checkbox> 
-                                                         <Checkbox label="添加审查访问员"></Checkbox> 
-                                                         <Checkbox label="编辑审查访问员"></Checkbox>                                                           
+                                                         <Checkbox label="模板管理"></Checkbox> <hr>
+                                                         <!-- <Checkbox label="员工管理"></Checkbox>  -->
+                                                            
+                                                        <Checkbox  :value="checkAll" label="员工管理"></Checkbox><hr>
+                                                           
+                                                            <CheckboxGroup v-model="checked" @on-change="yuangong" style="margin-left:30px">
+                                                                <Checkbox label="添加部门"></Checkbox>
+                                                                <Checkbox label="添加职位"></Checkbox>
+                                                                <Checkbox label="添加员工"></Checkbox>
+                                                                <Checkbox label="审查访问员"></Checkbox>
+                                                            </CheckboxGroup><hr>
+
+
+
+
+
+
+                                                         <Checkbox label="代理管理"></Checkbox> 
+                                                         <Checkbox label="访问员管理"></Checkbox> 
+                                                         <Checkbox label="权限管理"></Checkbox> 
+                                                         <Checkbox label="操作日志"></Checkbox>                                                           
                                                     </CheckboxGroup><hr>
 
-                                                    <!-- 权限管理 -->
-                                                    <Checkbox v-model="single7" class="tit">权限管理</Checkbox>
+                                                    <!-- 报告管理 -->
+                                                    <span class="tit">报告管理</span>
                                                     <CheckboxGroup v-model="checked" @on-change="son7" class="padding">
-                                                         <Checkbox label="添加权限"></Checkbox> 
-                                                         <Checkbox label="编辑权限"></Checkbox>                                                                                                    
+                                                         <Checkbox label="业绩报告"></Checkbox> 
+                                                         <Checkbox label="报告模板"></Checkbox>
+                                                         <Checkbox label="时效报告"></Checkbox> 
+                                                         <Checkbox label="家化报告"></Checkbox>   
+                                                         <Checkbox label="已生成报告"></Checkbox> 
+                                                                                                                                                          
                                                     </CheckboxGroup><hr>
 
-                                                     <!-- 操作日志 -->
-                                                    <Checkbox v-model="single8" class="tit">操作日志</Checkbox>
+                                                     <!-- 可视化 -->
+                                                    <span class="tit">可视化管理</span>
                                                     <CheckboxGroup v-model="checked" @on-change="son8" class="padding">
-                                                         <Checkbox label="删除功能"></Checkbox>                                                                                                                                                         
+                                                         <!-- <Checkbox label="删除功能"></Checkbox>                                                                                                                                                          -->
                                                     </CheckboxGroup><hr>
 
-                                                     <!-- 操作日志 -->
-                                                    <Checkbox v-model="single9" class="tit">可视化数据</Checkbox>
+                                                     <!-- 我的任务 -->
+                                                    <span class="tit">我的任务</span>
                                                     <CheckboxGroup v-model="checked" @on-change="son9" class="padding">
-                                                         <Checkbox label="导出表格"></Checkbox>                                                                                                                                                         
-                                                    </CheckboxGroup><hr>
+                                                         <Checkbox label="项目列表"></Checkbox>  
+                                                         <Checkbox label="一审任务"></Checkbox> 
+                                                         <Checkbox label="二审任务"></Checkbox> 
+                                                         <Checkbox label="算分任务"></Checkbox> 
+                                                         <Checkbox label="消息反馈"></Checkbox>                                                                                                                                                        
+                                                    </CheckboxGroup>
 
                                                      <!-- <Input v-model="value5" type="textarea" placeholder="备注" class="beizhu"/> -->
                                               
@@ -114,57 +143,76 @@
                                                  <!-- 分配权限 -->
                                                  <div class="fenpei"> 分配权限</div>
                                                  <div class="check">
-                                                      <!-- 首页 -->
+                                                     <!-- 首页 -->
                                                     <span  class="tit">首页</span>
-                                                    <CheckboxGroup v-model="checked" @on-change="son1" class="padding">
-                                                        <Checkbox label="查看详情功能"></Checkbox>                                                      
+                                                    <hr>
+                                                      <!-- 项目管理 -->
+                                                     <span class="tit">项目管理</span>
+                                                     <CheckboxGroup v-model="checked" @on-change="son1" class="padding">
+                                                        <Checkbox label="添加项目"></Checkbox>
+                                                        <Checkbox label="项目列表"></Checkbox> 
+                                                        <Checkbox label="消息反馈"></Checkbox>                                                       
                                                      </CheckboxGroup><hr>
                                                       <!-- 调研对象管理 -->
-                                                     <span class="tit">调研对象管理</span><hr>
-                                                      <!-- 调研对象列表 -->
-                                                    <span  class="tit">调研对象列表</span>
+                                                    <span class="tit">调研对象管理</span>
                                                     <CheckboxGroup v-model="checked" @on-change="son3" class="padding">
-                                                        <Checkbox label="查看详情功能(调研)"></Checkbox> 
-                                                        <Checkbox label="导入调研对象功能"></Checkbox> 
-                                                        <Checkbox label="生成二维码功能"></Checkbox>                                                      
+                                                        <Checkbox label="调研对象管理"></Checkbox> 
+                                                        <Checkbox label="更新记录"></Checkbox>                                          
                                                     </CheckboxGroup><hr>
-                                                       <!-- 更新记录 -->
-                                                    <span class="tit">更新记录</span>
+                                                       <!-- 审核管理 -->
+                                                    <span class="tit">审核管理</span>
                                                     <CheckboxGroup v-model="checked" @on-change="son4" class="padding">
-                                                        <Checkbox label="查看功能"></Checkbox> 
-                                                         <Checkbox label="认证功能"></Checkbox>                                                 
+                                                        <Checkbox label="审核安排"></Checkbox> 
+                                                         <Checkbox label="审核退回"></Checkbox> 
+                                                          <Checkbox label="审核列表"></Checkbox>                                                     
+                                                    </CheckboxGroup><hr>
+                                                       <!-- 门店管理 -->
+                                                    <span class="tit">门店管理</span>
+                                                    <CheckboxGroup v-model="checked" @on-change="son5" class="padding">
+                                                        <Checkbox label="门店列表"></Checkbox>                                                     
                                                     </CheckboxGroup><hr>
                                                        <!-- 企业管理 -->
-                                                    <span  class="tit">更新记录</span><hr>
-                                                       <!-- 员工管理 -->
-                                                    <span  class="tit">员工管理</span>
+                                                    <span class="tit">企业管理</span>
                                                     <CheckboxGroup v-model="checked" @on-change="son6" class="padding">
-                                                         <Checkbox label="添加部门"></Checkbox> 
-                                                         <Checkbox label="添加职位"></Checkbox> 
-                                                         <Checkbox label="添加员工"></Checkbox> 
-                                                         <Checkbox label="编辑员工"></Checkbox> 
-                                                         <Checkbox label="添加审查访问员"></Checkbox> 
-                                                         <Checkbox label="编辑审查访问员"></Checkbox>                                                           
+                                                         <Checkbox label="模板管理"></Checkbox> 
+                                                         <Checkbox label="员工管理"></Checkbox>
+                                                           
+
+
+
+                                                         <Checkbox label="代理管理"></Checkbox> 
+                                                         <Checkbox label="访问员管理"></Checkbox> 
+                                                         <Checkbox label="权限管理"></Checkbox> 
+                                                         <Checkbox label="操作日志"></Checkbox>                                                           
                                                     </CheckboxGroup><hr>
 
-                                                    <!-- 权限管理 -->
-                                                    <span  class="tit">权限管理</span>
+                                                    <!-- 报告管理 -->
+                                                    <span class="tit">报告管理</span>
                                                     <CheckboxGroup v-model="checked" @on-change="son7" class="padding">
-                                                         <Checkbox label="添加权限"></Checkbox> 
-                                                         <Checkbox label="编辑权限"></Checkbox>                                                                                                    
+                                                         <Checkbox label="业绩报告"></Checkbox> 
+                                                         <Checkbox label="报告模板"></Checkbox>
+                                                         <Checkbox label="时效报告"></Checkbox> 
+                                                         <Checkbox label="家化报告"></Checkbox>   
+                                                         <Checkbox label="已生成报告"></Checkbox> 
+                                                                                                                                                          
                                                     </CheckboxGroup><hr>
 
-                                                     <!-- 操作日志 -->
-                                                    <span  class="tit">操作日志</span>
+                                                     <!-- 可视化 -->
+                                                    <span class="tit">可视化管理</span>
                                                     <CheckboxGroup v-model="checked" @on-change="son8" class="padding">
-                                                         <Checkbox label="删除功能"></Checkbox>                                                                                                                                                         
+                                                         <!-- <Checkbox label="删除功能"></Checkbox>                                                                                                                                                          -->
                                                     </CheckboxGroup><hr>
 
-                                                     <!-- 操作日志 -->
-                                                    <span  class="tit">可视化数据</span>
+                                                     <!-- 我的任务 -->
+                                                    <span class="tit">我的任务</span>
                                                     <CheckboxGroup v-model="checked" @on-change="son9" class="padding">
-                                                         <Checkbox label="导出表格"></Checkbox>                                                                                                                                                         
-                                                    </CheckboxGroup><hr>
+                                                         <Checkbox label="项目列表"></Checkbox>  
+                                                         <Checkbox label="一审任务"></Checkbox> 
+                                                         <Checkbox label="二审任务"></Checkbox> 
+                                                         <Checkbox label="算分任务"></Checkbox> 
+                                                         <Checkbox label="消息反馈"></Checkbox>                                                                                                                                                        
+                                                    </CheckboxGroup>
+
 
                                                      <!-- <Input v-model="value5" type="textarea" placeholder="备注" class="beizhu"/> -->
                                               
@@ -183,7 +231,7 @@
                              
                              <!-- 表格 -->
                               
-                               <el-table :data="tableData" stripe border style="width:100%" highlight-current-row>
+                               <el-table :data="dataArr" stripe border style="width:100%" highlight-current-row>
                                 　　
                                 　　<el-table-column prop="jid" label="权限组编号" align="center" min-width="120">
                                 　　</el-table-column>
@@ -199,10 +247,11 @@
                                 　　</el-table-column>
                                 </el-table>
                                 <!-- 分页 -->
-                                <Page :total="100" />
+                                
                         </div>
-
-                         <Page :total="100" style="margin-top:10px"/>
+                        <Page :total="pageTotal" :current="pageNum" :page-size="pageSize" show-elevator  show-total placement="top" @on-change="handlePage" style="margin-top:10px"></Page>
+                          
+                        
 
 
 
@@ -227,23 +276,29 @@ import axios from "axios"
 export default {
   name: 'Quanxian',
    data() {
-      return {
+      return { //员工添加
+                checkAll: true,
+                indeterminate: true,
+                parindex: false,
+                checkany: false,
+                quanxuan: [],
+                yuanchecked:false,
+        pageTotal: 10,  //数据总数
+        pageNum: 1,  //初始页
+        pageSize: 3,  //每页条数
+        dataArr :[],   //页面显示的数组
         tableData:[
-           {
-               jid:"1",
-               jname:"对方",
-               jtype:"查看详情功能,认证功能,编辑权限,导出表格",           
-           },
-            {
-               jid:"2",
-               jname:"送给对方",
-               jtype:"认证功能,编辑权限",           
-           },
-            {
-               jid:"3",
-               jname:"大蛋糕",
-               jtype:"编辑权限,导出表格",           
-           }
+        //    {
+        //        jid:"1",
+        //        jname:"对方",
+        //        jtype:"查看详情功能,认证功能,编辑权限,导出表格",           
+        //    },
+        //     {
+        //        jid:"2",
+        //        jname:"送给对方",
+        //        jtype:"认证功能,编辑权限",           
+        //    },
+            
         ],
         quanxianzu:[],
         jid:"",
@@ -263,14 +318,6 @@ export default {
                     {
                         value: 'New York',
                         label: 'New York'
-                    },
-                    {
-                        value: 'London',
-                        label: 'London'
-                    },
-                    {
-                        value: 'Sydney',
-                        label: 'Sydney'
                     },
                    
                 ],
@@ -300,7 +347,7 @@ export default {
             this.$Message.info('取消');
         },
          son1(data){
-                 console.log(data)
+                // console.log(data)
                 if (data.length >1 || data.length===1) {                
                     this.single1 = true;
                     this.checked=data
@@ -312,7 +359,7 @@ export default {
             },
           
           son3(data){
-                 console.log(data)
+                // console.log(data)
                 if (data.length >1 || data.length===1) {                
                     this.single3 = true;
                     this.checked=data
@@ -323,7 +370,7 @@ export default {
                 }
             },
             son4(data){
-                 console.log(data)
+                 //console.log(data)
                 if (data.length >1 || data.length===1) {                
                     this.single4 = true;
                     this.checked=data
@@ -333,20 +380,31 @@ export default {
                     this.single4 = false;
                 }
             },
+            son5(data){
+                 //console.log(data)
+                if (data.length >1 || data.length===1) {                
+                    this.single5 = true;
+                    this.checked=data
+                //   console.log(this.checked)
+                } 
+                else {
+                    this.single5 = false;
+                }
+            },
            
             son6(data){
-                 console.log(data)
+                 //console.log(data)
                 if (data.length >1 || data.length===1) {                
                     this.single6 = true;
                     this.checked=data
-                //   console.log(this.checked)
+                   console.log(this.checked)
                 } 
                 else {
                     this.single6 = false;
                 }
             },
            son7(data){
-                 console.log(data)
+                // console.log(data)
                 if (data.length >1 || data.length===1) {                
                     this.single7 = true;
                     this.checked=data
@@ -357,7 +415,7 @@ export default {
                 }
             },
            son8(data){
-                 console.log(data)
+                // console.log(data)
                 if (data.length >1 || data.length===1) {                
                     this.single8 = true;
                     this.checked=data
@@ -368,7 +426,7 @@ export default {
                 }
             },
             son9(data){
-                 console.log(data)
+                // console.log(data)
                 if (data.length >1 || data.length===1) {                
                     this.single9 = true;
                     this.checked=data
@@ -378,6 +436,22 @@ export default {
                     this.single9 = false;
                 }
             },
+            //权限组员工管理
+            
+            yuangong (data) {
+               console.log(data)
+               if (data.length >0 ) {                     
+                        data.splice($.inArray('员工管理',data),1)                     
+                       this.checked=data.push("员工管理")
+                       this.checked=data
+                } else{        
+                     this.checked=data         
+                   data.splice($.inArray('员工管理',data),1)
+                   
+                }
+            } ,
+       
+      
             // 权限组选中值
             change(val){
                  console.log(val)
@@ -440,6 +514,15 @@ export default {
                         // window.location.reload()
                     })
             },
+         //分页
+        handlePage(value){
+            console.log(value)
+            this.pageNum = value;
+            var _start = ( value - 1 ) * this.pageSize;
+            var _end = value * this.pageSize;
+            this.dataArr = this.tableData.slice(_start,_end);
+        },
+
            
                         
             
@@ -462,25 +545,28 @@ export default {
                     // },
     mounted(){
           var that = this
-         axios({
-                   
-                url:"http://192.168.0.135:8080/selectJuisdiction",
-                   
+         axios({         
+                url:"http://192.168.0.135:8080/selectJuisdiction",       
                 })
                 .then(function(data){
-                    //  console.log(data.data)                      
-                    //  console.log(that.tableData)
-                     var arr = that.tableData.concat(data.data);
-                     that.tableData=arr;
-                     var obj = {}
-                     for(var i in arr){
-                         obj.value=arr[i].jid
-                         obj.label=arr[i].jname
-                         that.cityList.push(obj)
-                         console.log(that.quanxianzu)
+                     // console.log(data.data)   
+                      var arr = data.data;                   
+                      var newarr = that.tableData.concat(arr);
+                      that.tableData=newarr;
+                        console.log(newarr.length);
+                        that.pageTotal = that.tableData.length;
+                        var _start = ( that.pageNum - 1 ) * that.pageSize;  //pageNum 第几页  pageSize:每页几条数据
+                        var _end = that.pageNum * that.pageSize;
+                        that.dataArr = that.tableData.slice(_start,_end);
+
+                    //  console.log(newarr)
+                     for(var i in newarr){
+                         var obj = {value:newarr[i].jid,label:newarr[i].jname}
+                          that.cityList.push(obj)                   
                      }
-                     
-                })
+                      console.log(that.cityList)
+                });
+                
     }
   
 }
@@ -511,14 +597,14 @@ table{text-align: center;
 .yuangong{
     width: 100%;height: 330px;display: flex;justify-content: space-between;
     .addyuan{
-    width: 49%;height: 330px;border: 1px dotted red;background:#FFFCED;padding-left: 15px
+       width: 49%;height: 330px;border: 1px dotted red;background:#FFFCED;padding-left: 15px
     }
 }
 .tit1{font-size: 14px;font-weight: bold}
 
 
 .addquanxian{
-    width: 100%;height: 550px;
+    width: 100%;height: 650px;
 }
 .select1{width: 300px;margin-bottom: 5px}
 .fenpei{width: 100%;height: 30px;line-height: 30px;font-weight: bold}

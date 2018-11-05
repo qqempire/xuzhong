@@ -17,10 +17,8 @@
               <Option v-for="item in cityList" :value="item.value" :key="item.value" style="background:#11182D">{{ item.label }}</Option>
           </Select> -->
           <select id="mySelect">
-            <option>Apple</option>
-            <option>Pear</option>
-            <option>Banana</option>
-            <option>Orange</option>
+            <option>员工</option>
+            <option>代理</option>
           </select>
           <div id="box">
               <input type="submit" id="submit" value="登录" @click="login">  
@@ -98,31 +96,33 @@ export default {
      login(){
      
 
-      var b = $('#mySelect') .val();//选中的值
+      var val = $('#mySelect') .val();//选中的值
 
-      var c = $("#mySelect").get(0).selectedIndex;;//选中的索引
+      var ins = $("#mySelect").get(0).selectedIndex;;//选中的索引
       
-      console.log(b,c)
-        // var that = this;
-        // console.log(that.loginuser,that.loginpassword)
-        // axios({
-        //     url:"http://192.168.0.135:8080/login",
-        //     params:{account:that.loginuser,password:that.loginpassword,id:1}
-        // })
-        // .then(function(data){
-        //     console.log(data.data)
-        //     if(data.data==""){
-        //       that.instance('warning')
-        //     }else{
-        //       //console.log(data.data.uname)
-        //       localStorage.setItem('username',data.data.uname)
-        //       localStorage.setItem('job',data.data.pname)
-        //       console.log(localStorage.getItem('job'))
-        //        //that.openFullScreen2()
-        //       // that.username(data.data.uname) //把this.user传参到store里的login
-        //       //  that.$router.push("/home")
-        //     }
-        // })
+      console.log(val,ins)
+        var that = this;
+        console.log(that.loginuser,that.loginpassword)
+        axios({
+            url:"http://192.168.0.135:8080/login",
+            params:{account:that.loginuser,password:that.loginpassword,id:ins}
+        })
+        .then(function(data){
+            console.log(data.data)
+            if(data.data==""){
+              that.instance('warning')
+            }else{
+              //console.log(data.data.uname)
+              localStorage.setItem('username',data.data.uname) //用户名
+              localStorage.setItem('job',data.data.pname)  //职位
+              localStorage.setItem('Jurisdiction',data.data.jtype) //权限
+
+              console.log(localStorage.getItem('Jurisdiction'))
+               that.openFullScreen2()
+              // that.username(data.data.uname) //把this.user传参到store里的login
+                that.$router.push("/home")
+            }
+        })
      }
   },
   mounted(){
@@ -134,9 +134,9 @@ export default {
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
- .ivu-select-selection{background: red}
-
-
+ 
+ .ivu-select-single .ivu-select-selection{background: red}
+.ivu-select-single .ivu-select-selection{background: green}
   html,body{height: 100%;}
   .login{width:100%;height:100vh; min-width: 1100px; overflow: hidden; background:url(../../assets/img/login/bd.png) no-repeat center/cover;
     
@@ -147,10 +147,10 @@ export default {
      
     .content{width: 500px; height: 250px; margin: 0 auto;margin: auto;  position: absolute;  top: 0; left: 0; bottom: 0; right: 0;top:350px;
 
-        .for{ box-sizing: border-box; width: 500px; height: 240px; padding: 10px 20px 0; background-color: #21202E; border: 1px solid #2d2c3c; 
+        .for{ box-sizing: border-box; width: 500px; height: 220px; padding: 10px 20px 0; background-color: #21202E; border: 1px solid #2d2c3c; 
             position: absolute; left: 0; right: 0; margin: auto; 
             input{width: 450px; height: 40px;margin-top: 5px;border-radius: 5px; border: 0; border-bottom: 1px solid#4d6a74; background:#11182D; color: #56BACA; font-size: 16px; text-align: center;outline: none }
-            #mySelect{width: 450px; height: 40px;background:#11182D;text-align: center;text-align-last: center;color: #56BACA;border-radius: 5px;outline: none;margin-top: 5px;border:none;border: 1px solid#4d6a74;
+            #mySelect{width: 450px; height: 40px;background:#11182D;font-size: 14px;text-align: center;text-align-last: center;color: #56BACA;border-radius: 5px;outline: none;margin-top: 5px;border:none;border: 1px solid#4d6a74;
               option{width: 450px; height: 40px;text-align: center;}
             }
           #box{ width: 450px; height: 70px; 

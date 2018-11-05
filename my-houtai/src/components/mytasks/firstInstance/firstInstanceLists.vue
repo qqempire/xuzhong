@@ -5,19 +5,19 @@
                 <Breadcrumb :style="{margin: '16px 0',}">  
                     <div class="title"><span>条件筛选</span></div>
                     <div class="select">                             
-                        <Select v-model="sortList.regionalAgency" style="width:150px" placeholder="区域代理">
+                        <Select v-model="sortList.regionalagency" style="width:150px" placeholder="区域代理">
                             <Option v-for="(item,index) in sortLists.regionalAgencyLists" :value="item" :key="index">{{ item }}</Option>
                         </Select>&nbsp;
-                        <Select v-model="sortList.projectName" style="width:150px" placeholder="项目名称">
+                        <Select v-model="sortList.projectname" style="width:150px" placeholder="项目名称">
                             <Option v-for="(item,index) in sortLists.projectNameLists" :value="item" :key="index">{{ item }}</Option>
                         </Select>&nbsp;
-                        <Select v-model="sortList.taskState" style="width:150px" placeholder="任务状态">
+                        <Select v-model="sortList.taskstate" style="width:150px" placeholder="任务状态">
                             <Option v-for="(item,index) in sortLists.taskStateLists" :value="item" :key="index">{{ item }}</Option>
                         </Select>&nbsp;
-                        <Select v-model="sortList.auditStatus" style="width:150px" placeholder="审核状态">
+                        <Select v-model="sortList.auditstate" style="width:150px" placeholder="审核状态">
                             <Option v-for="(item,index) in sortLists.auditStatusLists" :value="item" :key="index">{{ item }}</Option>
                         </Select>&nbsp;
-                        <Select v-model="sortList.researchNumber" style="width:200px" placeholder="调研编号">
+                        <Select v-model="sortList.researchnum" style="width:200px" placeholder="调研编号">
                             <Option v-for="(item,index) in sortLists.researchNumberLists" :value="item" :key="index">{{ item }}</Option>
                         </Select>&nbsp;&nbsp;
                         <Button type="success" @click="sortData">&nbsp;&nbsp;搜索&nbsp;&nbsp;</Button>
@@ -62,7 +62,7 @@ export default {
                 researchNumberLists:[111]
             },
             // 点击查询按钮发送的参数 
-            sortList:{regionalAgency:'',projectName:'',taskState:'',auditStatus:'',researchNumber:''},
+            sortList:{regionalagency:'',projectname:'',taskstate:'',auditstate:'',researchnum:''},
             // 表格内容
             firstInstance: [{type: 'selection',width: 60,align: 'center'},{title: '项目名称',key: 'projectname'},{title: '调研对象',key: 'researchobject'},{title: '调研编号',key: 'researchnum'},{title: '审核状态',key: 'auditstate'},{title: '审核时间',key: 'audittime'},                                        
                         {title: '操作',key: '操作', 
@@ -88,13 +88,22 @@ export default {
                     ],
                     firstInstanceData: [],
         // 分页数据
-            dataTotal:5,
-            pageNum:5,
-            dataPage:[]        
+            dataTotal:10,
+            pageNum:10,
+            dataPage:[]         
        }
     },
     //预加载数据
-    mounted(){        
+    mounted(){
+        // 筛选框列表
+            axios({
+                url:"http://192.168.0.134:8080/queryFIDDL",  
+                method:'get'                           
+            }).then((res)=>{
+                // 初始页面数据
+                this.sortLists = res.data.sortLists
+            });         
+        
         //表格信息
             axios({
                 url:"http://192.168.0.134:8080/queryFIResearchsitua",  
@@ -103,17 +112,15 @@ export default {
                 this.dataPage = res.data;
                 this.dataTotal = res.data.length;
                 // 初始页面数据
-                if (this.dataTotal<5) {
-                    for (let index = 0; index < this.dataTotal-1; index++) {
+                if (this.dataTotal<10) {
+                    for (let index = 0; index < this.dataTotal; index++) {
                         this.firstInstanceData.push(this.dataPage[index])
                     }
                 } else {
-                    for (let index = 0; index < 5; index++) {
+                    for (let index = 0; index < 10; index++) {
                         this.firstInstanceData.push(this.dataPage[index])
                     }                
-                }                
-                
-
+                }                                
             });
     },
 
@@ -125,7 +132,25 @@ export default {
                 },
         // 搜索
             sortData(){
-                console.log('搜索功能')
+                this.firstInstanceData=[]
+                axios({
+                    url:"http://192.168.0.134:8080/queryFIResearchsitua",  
+                    method:'get',
+                    params:this.sortList                           
+                }).then((res)=>{
+                    this.dataPage = res.data;
+                    this.dataTotal = res.data.length;
+                    // 初始页面数据
+                    if (this.dataTotal<10) {
+                        for (let index = 0; index < this.dataTotal; index++) {
+                            this.firstInstanceData.push(this.dataPage[index])
+                        }
+                    } else {
+                        for (let index = 0; index < 10; index++) {
+                            this.firstInstanceData.push(this.dataPage[index])
+                        }                
+                    }                                
+                });
             },
         // 批量通过
             batchThrough(){
@@ -147,12 +172,12 @@ export default {
             changPage(page){
             //切换页码时更改表格相应数据
                 this.firstInstanceData = []
-                if (page*5 < this.dataTotal) {
-                    for (var index = (page-1)*5; index < (page)*5; index++) {
+                if (page*10 < this.dataTotal) {
+                    for (var index = (page-1)*10; index < (page)*10; index++) {
                         this.firstInstanceData.push(this.dataPage[index])          
                     }  
                 } else {
-                    for (var index = (page-1)*5; index < this.dataTotal-1; index++) {
+                    for (var index = (page-1)*10; index < this.dataTotal; index++) {
                         this.firstInstanceData.push(this.dataPage[index])          
                     }                     
                 }                                  
@@ -168,10 +193,10 @@ export default {
         .title{width: 100%;height: 40px;background: #5BC0DE;line-height: 40px;color: #fff;padding-left:10px;display:flex;justify-content: space-between;align-items:center;margin-bottom: 10px;
         }
         .select{width: 80%;}
-        .content{height: 600px; overflow: hidden;
+        .content{overflow: hidden;
             .power{margin-bottom: 10px; width: 100%; display: flex; justify-content: flex-end;}
             .title{width: 100%;height: 40px;background: #5BC0DE;line-height: 40px;color: #fff;padding-left:10px;display:flex;justify-content: space-between;align-items:center;margin-bottom: 10px;}
-            .page{float: right; margin-top: 10px;}
+            .page{float: right; margin-top: 10px; margin-bottom: 5px;}
         }
     }
 </style>

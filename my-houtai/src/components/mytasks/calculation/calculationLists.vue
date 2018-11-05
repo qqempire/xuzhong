@@ -5,22 +5,19 @@
                 <Breadcrumb :style="{margin: '16px 0',}">  
                     <div class="title"><span>条件筛选</span></div>
                     <div>                             
-                        <Select v-model="sortList.regionalAgency" style="width:150px" placeholder="区域代理">
-                            <Option v-for="(item,index) in sortLists.regionalAgencyLists" :value="item" :key="index">{{ item }}</Option>
-                        </Select>&nbsp;
-                        <Select v-model="sortList.projectName" style="width:150px" placeholder="项目名称">
+                        <Select v-model="sortList.projectname" style="width:150px" placeholder="项目名称">
                             <Option v-for="(item,index) in sortLists.projectNameLists" :value="item" :key="index">{{ item }}</Option>
                         </Select>&nbsp;
-                        <Select v-model="sortList.taskState" style="width:150px" placeholder="任务状态">
+                        <Select v-model="sortList.taskstate" style="width:150px" placeholder="任务状态">
                             <Option v-for="(item,index) in sortLists.taskStateLists" :value="item" :key="index">{{ item }}</Option>
                         </Select>&nbsp;
-                        <Select v-model="sortList.auditStatus" style="width:150px" placeholder="审核状态">
+                        <Select v-model="sortList.auditstate" style="width:150px" placeholder="审核状态">
                             <Option v-for="(item,index) in sortLists.auditStatusLists" :value="item" :key="index">{{ item }}</Option>
                         </Select>&nbsp;
-                        <Select v-model="sortList.researchNumber" style="width:200px" placeholder="调研编号">
+                        <Select v-model="sortList.researchnum" style="width:200px" placeholder="调研编号">
                             <Option v-for="(item,index) in sortLists.researchNumberLists" :value="item" :key="index">{{ item }}</Option>
                         </Select>&nbsp;&nbsp;
-                        <Button type="success" @click="queryProject">&nbsp;&nbsp;搜索&nbsp;&nbsp;</Button>
+                        <Button type="success" @click="sortData">&nbsp;&nbsp;搜索&nbsp;&nbsp;</Button>
                     </div>
                 </Breadcrumb>
                 <Card>
@@ -44,25 +41,24 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
     name: 'calculationLists',
     data () {
         return {
         // 查询功能
             sortLists:{
-                regionalAgencyLists: ["河南","广东","江西","湖南","湖北","河北","东北"],
                 projectNameLists:["安阳"],
                 taskStateLists: ["文峰"],
                 auditStatusLists:['手动输入'],
                 researchNumberLists:[22],
             },
             // 点击查询按钮发送的参数 
-            sortList:{regionalAgency:'',projectName:'',taskState:'',auditStatus:'',researchNumber:''},
-
+            sortList:{projectname:'',taskstate:'',auditstate:'',researchnum:''},
         // 表格内容
-            columns10: [{type: 'selection',align: 'center'},{title: '区',key: '区'},{title: '调研对象',key: '调研对象'},{title: '调研编号',key: '调研编号'},{title: '任务状态',key: '任务状态'},                                                           
-                        {title: '得分核对状态',width: 130,key: '得分核对状态'},{title: '原始得分',width: 120,key: '原始得分',sortable: true},{title: '一审后得分',width: 130, key: '一审后得分',sortable: true},{title: '二审后得分',width: 130,key: '二审后得分',sortable: true},
-                        {title: '核对得分',width: 120,key: '核对得分',sortable: true},                                                              
+            columns10: [{type: 'selection',align: 'center'},{title: '区',key: 'district'},{title: '调研对象',key: 'researchobject'},{title: '调研编号',key: 'researchnum'},{title: '任务状态',key: 'taskstate'},                                                           
+                        {title: '得分核对状态',width: 130,key: 'auditstate'},{title: '原始得分',width: 120,key: 'originalscore',sortable: true},{title: '一审后得分',width: 130, key: 'firstinstancescore',sortable: true},{title: '二审后得分',width: 130,key: 'secondinstancescore',sortable: true},
+                        {title: '核对得分',width: 120,key: 'checkscore',sortable: true},                                                              
                         {title: '操作',key: '操作', 
                             render: (h, params) => {
                                     return h('div', [
@@ -84,51 +80,93 @@ export default {
                             }                              
                         }
                     ],
-            data10: [{区: 'John Brown',调研对象: 18,调研编号: 'New York No. 1 Lake Park',任务状态: '2016-10-03',得分核对状态: '2016-10-03',原始得分: 99,一审后得分:80,二审后得分:70,核对得分:78,操作:'审核'}],
+            data10: [],
         // 分页数据
-            dataTotal:5,
-            pageNum:5,
-            dataPage:[]
+            dataTotal:10,
+            pageNum:10,
+            dataPage:[]   
         }
     },
     //预加载数据
-    mounted(){        
+    mounted(){
+        // 筛选框列表
+            axios({
+                url:"http://192.168.0.134:8080/subTaskSortLists",  
+                method:'get'                           
+            }).then((res)=>{
+                // 初始页面数据
+                this.sortLists = res.data.sortLists
+            });         
+        
         //表格信息
-            // axios({
-            //     url:"http://192.168.0.134:8080/queryMyTask",  
-            //     method:'get'                           
-            // }).then((res)=>{
-            //     // 初始页面数据
-            //     this.data10 = res.data       
-            // });
-    },  
-
+            axios({
+                url:"http://192.168.0.134:8080/queryCalculusTask",  
+                method:'get'                           
+            }).then((res)=>{
+                this.dataPage = res.data;
+                this.dataTotal = res.data.length;
+                // 初始页面数据
+                if (this.dataTotal<10) {
+                    for (let index = 0; index < this.dataTotal; index++) {
+                        this.data10.push(this.dataPage[index])
+                    }
+                } else {
+                    for (let index = 0; index < 10; index++) {
+                        this.data10.push(this.dataPage[index])
+                    }                
+                }                                
+            });
+    }, 
     methods:{
         show (index) {
             // 根据index找到相应的data数据，传给后台，让后台返回详情数据
             console.log(index)
-            this.$router.push("/prescriptionC")   //跳转到相应项目的位置
-            //         this.$router.push("/domesticationC")   //跳转到相应项目的位置
+            // this.$router.push("/prescriptionC")   //跳转到相应项目的位置
+            this.$router.push("/domesticationC")   //跳转到相应项目的位置
         },
         //导出表格数据
         exportData(){
             console.log('导出数据')
         },
 
-        // 条件搜索
-        queryProject(){
-            console.log("条件搜索")
-        },
+        // 搜索
+            sortData(){
+                this.data10=[]
+                console.log(this.sortList)
+                axios({
+                    url:"http://192.168.0.134:8080/queryCalculusTask",  
+                    method:'get',
+                    params:this.sortList                           
+                }).then((res)=>{
+                    this.dataPage = res.data;
+                    this.dataTotal = res.data.length;
+                    // 初始页面数据
+                    if (this.dataTotal<10) {
+                        for (let index = 0; index < this.dataTotal; index++) {
+                            this.data10.push(this.dataPage[index])
+                        }
+                    } else {
+                        for (let index = 0; index < 10; index++) {
+                            this.data10.push(this.dataPage[index])
+                        }                
+                    }                                
+                });
+            },
 
         // 换页操作
-        changPage(page){
-        //切换页码时更改表格相应数据
-            // this.data7 = []
-            // for (var index = (page-1)*5; index < (page)*5; index++) {
-            //     this.data9.push(this.dataPage[index])          
-            // } 
-            console.log("换页操作")      
-        }  
+            changPage(page){
+            //切换页码时更改表格相应数据
+                this.data10 = []
+                if (page*10 < this.dataTotal) {
+                    for (var index = (page-1)*10; index < (page)*10; index++) {
+                        this.data10.push(this.dataPage[index])          
+                    }  
+                } else {
+                    for (var index = (page-1)*10; index < this.dataTotal; index++) {
+                        this.data10.push(this.dataPage[index])          
+                    }                     
+                }                                  
+            } 
 
     }
 }

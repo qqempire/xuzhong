@@ -5,21 +5,19 @@
                 <Breadcrumb :style="{margin: '16px 0',}">  
                     <div class="title"><span>条件筛选</span></div>
                     <div class="select">                             
-                        <Select v-model="sortList.regionalAgency" style="width:150px" placeholder="项目名称">
-                            <Option v-for="(item,index) in sortLists.regionalAgencyLists" :value="item" :key="index">{{ item }}</Option>
-                        </Select>&nbsp;
-                        <Select v-model="sortList.projectName" style="width:150px" placeholder="任务状态">
+                        <Select v-model="sortList.projectname" style="width:150px" placeholder="项目名称">
                             <Option v-for="(item,index) in sortLists.projectNameLists" :value="item" :key="index">{{ item }}</Option>
                         </Select>&nbsp;
-                        <Select v-model="sortList.taskState" style="width:150px" placeholder="一审状态">
+                        <Select v-model="sortList.taskstate" style="width:150px" placeholder="任务状态">
                             <Option v-for="(item,index) in sortLists.taskStateLists" :value="item" :key="index">{{ item }}</Option>
                         </Select>&nbsp;
-                        <Select v-model="sortList.auditStatus" style="width:150px" placeholder="二审状态">
-                            <Option v-for="(item,index) in sortLists.auditStatusLists" :value="item" :key="index">{{ item }}</Option>
+                        <Select v-model="sortList.firstinstance" style="width:150px" placeholder="一审状态">
+                            <Option v-for="(item,index) in sortLists.firstInstanceLists" :value="item" :key="index">{{ item }}</Option>
                         </Select>&nbsp;
-                        <Select v-model="sortList.researchNumber" style="width:200px" placeholder="调研编号">
-                            <Option v-for="(item,index) in sortLists.researchNumberLists" :value="item" :key="index">{{ item }}</Option>
-                        </Select>&nbsp;&nbsp;
+                        <Select v-model="sortList.secondinstance" style="width:150px" placeholder="二审状态">
+                            <Option v-for="(item,index) in sortLists.secondInstanceLists" :value="item" :key="index">{{ item }}</Option>
+                        </Select>&nbsp;
+                            <Input v-model="sortList.researchnum" placeholder="调研编号" style="width:150px"/>&nbsp;&nbsp;
                         <Button type="success" @click="sortData">&nbsp;&nbsp;搜索&nbsp;&nbsp;</Button>
                     </div>
                 </Breadcrumb>                
@@ -48,6 +46,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
     name: 'secondInstanceLists',
     data () {
@@ -55,16 +54,15 @@ export default {
     // 筛选框内容
         // 查询功能
             sortLists:{
-                regionalAgencyLists: ["河南","广东","江西","湖南","湖北","河北","东北"],
                 projectNameLists:["安阳"],
-                taskStateLists: ["文峰"],
-                auditStatusLists:['手动输入'],
-                researchNumberLists:[111]
+                taskStateLists: ["河南","广东","江西","湖南","湖北","河北","东北"],
+                firstInstanceLists:["一审"],
+                secondInstanceLists: ["二审"],
             },
             // 点击查询按钮发送的参数 
-            sortList:{regionalAgency:'',projectName:'',taskState:'',auditStatus:'',researchNumber:''},
+            sortList:{projectname:'',taskstate:'',firstinstance:'',secondinstance:'',researchnum:''},
             // 表格内容
-            secondInstance: [{type: 'selection',width: 60,align: 'center'},{title: '项目名称',key: '项目名称'},{title: '调研对象',key: '调研对象'},{title: '调研编号',key: '调研编号'},{title: '审核状态',key: '审核状态'},{title: '审核时间',key: '审核时间'},                                        
+            secondInstance: [{type: 'selection',width: 60,align: 'center'},{title: '区',key: 'district'},{title: '调研对象',key: 'researchobject'},{title: '调研编号',key: 'researchnum'},{title: '一审状态',key: 'firstinstancestate'},{title: '二审负责人',key: 'secondinstanceperson'},{title: '二审状态',key: 'secondinstancestate'},                                       
                         {title: '操作',key: '操作', 
                             render: (h, params) => {
                                     return h('div', [
@@ -86,25 +84,44 @@ export default {
                             }                              
                         }
                     ],
-            secondInstanceData: [{项目名称: 'John Brown',调研对象: 18,调研编号: 'New York No. 1 Lake Park',审核状态: '2016-10-03', 审核时间: '2016-10-03'}],
+            secondInstanceData: [],
 
         // 分页数据
-            dataTotal:5,
-            pageNum:5,
+            dataTotal:10,
+            pageNum:10,
             dataPage:[]   
         }
     },
     //预加载数据
-    mounted(){        
+    mounted(){
+        // 筛选框列表
+            axios({
+                url:"http://192.168.0.134:8080/secondIceTasksortLists",  
+                method:'get'                           
+            }).then((res)=>{
+                // 初始页面数据
+                this.sortLists = res.data.sortLists
+            });         
+        
         //表格信息
-            // axios({
-            //     url:"http://192.168.0.134:8080/queryMyTask",  
-            //     method:'get'                           
-            // }).then((res)=>{
-            //     // 初始页面数据
-            //     this.secondInstanceData = res.data       
-            // });
-    },    
+            axios({
+                url:"http://192.168.0.134:8080/queryFIResearchsitua",  
+                method:'get'                           
+            }).then((res)=>{
+                this.dataPage = res.data;
+                this.dataTotal = res.data.length;
+                // 初始页面数据
+                if (this.dataTotal<10) {
+                    for (let index = 0; index < this.dataTotal; index++) {
+                        this.secondInstanceData.push(this.dataPage[index])
+                    }
+                } else {
+                    for (let index = 0; index < 10; index++) {
+                        this.secondInstanceData.push(this.dataPage[index])
+                    }                
+                }                                
+            });
+    },
     methods:{
         //跳转
             show (index) {
@@ -112,7 +129,25 @@ export default {
             },
         // 搜索
             sortData(){
-                console.log('搜索功能')
+                this.secondInstanceData=[]
+                axios({
+                    url:"http://192.168.0.134:8080/querySecondIncTask",  
+                    method:'get',
+                    params:this.sortList                           
+                }).then((res)=>{
+                    this.dataPage = res.data;
+                    this.dataTotal = res.data.length;
+                    // 初始页面数据
+                    if (this.dataTotal<10) {
+                        for (let index = 0; index < this.dataTotal; index++) {
+                            this.secondInstanceData.push(this.dataPage[index])
+                        }
+                    } else {
+                        for (let index = 0; index < 10; index++) {
+                            this.secondInstanceData.push(this.dataPage[index])
+                        }                
+                    }                                
+                });
             },
         // 批量通过
             batchThrough(){
@@ -134,11 +169,16 @@ export default {
             changPage(page){
             //切换页码时更改表格相应数据
                 this.secondInstanceData = []
-                for (var index = (page-1)*5; index < (page)*5; index++) {
-                    this.secondInstanceData.push(this.dataPage[index])          
-                }       
-            } 
-
+                if (page*10 < this.dataTotal) {
+                    for (var index = (page-1)*10; index < (page)*10; index++) {
+                        this.secondInstanceData.push(this.dataPage[index])          
+                    }  
+                } else {
+                    for (var index = (page-1)*10; index < this.dataTotal; index++) {
+                        this.secondInstanceData.push(this.dataPage[index])          
+                    }                     
+                }                                  
+            }
     }
 }
 </script>
@@ -148,10 +188,10 @@ export default {
         .title{width: 100%;height: 40px;background: #5BC0DE;line-height: 40px;color: #fff;padding-left:10px;display:flex;justify-content: space-between;align-items:center;margin-bottom: 10px;
         }
         .select{width: 80%;}
-        .content{height: 600px; overflow: hidden;
+        .content{overflow: hidden;
             .power{margin-bottom: 10px; width: 100%; display: flex; justify-content: flex-end;}
             .title{width: 100%;height: 40px;background: #5BC0DE;line-height: 40px;color: #fff;padding-left:10px;display:flex;justify-content: space-between;align-items:center;margin-bottom: 10px;}
-            .page{float: right; margin-top: 10px;}
+            .page{float: right; margin-top: 10px; margin-bottom: 5px;}
         }
     }
 </style>

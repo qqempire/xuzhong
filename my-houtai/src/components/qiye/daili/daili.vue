@@ -27,7 +27,9 @@
                                             <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
                                         </Select>&nbsp;&nbsp;
                                         <Button type="success">&nbsp;&nbsp;搜索&nbsp;&nbsp;</Button>
+                                        <Button type="success">&nbsp;&nbsp;添加代理人&nbsp;&nbsp;</Button>
                         </div>
+                        
                         <br/>
                         <!-- 下表 -->
                         <div class="title">
