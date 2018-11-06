@@ -31,7 +31,7 @@
                             <Button type="error">&nbsp;&nbsp;核对不通过&nbsp;&nbsp;</Button>
                         </div>
                         <!-- 表格 -->
-                        <Table border ref="selection" :columns="columns10" :data="data10"></Table>
+                        <Table border ref="selection" :columns="columns10" :data="data10" size="small"></Table>
                         <Page :total="dataTotal" show-elevator :page-size=pageNum class-name="page" @on-change="changPage" />                         
                     </div>
                 </Card>
@@ -56,10 +56,10 @@ export default {
             // 点击查询按钮发送的参数 
             sortList:{projectname:'',taskstate:'',auditstate:'',researchnum:''},
         // 表格内容
-            columns10: [{type: 'selection',align: 'center'},{title: '区',key: 'district'},{title: '调研对象',key: 'researchobject'},{title: '调研编号',key: 'researchnum'},{title: '任务状态',key: 'taskstate'},                                                           
-                        {title: '得分核对状态',width: 130,key: 'auditstate'},{title: '原始得分',width: 120,key: 'originalscore',sortable: true},{title: '一审后得分',width: 130, key: 'firstinstancescore',sortable: true},{title: '二审后得分',width: 130,key: 'secondinstancescore',sortable: true},
-                        {title: '核对得分',width: 120,key: 'checkscore',sortable: true},                                                              
-                        {title: '操作',key: '操作', 
+            columns10: [{type: 'selection',align: 'center',width:50},{title: '区', align: 'center', key: 'district'},{title: '调研对象', align: 'center', key: 'researchobject'},{title: '调研编号', align: 'center', key: 'researchnum'},{title: '任务状态', align: 'center', key: 'taskstate'},                                                           
+                        {title: '得分核对状态', align: 'center', key: 'auditstate'},{title: '原始得分', align: 'center', key: 'originalscore',sortable: true},{title: '一审后得分',  align: 'center', key: 'firstinstancescore',sortable: true},{title: '二审后得分', align: 'center', key: 'secondinstancescore',sortable: true},
+                        {title: '核对得分', align: 'center', key: 'checkscore',sortable: true},                                                              
+                        {title: '操作', align: 'center', key: '操作', 
                             render: (h, params) => {
                                     return h('div', [
                                         h('Button', {
@@ -177,7 +177,7 @@ export default {
         .title{width: 100%;height: 40px;background: #5BC0DE;line-height: 40px;color: #fff;padding-left:10px;display:flex;justify-content: space-between;align-items:center;margin-bottom: 10px;
             span:nth-child(2){display: block;width: 100px;height: 30px;background: #C1C1C1;border-radius: 5px;line-height: 30px;text-align: center;}
         }
-        .content{height: 600px; overflow: hidden;
+        .content{overflow: hidden;
             .power{margin-bottom: 10px; width: 100%; display: flex; justify-content: flex-end;}
             .page{float: right; margin-top: 10px;}
         }

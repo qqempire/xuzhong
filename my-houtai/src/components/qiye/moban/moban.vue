@@ -22,21 +22,7 @@
                                 </div>
                                
                           <!-- 表格树 -->
-                           <!-- <el-table  stripe border style="width:100%" empty-text="" height="50px">
-                        　　<el-table-column prop="id" label="名称" align="center" min-width="185" max-height="10">
-                        　　</el-table-column>
-                        　　<el-table-column prop="name" label="编号" align="center" min-width="120" max-height="10">
-                        　　</el-table-column>
-                        　　<el-table-column prop="discribe" label="条形码" align="center" min-width="145">
-                        　　</el-table-column>
-                        　　<el-table-column prop="sort" label="是否需要价格" align="center" min-width="120">
-                        　　</el-table-column>
-                        　　<el-table-column label="排序" align="center" min-width="100">
-                        　　</el-table-column>
-                            <el-table-column label="操作" align="center" min-width="80">
-                        　　</el-table-column>
-                            </el-table> -->
-                            <!-- <Table :columns="columns1"  no-data-text="" style="height:50px"> </Table>                    -->
+                          
                             <div class="tree">
                                 <table-tree :columns="columns" :tree-structure="true" :data-source="menuData" ></table-tree>
                             </div>  
@@ -89,7 +75,7 @@
                     </Content>
                 </tab-pane>
 
-                <!-- app项目模板 -->
+         <!-- app项目模板 -->
                 <tab-pane label="app项目模板">
                     <Content :style="{padding: '0 16px 16px'}">
                         
@@ -97,16 +83,11 @@
                             <div style="height: 600px">
                                 <div class="sou">
                                     项目类型&nbsp;&nbsp;&nbsp;
-                                    <el-select v-model="value8" filterable placeholder="请选择" style="width:280px">
-                                        <el-option
-                                        v-for="item in options2"
-                                        :key="item.value"
-                                        :label="item.label"
-                                        :value="item.value">
-                                        </el-option>
-                                    </el-select>
+                                     <Select v-model="jiashi1" style="width:200px" @on-change="jiashi">
+                                        <Option v-for="item in productlei" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                                    </Select>
                                     &nbsp;&nbsp;
-                                    <el-button type="success" >搜索</el-button>
+                                    <el-button type="success" @click="appsou">搜索</el-button>
                                     <el-button type="success" @click="tobianji">添加模板</el-button>
                                     <!-- <router-link to="/moban/bianji" ><el-button type="success" >添加模板</el-button></router-link> -->
                                     
@@ -399,12 +380,27 @@ export default {
         cityList:[],
         value5:"",
         value:"",
-        //111
-        options: [
-            // {
-            //     value: '实化',
-            //     label: '实化'
-            // }, 
+        //app项目模板
+        jiashi1:"",
+        productlei: [
+            {
+                value: '2',
+                label: '实效'
+            },
+            {
+                value: '1',
+                label: '家化'
+            },  
+        ],
+         options: [
+            {
+                value: '实效',
+                label: '实效'
+            },
+            {
+                value: '家化',
+                label: '家化'
+            },  
         ],
         value8: '项目调查产品类别',
         select:"",
@@ -468,7 +464,7 @@ export default {
       handleClick(row) {
         console.log(row);
       },
-       //才品类别管理
+       //产品类别管理
 
        leibie(){
            
@@ -488,17 +484,17 @@ export default {
            this.value1=val
         },
         search(){
-            console.log(this.data5[0].children)      
+            // console.log(this.data5[0].children)      
                 var that = this;
                 axios({
                     url:"http://192.168.0.135:8080/QueryByProduct",
                     params:{column1:that.value1}
                 })
                 .then(function(data){
-                    //console.log(data.data[0]) 
+                    console.log(data.data[0]) 
                    
-                    var arr = data.data;
-                    var aaa = that.data5[0].children.push(arr[0])
+                    // var arr = data.data;
+                    // var aaa = that.data5[0].children.push(arr[0])
                    // console.log(that.data5[0].children)
                 })
         
@@ -541,8 +537,30 @@ export default {
                 this.xiugai = this.model1
                 this.modal11=true;
                 console.log( data.pname)
-            }
-        
+            },
+// app模板  
+        jiashi(val){
+          
+           this.jiashi1=val
+           console.log(this.jiashi1)
+        },
+        appsou(){
+            var that = this
+            axios({               
+                url:"http://192.168.0.135:8080/QueryByApptemplateId", 
+                params:{attype:that.jiashi1}
+            })
+            .then(function(data){
+                console.log(data.data)       
+                // var arr = data.data;
+                // for(var i in arr){
+                //       var obj={value:arr[i].tid,label:arr[i].tname}
+                //        that.options.push(obj)
+                // }
+               
+            })
+        }
+
     
   },
   mounted(){

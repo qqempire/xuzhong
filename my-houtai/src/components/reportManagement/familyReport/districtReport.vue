@@ -19,7 +19,7 @@
                 <Card>
                     <div class="table" >
                         <!-- 表格 -->
-                        <Table border :columns="columns12" :data="data12" ></Table>
+                        <Table border :columns="columns12" :data="data12" size="small"></Table>
                         <Page :total="dataTotal" show-elevator :page-size=pageNum class-name="page" @on-change="changPage" />                       
                     </div>
                 </Card>
@@ -29,19 +29,20 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'districtReport',
   data () {
     return {
     // 表格数据
-        columns12: [{title: '区域',key: '区域'},{title: '原始得分',key: '原始得分'},{title: '标准得分',key: '标准得分'},{title: '商店总数',key: '商店总数'},{title: 'A+店数',key: 'A+店数'},
-            {title: 'A店数',key: 'A'},{title: 'B店数',key: 'B店数'},{title: 'C店数',key: 'C店数'},{title: 'D店数',key: 'D店数'},{title: 'DSR店数',key: 'DSR店数'},
-            {title: '样本总数',key: '样本总数'},{title: '排名',key: '排名'}],
+        columns12: [{title: '区域', align: 'center', key: '区域'},{title: '原始得分', align: 'center', key: '原始得分'},{title: '标准得分', align: 'center', key: '标准得分'},{title: '商店总数', align: 'center', key: '商店总数'},{title: 'A+店数', align: 'center', key: 'A+店数'},
+            {title: 'A店数', align: 'center', key: 'A'},{title: 'B店数', align: 'center', key: 'B店数'},{title: 'C店数', align: 'center', key: 'C店数'},{title: 'D店数', align: 'center', key: 'D店数'},{title: 'DSR店数', align: 'center', key: 'DSR店数'},
+            {title: '样本总数', align: 'center', key: '样本总数'},{title: '排名', align: 'center', key: '排名'}],
         data12: [{区域: 'John Brown',原始得分: 18,标准得分:999,商店总数: 'New York No. 1 Lake Park',A: 55,A店数: "查看",B店数: 43,C店数: 99,D店数: 55,DSR店数: 77,样本总数: 88,排名:8}],
     // 分页数据
-        dataTotal:5,
-        pageNum:5,
-        dataPage:[]             
+        dataTotal:10,
+        pageNum:10,
+        dataPage:[]              
     }
   },
     methods: {
@@ -67,13 +68,18 @@ export default {
         goBack(){
             this.$router.push("/familyReportList")
         },
-        // 换页操作
+        //切换页码时更改表格相应数据        
         changPage(page){
-        //切换页码时更改表格相应数据
             this.data12 = []
-            for (var index = (page-1)*5; index < (page)*5; index++) {
-                this.data12.push(this.dataPage[index])          
-            }       
+            if (page*10 < this.dataTotal) {
+                for (var index = (page-1)*10; index < (page)*10; index++) {
+                    this.data12.push(this.dataPage[index])          
+                }  
+            } else {
+                for (var index = (page-1)*10; index < this.dataTotal; index++) {
+                    this.data12.push(this.dataPage[index])          
+                }                     
+            }                                  
         }                 
     }
 }

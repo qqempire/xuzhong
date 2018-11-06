@@ -24,7 +24,7 @@
                                     <Option v-for="item in yuanstatus" :value="item.value" :key="item.value">{{ item.label }}</Option>
                                 </Select>
                                 <Button type="success" @click="search">搜索</Button>
-                                <Button type="success" @click="modal10 = true">添加部门</Button>
+                                <Button type="success" @click="modal10 = true" class="bumenbtn">添加部门</Button>
                                 
                                     <Modal
                                         title="添加部门"
@@ -37,7 +37,7 @@
                                         </p>
                                        
                                     </Modal>
-                                <Button type="success" @click="modal11= true">添加职位</Button>
+                                <Button type="success" @click="modal11= true"  class="zhibtn">添加职位</Button>
                                      <Modal
                                         title="添加职位"
                                         v-model="modal11"
@@ -52,7 +52,7 @@
                                         </p>
                                        
                                     </Modal>
-                                <Button type="success" @click="modal12 = true">添加员工</Button>
+                                <Button type="success" @click="modal12 = true" class="yuanbtn">添加员工</Button>
 
                                 <!-- 员工添加弹出层 -->
                                      <Modal
@@ -104,7 +104,7 @@
                                         
                                         
                                     </Modal>
-                                <Button type="success" @click="shencha">审查访问员</Button>
+                                <Button type="success" @click="shencha" class="shenchabtn">审查访问员</Button>
                                      
                                  
                            </div>
@@ -257,6 +257,7 @@ export default {
         bumen:[],
         quanxian:[],
         positionzhi:[],
+         obj :{},
         intime:"",
         outtime:"",
         email:"",
@@ -375,11 +376,12 @@ export default {
         shencha(){
             this.$router.push("./addshencha")
         },
-        // 页面
+        // 部门
         change1(val){
            this.model1=val;
            var that = this
           // 职位
+            
             axios({         
             url:"http://192.168.0.135:8080/QueryByPositionId",
             params:{did:that.model1}       
@@ -387,9 +389,11 @@ export default {
             .then(function(data){
                 console.log(data.data)
                 var arr = data.data
-                for(var i in arr){
-                    var obj={value:arr[i].pid,label:arr[i].pname}
-                    that.positionzhi.push(obj)
+                that.positionzhi=[]
+                for(var i in arr){                  
+                    that.obj={value:arr[i].pid,label:arr[i].pname}
+                    that.positionzhi.push(that.obj)
+                   
                 }
             });
         },
@@ -627,7 +631,26 @@ export default {
                     that.quanxian.push(obj)
                 }
             });
-            
+
+            //按钮权限判断         
+            function ifquan(biaoqian){
+                var text = $.trim(biaoqian.text());
+                // console.log(text1)                             
+                var str =  localStorage.getItem('Jurisdiction')
+                var arr = str.split(',');
+                var num = $.inArray(text, arr);  //返回 -1则不存在               
+                console.log(num)
+                if(num==-1){
+                    biaoqian.css({'display':'none'})
+                }else{
+                    biaoqian.css({'display':'block'})
+                }
+                   
+             }
+             ifquan($(".bumenbtn"))
+             ifquan($(".zhibtn"))
+             ifquan($(".yuanbtn"))
+             ifquan($(".shenchabtn"))
 
     }
   
@@ -663,5 +686,6 @@ table{text-align: center;
     }
 }
 .tit1{font-size: 14px;font-weight: bold}
+// .bumenbtn{display: block}
 
 </style>

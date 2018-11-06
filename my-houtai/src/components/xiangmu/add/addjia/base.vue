@@ -19,7 +19,7 @@
                                                <Select v-model="model" style="width:180px" placeholder="权限组" @on-change="change">
                                                     <Option v-for="item in xmlb" :value="item.value"  label-in-value='true' :key="item.value">{{ item.label }}</Option>
                                                 </Select>
-                                               <Select v-model="model2" style="width:180px" placeholder="产品类别">
+                                               <Select v-model="model2" style="width:180px" placeholder="产品类别" @on-change="changeleibie">
                                                     <Option v-for="item in product" :value="item.value" :key="item.value">{{ item.label }}</Option>
                                                </Select>
                                           </div>
@@ -237,6 +237,23 @@ export default {
   }
  },
   methods: {
+      //产品类别选择
+      changeleibie(val){
+         var that = this;
+            axios({
+                url:"http://192.168.0.135:8080/QueryByProduct",
+                params:{column1:val}
+            })
+            .then(function(data){            
+                 var arr = data.data;
+                for(var i in arr){    
+                     console.log(arr[i])                  
+                      var obj={value:arr[i].pid,label:arr[i].pname}
+                       that.diaoyan.push(obj)                                          
+                 }
+                
+            })
+      },
       show (index) {
                 this.$Modal.info({
                     title: 'User Info',
@@ -323,24 +340,20 @@ export default {
          var that = this;
       
       //产品类别下拉
-          axios({ 
-                  url:"http://192.168.0.134:8080/queryproducttype",
-                   
-                })
-                .then(function(data){
-                    //console.log(data.data)       
-                    var arr = data.data;
-                    for(var i in arr){
-                        //  obj.value=arr[i].producttype
-                        //  obj.label=arr[i].producttype
-                         
-                      var obj={value:arr[i].producttype,label:arr[i].producttype}
-                       // console.log(obj)
+         var that = this
+        	
+            axios({               
+                url:"http://192.168.0.135:8080/QueryByTypes",                    
+            })
+            .then(function(data){
+                console.log(data.data)       
+                var arr = data.data;
+                for(var i in arr){
+                      var obj={value:arr[i].tid,label:arr[i].tname}
                        that.product.push(obj)
-                     }
-                     
-                   
-                })
+                }
+               
+            })
          //选择项目模板
           axios({ 
                   url:"http://192.168.0.134:8080/queryProjecttemp",

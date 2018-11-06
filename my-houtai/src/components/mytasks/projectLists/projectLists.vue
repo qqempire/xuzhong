@@ -37,7 +37,7 @@
                                     <Button type="info" >DSR进度：&nbsp;{{item.DSR}}</Button>
                                 </div>
                                 <!-- 数据表 -->
-                                <Table v-show=item.boo :columns="columns7" :data="data[index]"></Table>
+                                <Table border v-show=item.boo :columns="columns7" :data="data[index]" size="small"></Table>
                             </div>
                         </div>
                     </div>
@@ -64,10 +64,10 @@ export default {
             sortList:{regionalagency:'',projectname:'',taskstate:'',auditstate:''},
         // table数据
             // 表头数据
-            dataTitle:[{projectname:'家化项目',DSR:"69%",boo:false,tip:'展开'},{projectname:'家化项目bgdfg',DSR:"44%",boo:false,tip:'展开'},],
+            dataTitle:[{projectname:'家化项目',DSR:"69%",boo:false,tip:'展开'},{projectname:'家化项目bgdfg',DSR:"44%",boo:false,tip:'展开'}],
             // 表格数据
-            columns7: [{title: '调研对象',key: 'researchobject'},{title: '调研编号',key: 'researchnum'},{title: '访问员账号',key: 'entryaccountnum',},{title: '任务状态',key: 'taskstate'},{title: '审核状态',key: 'auditstate'},{title: '截至日期',key: 'deadline',sortable: true},
-                {title: '操作',key: '操作', 
+            columns7: [{title: '调研对象', align: 'center', key: 'researchobject'},{title: '调研编号', align: 'center', key: 'researchnum'},{title: '访问员账号', align: 'center', key: 'entryaccountnum',},{title: '任务状态', align: 'center', key: 'taskstate'},{title: '审核状态', align: 'center', key: 'auditstate'},{title: '截至日期', align: 'center', key: 'deadline',sortable: true},
+                {title: '操作', align: 'center', key: 'oprate', 
                     render: (h, params) => {
                             return h('div', [
                                 h('Button', {
@@ -80,7 +80,7 @@ export default {
                                     },
                                     on: {
                                         click: () => {
-                                            this.show(params.index)
+                                            this.show(params.row.researchnum)
                                         }
                                     }
                                 }, '查看')
@@ -88,7 +88,8 @@ export default {
                     }                              
                 }
             ],
-            data:[]
+            data:[[{researchobject:'1',researchnum:'2',entryaccountnum:'3',taskstate:'4',auditstate:'5',deadline:'6',},{researchobject:'1',researchnum:'12',entryaccountnum:'3',taskstate:'4',auditstate:'5',deadline:'6',}],[{researchobject:'1',researchnum:'333',entryaccountnum:'3',taskstate:'4',auditstate:'5',deadline:'6',}],],
+            detailData:[]
         }
     },
 
@@ -96,27 +97,27 @@ export default {
     // 动态
     mounted(){
         // 筛选框列表
-            axios({
-                url:"http://192.168.0.134:8080/queryPjLiTask",  
-                method:'get'                           
-            }).then((res)=>{
-                // 初始页面数据
-                this.sortLists = res.data.sortLists
-            });        
+        axios({
+            url:"http://192.168.0.134:8080/queryPjLiTask",  
+            method:'get'                           
+        }).then((res)=>{
+            // 初始页面数据
+            this.sortLists = res.data.sortLists
+        });        
         //表格信息
-            axios({
-                url:"http://192.168.0.134:8080/queryMyTask",  
-                method:'get'                           
-            }).then((res)=>{
-                // 初始页面数据
-                this.dataTitle = res.data.title;              
-                this.data = res.data.data   
-            });   
+        axios({
+            url:"http://192.168.0.134:8080/queryMyTask",  
+            method:'get'                           
+        }).then((res)=>{
+            // 初始页面数据
+            this.dataTitle = res.data.title;              
+            this.data = res.data.data   
+        });   
     },
     methods:{
         //   展示相应的detail
-        show (index) {
-                this.$router.push("/projectDetail")  
+        show (name) {            
+            this.$router.push({path:"/projectDetail",query:{researchnum:name}})  
         },
         
         //导出表格数据

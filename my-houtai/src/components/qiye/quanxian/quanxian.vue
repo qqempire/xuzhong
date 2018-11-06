@@ -175,7 +175,14 @@
                                                     <span class="tit">企业管理</span>
                                                     <CheckboxGroup v-model="checked" @on-change="son6" class="padding">
                                                          <Checkbox label="模板管理"></Checkbox> 
-                                                         <Checkbox label="员工管理"></Checkbox>
+                                                         <Checkbox  :value="checkAll" label="员工管理"></Checkbox><hr>
+                                                           
+                                                            <CheckboxGroup v-model="checked" @on-change="yuangong" style="margin-left:30px">
+                                                                <Checkbox label="添加部门"></Checkbox>
+                                                                <Checkbox label="添加职位"></Checkbox>
+                                                                <Checkbox label="添加员工"></Checkbox>
+                                                                <Checkbox label="审查访问员"></Checkbox>
+                                                            </CheckboxGroup><hr>
                                                            
 
 
@@ -479,7 +486,7 @@ export default {
                      console.log(data.data)     
                     if(data.data.msg=="添加成功"){
                         alert("添加成功")
-                        // window.location.reload()
+                         window.location.reload()
                     }
                        
                 })
@@ -510,8 +517,11 @@ export default {
                         params:{jid:that.jid,jtype:str,jname:jname}
                     })
                     .then(function(data){
-                        console.log(data.data)     
-                        // window.location.reload()
+                        console.log(data.data) 
+                        if(data.data.msg=="修改成功"){
+                            alert("修改成功")
+                        }    
+                      window.location.reload()
                     })
             },
          //分页

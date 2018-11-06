@@ -29,7 +29,7 @@
                             <Button type="success" @click="sortData">&nbsp;&nbsp;搜索&nbsp;&nbsp;</Button>
                         </div>
                         <!-- 表格 -->
-                        <Table border :columns="columns9" :data="data9"></Table>
+                        <Table border :columns="columns9" :data="data9" size="small"></Table>
                         <!-- 换页 -->
                         <Page :total="dataTotal" show-elevator :page-size=pageNum class-name="page" @on-change="changPage" />   
                     </div>
@@ -51,8 +51,8 @@ export default {
             },
             sortList:{projectname:null,starttime:null,endtime:null},
         //表格内容
-            columns9: [{title: '项目名称',key: 'projectname'},{title: '地区',key: 'area'},{title: '调研对象',key: 'researchobject'},{title: '调研编号',key: 'researchnum'},{title: '区域代理人',key: 'regionalagent'},
-                {title: '发送消息人姓名',key: 'sendmsgname'},{title: '联系方式',key: 'phone'},{title: '反馈类型',key: 'feedbacktype'},{title: '时间',key: 'time'}],
+            columns9: [{title: '项目名称', align: 'center', key: 'projectname'},{title: '地区', align: 'center', key: 'area'},{title: '调研对象', align: 'center', key: 'researchobject'},{title: '调研编号', align: 'center', key: 'researchnum'},{title: '区域代理人', align: 'center', key: 'regionalagent'},
+                {title: '发送消息人姓名', align: 'center', key: 'sendmsgname'},{title: '联系方式', align: 'center', key: 'phone'},{title: '反馈类型', align: 'center', key: 'feedbacktype'},{title: '时间', align: 'center', key: 'time'}],
             data9: [],
         // 分页数据
             dataTotal:10,

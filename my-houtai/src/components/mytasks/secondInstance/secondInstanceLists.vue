@@ -35,7 +35,7 @@
                             <Button type="success" @click="downloadAudioVideo">&nbsp;&nbsp;下载录音录像&nbsp;&nbsp;</Button>
                         </div>
                         <!-- 表格 -->
-                        <Table border ref="selection" :columns="secondInstance" :data="secondInstanceData"></Table>
+                        <Table border ref="selection" :columns="secondInstance" :data="secondInstanceData" size="small"></Table>
                         <!-- 换页 -->
                         <Page :total="dataTotal" show-elevator :page-size=pageNum class-name="page" @on-change="changPage" />                    
                     </div>
@@ -62,8 +62,8 @@ export default {
             // 点击查询按钮发送的参数 
             sortList:{projectname:'',taskstate:'',firstinstance:'',secondinstance:'',researchnum:''},
             // 表格内容
-            secondInstance: [{type: 'selection',width: 60,align: 'center'},{title: '区',key: 'district'},{title: '调研对象',key: 'researchobject'},{title: '调研编号',key: 'researchnum'},{title: '一审状态',key: 'firstinstancestate'},{title: '二审负责人',key: 'secondinstanceperson'},{title: '二审状态',key: 'secondinstancestate'},                                       
-                        {title: '操作',key: '操作', 
+            secondInstance: [{type: 'selection',width: 50,align: 'center'},{title: '区', align: 'center', key: 'district'},{title: '调研对象', align: 'center', key: 'researchobject'},{title: '调研编号', align: 'center', key: 'researchnum'},{title: '一审状态', align: 'center', key: 'firstinstancestate'},{title: '二审负责人', align: 'center', key: 'secondinstanceperson'},{title: '二审状态', align: 'center', key: 'secondinstancestate'},                                       
+                        {title: '操作', align: 'center', key: '操作', 
                             render: (h, params) => {
                                     return h('div', [
                                         h('Button', {

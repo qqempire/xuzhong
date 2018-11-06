@@ -212,14 +212,6 @@ export default {
            this.$router.push("/login")
        };
 
-    //权限判断
-    //    var text = $(".xmgl1").text();
-    //    var str =  localStorage.getItem('Jurisdiction')
-    //    var arr = str.split(',')
-    //    var num = $.inArray(text, arr);  //返回 -1则不存在
-    //    if(num==-1){
-    //        $(".xmgl1").css({'display':'none'})
-    //    }
     function ifquan(biaoqian){
        var text = biaoqian.text();
        var str =  localStorage.getItem('Jurisdiction')

@@ -28,7 +28,7 @@
                             <el-button type="info" @click="exportData">导出表格</el-button>
                         </div>
                         <!-- 表格 -->
-                        <Table border :columns="generatedReport" :data="generatedReportData" ></Table>
+                        <Table border :columns="generatedReport" :data="generatedReportData" size="small"></Table>
                         <!-- 换页 -->
                         <Page :total="dataTotal" show-elevator :page-size=pageNum class-name="page" @on-change="changPage" />                       
                     </div>
@@ -64,8 +64,8 @@ export default {
                         ]);
                     }            
             },           
-            {title: '操作人',key: 'operator'},{title: '创建时间',key: 'startTime'},                    
-            {title: '操作',key: 'operate', 
+            {title: '操作人', align: 'center', key: 'operator'},{title: '创建时间', align: 'center', key: 'startTime'},                    
+            {title: '操作', align: 'center', key: 'operate', 
                 render: (h, params) => {
                     return h('div', [
                         h('Button', {

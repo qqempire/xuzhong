@@ -8,7 +8,7 @@
                             :format="['xls','xlsx']"                            
                             :on-format-error="handleFormatError"
                             :on-success="handleSuccess1"
-                            action="http://192.168.0.133:8080/storeupload"     
+                            action="http://192.168.0.134:8080/storeupload"     
                             >   
                             <Button icon="ios-cloud-upload-outline">批量上传</Button>
                         </Upload>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -71,7 +71,7 @@
                             <el-button type="info" @click="exportData">导出表格</el-button>
                         </div>
                         <!-- 表格 -->
-                        <Table border :columns="columns9" :data="data9" ></Table>
+                        <Table border :columns="columns9" :data="data9" size="small"></Table>
                         <Modal
                             title="单个门店修改"
                             ok-text='保存'
@@ -103,8 +103,7 @@ export default {
         return {            
         //添加单个列表
             modal12:false,
-            addOnestore:{province:'',city:'',district:'',projecttype:'',storelevel:'',storearea:'',storenum:'',storename:'',storelong:'',storelat:'',detailsaddr:''},
-           
+            addOnestore:{province:'s',city:'',district:'',projecttype:'',storelevel:'',storearea:'',storenum:'',storename:'',storelong:'',storelat:'',detailsaddr:''},           
         // 表格数据
             columns9: [{title: '区域', key: 'area',
                         render: (h, params) => {
@@ -171,27 +170,27 @@ export default {
             modal4:false,            
                        
         // 分页数据
-            dataTotal:5,
-            pageNum:5,
+            dataTotal:10,
+            pageNum:10,
             dataPage:[]  
         }
     },
     mounted() {
     // 请求列表总数据
         axios({
-            url:"http://192.168.0.133:8080/querystorestate",  
+            url:"http://192.168.0.134:8080/querystorestate",  
             method:'get'                           
         }).then((res)=>{
             this.dataPage = res.data;
             this.dataTotal = res.data.length;
             // 初始页面数据
-            if (this.dataTotal<5) {
+            if (this.dataTotal<10) {
                 for (let index = 0; index < this.dataTotal; index++) {
                     this.data9.push(this.dataPage[index])
                     this.data9[index].area = this.dataPage[index].province+this.dataPage[index].city+this.dataPage[index].district           
                 }
             } else {
-                for (let index = 0; index < 5; index++) {
+                for (let index = 0; index < 10; index++) {
                     this.data9.push(this.dataPage[index])
                     this.data9[index].area = this.dataPage[index].province+this.dataPage[index].city+this.dataPage[index].district                      
                 }                
@@ -199,21 +198,21 @@ export default {
         });
     // 三级联动——省(拿数据)
         axios({
-            url:"http://192.168.0.133:8080/provinceinfo",  
+            url:"http://192.168.0.134:8080/provinceinfo",  
             method:'get'                           
         }).then((res)=>{
             this.sortLists.provinceLists = res.data;
         }) 
         // 门店等级
         axios({
-            url:"http://192.168.0.133:8080/querystorelevel",  
+            url:"http://192.168.0.134:8080/querystorelevel",  
             method:'get'                           
         }).then((res)=>{
             this.sortLists.storeLevelLists = res.data;
         })
         // 门店范围
         axios({
-            url:"http://192.168.0.133:8080/querystorearea",  
+            url:"http://192.168.0.134:8080/querystorearea",  
             method:'get'                           
         }).then((res)=>{
             this.sortLists.storeAreaLists = res.data;
@@ -222,12 +221,12 @@ export default {
     methods: {
         //导出表格数据
         exportData(){
-            window.location.href="http://192.168.0.133:8080/storestatedownload?province="+this.sortList.province+"&city="+this.sortList.city+"&district="+this.sortList.district+"&storename="+this.sortList.storename+"&storelevel="+this.sortList.storelevel+"&storearea="+this.sortList.storearea
+            window.location.href="http://192.168.0.134:8080/storestatedownload?province="+this.sortList.province+"&city="+this.sortList.city+"&district="+this.sortList.district+"&storename="+this.sortList.storename+"&storelevel="+this.sortList.storelevel+"&storearea="+this.sortList.storearea
         },
     // 三级联动——省(发送)
         getProvince(value){
             axios({
-                url:"http://192.168.0.133:8080/querycity",  
+                url:"http://192.168.0.134:8080/querycity",  
                 params:{province:value},
             }).then((res)=>{
                 this.sortLists.cityLists = res.data;
@@ -236,7 +235,7 @@ export default {
     // 三级联动——市(发送)
         getCity(value){
             axios({
-                url:"http://192.168.0.133:8080/querydistrict",  
+                url:"http://192.168.0.134:8080/querydistrict",  
                 method:'get',
                 params:{city:value},
             }).then((res)=>{
@@ -246,7 +245,7 @@ export default {
 
         // 下载模板
         downloadTemplate(){        
-            window.location.href="http://192.168.0.133:8080/downloadTemplet"
+            window.location.href="http://192.168.0.134:8080/downloadTemplet"
         },
         //上传功能（success或者error）
         //单个上传
@@ -255,16 +254,16 @@ export default {
             for (let key in this.addOnestore) {                
                 if (this.addOnestore[key]=='') {
                     onOff = false;
-                    alert("请将信息输入完整!")
+                    this.$Message.info('请将信息输入完整');
                     return false;
                 }
             }
             if(onOff){
                 axios({
-                    url:"http://192.168.0.133:8080/sinaddstoinfo",               
+                    url:"http://192.168.0.134:8080/sinaddstoinfo",               
                     params:this.addOnestore                            
                 }).then((res)=>{
-                    alert(res.data.msg)                   
+                    this.$Message.info(res.data.msg);                  
                     // 清空this.addOnestore中的value
                     for (const key in this.addOnestore) {
                          this.addOnestore[key]==''                       
@@ -274,7 +273,7 @@ export default {
         }, 
         //批量上传
         handleSuccess1 (res, file) {
-            alert(res.msg)         
+            this.$Message.info(res.msg);         
         },  
         handleFormatError (file) {
             this.$Notice.warning({
@@ -283,23 +282,22 @@ export default {
             });
         },
         // 条件搜索
-        getStoreArea(value){ console.log(this.sortList)},
         querystorestate(){
             this.data9 = [];
             axios({
-                    url:"http://192.168.0.133:8080/querystorestate",              
+                    url:"http://192.168.0.134:8080/querystorestate",              
                     params:this.sortList                           
                 }).then((res)=>{
                     this.dataPage = res.data;
                     this.dataTotal = res.data.length;
                     // 初始页面数据
-                    if (this.dataTotal<5) {
+                    if (this.dataTotal<10) {
                         for (let index = 0; index < this.dataTotal; index++) {
                             this.data9.push(this.dataPage[index])
                             this.data9[index].area = this.dataPage[index].province+this.dataPage[index].city+this.dataPage[index].district           
                         }
                     } else {
-                        for (let index = 0; index < 5; index++) {
+                        for (let index = 0; index < 10; index++) {
                             this.data9.push(this.dataPage[index])
                             this.data9[index].area = this.dataPage[index].province+this.dataPage[index].city+this.dataPage[index].district                      
                         }                
@@ -318,11 +316,11 @@ export default {
         remove (index) {        
         // 删除操作通知后台
             axios({
-                url:"http://192.168.0.133:8080/deleteStoreinfo", 
+                url:"http://192.168.0.134:8080/deleteStoreinfo", 
                 method:'post',
                 params:{storenum:this.data9[index].storenum},                                      
             }).then((res)=>{
-                alert(res.data.msg)
+                this.$Message.info(res.data.msg);
                 // 前端页面显示删除
                 this.data9.splice(index, 1);
             })
@@ -333,11 +331,11 @@ export default {
             // 把修改后的整条数据发给后台保存
                 console.log(this.data9[this.storeList.index])   
             axios({
-                url:"http://192.168.0.133:8080/updateStoreinfo", 
+                url:"http://192.168.0.134:8080/updateStoreinfo", 
                 params:this.data9[this.storeList.index], 
                 method:'post',                                        
             }).then((res)=>{
-                alert(res.data.msg)
+                this.$Message.info(res.data.msg);
                 // 将修改后的数据存到前端相应的位置
                 for(let key in this.data9[this.storeList.index]){
                     this.data9[this.storeList.index][key]=this.storeList[key];
@@ -348,11 +346,10 @@ export default {
         changPage(page){
         //切换页码时更改表格相应数据
             this.data9 = []
-            for (var index = (page-1)*5; index < (page)*5; index++) {
+            for (var index = (page-1)*10; index < (page)*10; index++) {
                 this.data9.push(this.dataPage[index])          
             }       
-        }      
-        
+        }              
     },
 
 }
@@ -361,12 +358,12 @@ export default {
 <style scoped lang="scss">
     .shopLists{
         .add{width: 500px; height: 80px; display: flex; justify-content: space-around; align-items: center;}  
-        .content{overflow: hidden; height: 600px;
+        .content{overflow: hidden;
             .title{width: 100%;height: 40px;background: #5BC0DE;line-height: 40px;color: #fff;padding-left:10px;display:flex;justify-content: space-between;align-items:center;margin-bottom: 10px;
                 span:nth-child(2){display: block;width: 100px;height: 30px;background: #C1C1C1;border-radius: 5px;line-height: 30px;text-align: center;}
             }
             .select{display: flex; width:800px; justify-content: space-between; align-items: center;}
-            .page{float: right; margin-top: 10px;}
+            .page{float: right; margin-top: 10px; margin-bottom: 5px;}
         }  
     }
 </style>

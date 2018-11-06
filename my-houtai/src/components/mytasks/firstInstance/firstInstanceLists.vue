@@ -36,7 +36,7 @@
                             <Button type="success" @click="downloadAudioVideo">&nbsp;&nbsp;下载录音录像&nbsp;&nbsp;</Button>
                         </div>
                         <!-- 表格 -->
-                        <Table border ref="selection" :columns="firstInstance" :data="firstInstanceData"></Table>
+                        <Table border ref="selection" :columns="firstInstance" :data="firstInstanceData" size="small"></Table>
                         <!-- 换页 -->
                         <Page :total="dataTotal" show-elevator :page-size=pageNum class-name="page" @on-change="changPage" />                            
                     </div>
@@ -64,8 +64,8 @@ export default {
             // 点击查询按钮发送的参数 
             sortList:{regionalagency:'',projectname:'',taskstate:'',auditstate:'',researchnum:''},
             // 表格内容
-            firstInstance: [{type: 'selection',width: 60,align: 'center'},{title: '项目名称',key: 'projectname'},{title: '调研对象',key: 'researchobject'},{title: '调研编号',key: 'researchnum'},{title: '审核状态',key: 'auditstate'},{title: '审核时间',key: 'audittime'},                                        
-                        {title: '操作',key: '操作', 
+            firstInstance: [{type: 'selection',width: 50,align: 'center'},{title: '项目名称', align: 'center', key: 'projectname'},{title: '调研对象', align: 'center', key: 'researchobject'},{title: '调研编号', align: 'center', key: 'researchnum'},{title: '审核状态', align: 'center', key: 'auditstate'},{title: '审核时间', align: 'center', key: 'audittime'},                                        
+                        {title: '操作', align: 'center', key: '操作', 
                             render: (h, params) => {
                                     return h('div', [
                                         h('Button', {

@@ -24,7 +24,7 @@
                                     <p>排 序 值 :  <Input v-model="value3" placeholder="Enter something..." style="width: 300px" /></p>
                                 </Modal>
                         <!-- <Table border :columns="columns1" :data="data1"></Table>                         -->
-                              <el-table :data="dataArr" stripe border style="width:100%" highlight-current-row>
+                         <el-table :data="dataArr" stripe border style="width:100%" highlight-current-row>
                         　　<el-table-column prop="id" label="商品ID" align="center" min-width="40" max-height="10">
                         　　</el-table-column>
                         　　<el-table-column prop="name" label="类别名称" align="center" min-width="120" max-height="10">

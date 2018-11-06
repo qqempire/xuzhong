@@ -29,7 +29,7 @@
                             <Button type="success" @click="sortData">&nbsp;&nbsp;搜索&nbsp;&nbsp;</Button>
                         </div>
                         <!-- 表格 -->
-                        <Table border :columns="columns9" :data="data9"></Table>
+                        <Table border :columns="columns9" :data="data9" size="small"></Table>
                         <!-- 换页 -->
                         <Page :total="dataTotal" show-elevator :page-size=pageNum class-name="page" @on-change="changPage" />   
                     </div>
@@ -51,8 +51,8 @@ export default {
             },
             sortList:{projectname:null,starttime:null,endtime:null},
         //表格内容
-            columns9: [{title: '项目名称',key: 'projectname'},{title: '地区',key: 'area'},{title: '调研对象',key: 'researchobject',},{title: '调研编号',key: 'researchnum'},{title: '区域代理人',key: 'regionalagent'},
-                {title: '录入人员',key: 'entrypersonnel'},{title: '录入人员IP数量',key: 'entrypersonnelipnum'},{title: '绑定手机号',key: 'bindphonenum'}],
+            columns9: [{title: '项目名称', align: 'center', key: 'projectname'},{title: '地区', align: 'center', key: 'area'},{title: '调研对象', align: 'center', key: 'researchobject',},{title: '调研编号', align: 'center', key: 'researchnum'},{title: '区域代理人', align: 'center', key: 'regionalagent'},
+                {title: '录入人员', align: 'center', key: 'entrypersonnel'},{title: '录入人员IP数量', align: 'center', key: 'entrypersonnelipnum'},{title: '绑定手机号', align: 'center', key: 'bindphonenum'}],
             data9: [],
         // 分页数据
             dataTotal:10,

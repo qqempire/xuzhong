@@ -2,37 +2,54 @@
     <div class="performanceReport">
       <Layout :style="{marginLeft: '200px'}" >            
             <Content :style="{padding: '0 16px 16px'}">
+                <Breadcrumb :style="{margin: '16px 0'}"> 
+                    <div class="title"><span>条件筛选</span></div>
+                    <div class="select">                             
+                        <Select v-model="sortList.province" style="width:150px" placeholder="省" filterable @on-change="getProvince">
+                            <Option v-for="(item,index) in sortLists.provinceLists" :value="item" :key="index">{{ item }}</Option>
+                        </Select>
+                        <Select v-model="sortList.city" style="width:150px" placeholder="市" filterable @on-change="getCity">
+                            <Option v-for="(item,index) in sortLists.cityLists" :value="item" :key="index">{{ item }}</Option>
+                        </Select>
+                        <Select v-model="sortList.district" style="width:150px" placeholder="县/区" filterable>
+                            <Option v-for="(item,index) in sortLists.districtLists" :value="item" :key="index">{{ item }}</Option>
+                        </Select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        
+                        <Select v-model="sortList.agentstatus" style="width:100px" placeholder="代理状态">
+                            <Option v-for="(item,index) in sortLists.agentstatusLists" :value="item" :key="index">{{ item }}</Option>
+                        </Select>&nbsp;&nbsp;
+                        <Button type="success" @click="sort">&nbsp;&nbsp;搜索&nbsp;&nbsp;</Button>
+                    </div>
+                </Breadcrumb>
                 <Card>
                     <div class="content">
-                        <div class="title"><span>条件筛选</span></div>
-                        <div>                             
-                            <Select v-model="sortList.province" style="width:150px" placeholder="省" filterable @on-change="getProvince">
-                                <Option v-for="(item,index) in sortLists.provinceLists" :value="item" :key="index">{{ item }}</Option>
-                            </Select>
-                            <Select v-model="sortList.city" style="width:150px" placeholder="市" filterable @on-change="getCity">
-                                <Option v-for="(item,index) in sortLists.cityLists" :value="item" :key="index">{{ item }}</Option>
-                            </Select>
-                            <Select v-model="sortList.district" style="width:150px" placeholder="县/区" filterable>
-                                <Option v-for="(item,index) in sortLists.districtLists" :value="item" :key="index">{{ item }}</Option>
-                            </Select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            
-                            <Select v-model="sortList.agentstatus" style="width:100px" placeholder="代理状态">
-                                <Option v-for="(item,index) in sortLists.agentstatusLists" :value="item" :key="index">{{ item }}</Option>
-                            </Select>&nbsp;&nbsp;
-                            <Button type="success" @click="sort">&nbsp;&nbsp;搜索&nbsp;&nbsp;</Button>
-                        </div>
-                        <br/>
-                        <!-- 下表 -->
                         <div class="title">
                             <span>列表状态</span>
                             <el-button type="info" @click="exportData">导出表格</el-button>
                         </div>
                         <!-- 导航 -->
-                        <ul class="nav">
-                            <router-link tag="li" to="/performanceReport/performanceReportVisitor" active-class="active">访问员绩效</router-link>
-                            <router-link tag="li" to="/performanceReport/performanceReportExamine" active-class="active">审核绩效</router-link>
-                            <router-link tag="li" to="/performanceReport/performanceReportAgent" active-class="active">代理绩效</router-link>
-                        </ul>
+                        <Menu mode="horizontal" :theme="theme1" active-name="1" class="nav">
+                            <MenuItem name="1">
+                                <Icon type="ios-people" />
+                                <router-link  to="/performanceReport/performanceReportVisitor" active-class="active" :examineData="examineData">访问员绩效</router-link>
+                            </MenuItem>
+
+                            <MenuItem name="2">
+                                <Icon type="ios-paper" />
+                                <router-link  to="/performanceReport/performanceReportExamine" active-class="active" :agentData="agentData">审核绩效</router-link>
+                            </MenuItem>
+
+                            <MenuItem name="3">
+                                <Icon type="md-paper" />
+                                <router-link to="/performanceReport/performanceReportAgent" active-class="active" :visitorData="visitorData">代理绩效</router-link>
+                            </MenuItem>
+                        </Menu>
+
+                        <!-- <ul class="nav">
+                            <router-link tag="li" to="/performanceReport/performanceReportVisitor" active-class="active" :examineData="examineData">访问员绩效</router-link>
+                            <router-link tag="li" to="/performanceReport/performanceReportExamine" active-class="active" :agentData="agentData">审核绩效</router-link>
+                            <router-link tag="li" to="/performanceReport/performanceReportAgent" active-class="active" :visitorData="visitorData">代理绩效</router-link>
+                        </ul> -->
                         <router-view ></router-view>                     
                     </div>
                 </Card>
@@ -42,6 +59,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'visitor',
   data () {
@@ -59,7 +77,7 @@ export default {
     // 传出去的数据 
             examineData:'',agentData:'',visitorData:'',
     // 
-            
+           
     }
   },
   created(){
@@ -127,15 +145,12 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped  lang="scss">
     .performanceReport{
+        .title{width: 100%;height: 40px;background: #5BC0DE;line-height: 40px;color: #fff;padding-left:10px;display:flex;justify-content: space-between;align-items:center;margin-bottom: 10px;
+            span:nth-child(2){display: block;width: 100px;height: 30px;background: #C1C1C1;border-radius: 5px;line-height: 30px;text-align: center;}
+        }
+        .select{display: flex; width: 700px; justify-content: space-between; align-items: center;}
         .content{height: 600px;
-            .title{width: 100%;height: 40px;background: #5BC0DE;line-height: 40px;color: #fff;padding-left:10px;display:flex;justify-content: space-between;align-items:center;margin-bottom: 10px;
-                span:nth-child(2){display: block;width: 100px;height: 30px;background: #C1C1C1;border-radius: 5px;line-height: 30px;text-align: center;}
-            }
-            .nav{display: flex; width: 600px; height: 40px; text-align: center; line-height: 40px; color: white;
-                li{display:block; width: 200px; height: 40px; background: #cccccc;}
-                li:hover{background: #5BB85D;}
-                .active{background: #5BB85D;}
-            }
+            .nav{margin-bottom: 5px; height: 30px; line-height: 30px;}
         }          
     }
 </style>
