@@ -6,6 +6,7 @@
                 <Breadcrumb :style="{margin: '16px 0'}">
                     
                     <el-button type="info" size="small" @click="backtomoban">&nbsp;&nbsp;返回&nbsp;&nbsp;</el-button>
+                    <!-- <Button type="success" @click="newadd" size="small">保存新增</Button> -->
                     <el-button type="success" size="small" @click="btn">&nbsp;&nbsp;保存&nbsp;&nbsp;</el-button>
                 </Breadcrumb>
                 <Card>
@@ -104,33 +105,38 @@ export default {
   name: 'Bianji',
   data () {
     return {
-        lists:[{
-            lid:1,
-            name:"",
-            select:"",
-            noval:"",
-            xuan:"",
-            tian:""
-                  
+        lists:[
+             {
+           lid:1, name:"",select:"",noval:"",xuan:"",tian:""                 
+          },
+           {
+           lid:2, name:"",select:"",noval:"",xuan:"",tian:""                 
           },
           {
-           lid:2,
-            name:"",
-            select:"",
-            noval:"",
-            xuan:"",
-            tian:""
-                  
+           lid:3, name:"",select:"",noval:"",xuan:"",tian:""                 
+          },
+           {
+           lid:4, name:"",select:"",noval:"",xuan:"",tian:""                 
+          },
+           {
+           lid:5, name:"",select:"",noval:"",xuan:"",tian:""                 
           },
           {
-           lid:3,
-            name:"",
-            select:"",
-            noval:"",
-            xuan:"",
-            tian:""
-                  
-          }    
+           lid:6, name:"",select:"",noval:"",xuan:"",tian:""                 
+          },       
+           {
+           lid:7, name:"",select:"",noval:"",xuan:"",tian:""                 
+          },
+           {
+           lid:8, name:"",select:"",noval:"",xuan:"",tian:""                 
+          },
+           {
+           lid:9, name:"",select:"",noval:"",xuan:"",tian:""                 
+          },
+           {
+           lid:10, name:"",select:"",noval:"",xuan:"",tian:""                 
+          },
+          
         ],
         animal: '',
         dan:false,
@@ -181,46 +187,86 @@ export default {
     }
   },
   methods:{
+       jiashi(val){
+          
+           this.jiashi1=val
+           console.log(this.jiashi1)
+       },
+       handleSelectAll (status) {
+                this.$refs.selection.selectAll(status);
+       },
        
       addtr(){
-         var i = this.j++
+        //  var i = this.j++
            
-          var str = `<tr>
-                        <td><input type="checkbox" value="1"/> ${i}</td>                                     
-                        <td><p contenteditable="true"></p></td>
-                        <td ><input type="radio" name="row+${i}" value="1"/></td>
-                        <td ><input type="radio" name="row+${i}" value="2"/></td>
-                        <td><p contenteditable="true"></p></td>
-                        <td><p contenteditable="true"></p></td>
-                    </tr>`
-          $("#tables").append(str);
+        //   var str = `<tr>
+        //                 <td style="width:5%"><input type="checkbox" :value='item.lid'/> ${i}</td>                                     
+        //                 <td style="width:30%"><input type="text" style="width:100%" v-model="item.name"></td>
+        //                 <td style="width:5%"><input type="radio" :name="item.lid" value="1" v-model="item.xuan" class="radiocheck"/></td>
+        //                 <td style="width:5%"><input type="radio" :name="item.lid" value="2" v-model="item.tian" class="radiocheck"/></td>
+        //                 <td style="width:10%"><input type="text" style="width:30%" v-model="item.select"></td>
+        //                 <td style="width:10%"><input type="text" style="width:30%" v-model="item.noval"></td>        
+        //             </tr>`
+        //   $("#tables").append(str);
       },
+    //   新增
+    //  newadd(){
+        
+    //  },
       //保存
       btn(){
-        //   var radioval = $(".radiocheck[name='row1']:checked").val();
-        //    console.log(radioval)
-           console.log()
+        
           var arr = this.lists;
-          console.log(arr)
+      
           var newarr = [];
-          for(var i in arr){    
+          for(var i in arr){ 
+                 var aa=arr[i].xuan
+                 var bb=arr[i].tian
+                 var cc;             
+                cc= aa==""?bb:aa
+                 console.log(cc)
               var obj = {
                   apname:arr[i].name,
-                  aa:arr[i].select,
-                  bb:arr[i].noval,
-                  optiona:arr[i].xuan,
-                  optionb:arr[i].tian
+                  aptype:cc,
+                  optiona:arr[i].select,
+                  optionb:arr[i].noval
               }
-              newarr.push(obj)
-                      
+              newarr.push(obj)         
           }
-         console.log(newarr)
 
+           console.log(newarr)
+           var pname = this.mname
+           var sele = this.jiashi1
+           var bz = this.beizhu
+           var ck = this.checked.toString()
+        //    console.log(pname,sele,bz,ck)
 
-
-
-
-
+        var that = this;
+             var aaaaa={
+                apptemplate:{atname:pname,attype:sele,atmark:bz},
+                appfunction:{atmark:ck},
+                plist:newarr
+                } 
+                
+             //console.log(aaaaa)
+        axios({         
+            url:"http://192.168.0.135:8080/SavaAppFunction",
+            params:{
+                apptemplate:{atname:pname,attype:sele,atmark:bz},
+                appfunction:{atmark:ck},
+                plist:newarr
+                }       
+            })
+            .then(function(data){
+                console.log(data.data)
+                // var arr = data.data
+                // that.positionzhi=[]
+                // for(var i in arr){                  
+                //     that.obj={value:arr[i].pid,label:arr[i].pname}
+                //     that.positionzhi.push(that.obj)
+                   
+                // }
+            });
 
       },
 
@@ -263,14 +309,7 @@ export default {
       backtomoban(){
           this.$router.push("./moban")
       },
-       jiashi(val){
-          
-           this.jiashi1=val
-           console.log(this.jiashi1)
-       },
-       handleSelectAll (status) {
-                this.$refs.selection.selectAll(status);
-       }
+      
        //jiashi1,
   }
 }

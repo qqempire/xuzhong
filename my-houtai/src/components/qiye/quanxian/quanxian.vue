@@ -53,7 +53,7 @@
                                                       <!-- 调研对象管理 -->
                                                     <span class="tit">调研对象管理</span>
                                                     <CheckboxGroup v-model="checked" @on-change="son3" class="padding">
-                                                        <Checkbox label="调研对象管理"></Checkbox> 
+                                                        <Checkbox label="调研对象列表"></Checkbox> 
                                                         <Checkbox label="更新记录"></Checkbox>                                          
                                                     </CheckboxGroup><hr>
                                                        <!-- 审核管理 -->
@@ -99,7 +99,7 @@
                                                     <CheckboxGroup v-model="checked" @on-change="son7" class="padding">
                                                          <Checkbox label="业绩报告"></Checkbox> 
                                                          <Checkbox label="报告模板"></Checkbox>
-                                                         <Checkbox label="时效报告"></Checkbox> 
+                                                         <Checkbox label="实效报告"></Checkbox> 
                                                          <Checkbox label="家化报告"></Checkbox>   
                                                          <Checkbox label="已生成报告"></Checkbox> 
                                                                                                                                                           
@@ -156,7 +156,7 @@
                                                       <!-- 调研对象管理 -->
                                                     <span class="tit">调研对象管理</span>
                                                     <CheckboxGroup v-model="checked" @on-change="son3" class="padding">
-                                                        <Checkbox label="调研对象管理"></Checkbox> 
+                                                        <Checkbox label="调研对象列表"></Checkbox> 
                                                         <Checkbox label="更新记录"></Checkbox>                                          
                                                     </CheckboxGroup><hr>
                                                        <!-- 审核管理 -->
@@ -198,7 +198,7 @@
                                                     <CheckboxGroup v-model="checked" @on-change="son7" class="padding">
                                                          <Checkbox label="业绩报告"></Checkbox> 
                                                          <Checkbox label="报告模板"></Checkbox>
-                                                         <Checkbox label="时效报告"></Checkbox> 
+                                                         <Checkbox label="实效报告"></Checkbox> 
                                                          <Checkbox label="家化报告"></Checkbox>   
                                                          <Checkbox label="已生成报告"></Checkbox> 
                                                                                                                                                           

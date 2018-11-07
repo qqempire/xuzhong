@@ -121,7 +121,7 @@
                     <router-link to="/prescriptionReportList" tag="span">实效报告</router-link>
                 </MenuItem>
                 <MenuItem name="7-4" class="bggl4">
-                <router-link to="/familyReportList" tag="span"> 家化报告</router-link>
+                <router-link to="/familyReportList" tag="span">家化报告</router-link>
                 </MenuItem>
                 <MenuItem name="7-5" class="bggl5">
                     <router-link to="/generatedReportList" tag="span">已生成报告</router-link>
@@ -213,7 +213,7 @@ export default {
        };
 
     function ifquan(biaoqian){
-       var text = biaoqian.text();
+       var text = $.trim(biaoqian.text());
        var str =  localStorage.getItem('Jurisdiction')
        var arr = str.split(',')
        var num = $.inArray(text, arr);  //返回 -1则不存在
@@ -223,9 +223,9 @@ export default {
        }else{
            biaoqian.css({'display':'block'})
        }
-    //    console.log(num)
-    //    console.log( arr)
-    //    console.log(text)
+       console.log(num)
+       console.log(arr)
+       console.log(text)
     }
     // 项目管理
        ifquan($(".xmgl1"))
