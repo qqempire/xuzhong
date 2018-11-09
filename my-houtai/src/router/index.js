@@ -90,6 +90,8 @@ import Login from "../components/login/login.vue"
 
       //员工
       import Yuangong from "../components/qiye/yuangong/yuangong.vue" 
+      import ygrecheck from "../components/qiye/yuangong/ygrecheck.vue" 
+
       import Addshencha from "../components/qiye/yuangong/addshencha.vue" 
       import Addrecheck from "../components/qiye/yuangong/addshen.vue" 
       //代理
@@ -379,7 +381,12 @@ export default new Router({
               component: Yuangong
             },
             {
+              path: '/ygrecheck',
+              component: ygrecheck,
+            },
+            {
               path: '/addshencha',
+              name: 'Addrecheck',
               component: Addshencha
             },
             {

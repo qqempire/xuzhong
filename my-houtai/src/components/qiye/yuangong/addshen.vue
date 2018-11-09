@@ -4,11 +4,11 @@
             
             <Content :style="{padding: '0 16px 16px'}">
                 <Breadcrumb :style="{margin: '16px 0'}">
-                    <router-link to="./yuangong" tag="span">
-                       <Button type="warning" >返回</Button>
+                    <router-link to="./ygrecheck" tag="span">
+                       <el-button type="info" size="small">返回</el-button>
                     </router-link>
                     
-                    <Button type="success">保存</Button>
+                    <Button type="success" @click="save" size="default">保存</Button>
                     
                 </Breadcrumb>
                 <Card>
@@ -18,8 +18,10 @@
                              <div class="bbb">
                                <div class="tit">基本信息</div>
                                
-                              <Table border :columns="columns1" :data="data1"></Table>
-                           
+                              <!-- <Table border :columns="columns1" :data="data1"></Table> -->
+                                <Input v-model="visiter" placeholder="访问员账户" style="width: 200px" />
+                                <Input v-model="visiterpassword" placeholder="访问员密码" style="width: 200px" />
+
                              </div>
                             
                             
@@ -88,11 +90,13 @@ export default {
   name: 'Addrecheck',
   data () {
     return {
+        visiter:"",
+        visiterpassword:"",
         proname:"",
         pronum:"",
-        pageTotal1: 10,  //数据总数
+        pageTotal1:"",  //数据总数
         pageNum1: 1,  //初始页
-        pageSize1: 2,  //每页条数
+        pageSize1: 6,  //每页条数
         dataArr1 :[],   //页面显示的数组
 
         pageTotal: 10,  //数据总数
@@ -234,28 +238,28 @@ export default {
                     // },
                    
                 ],
-        columns1: [
-                    {
-                        title: '访问员账户',
-                        key: 'username',
-                        width:"200px",
+        // columns1: [
+        //             {
+        //                 title: '访问员账户',
+        //                 key: 'username',
+        //                 width:"200px",
                        
-                    },
-                    {
-                        title: '访问员密码',
-                        key: 'password',
-                        width:"200px"
-                    },
+        //             },
+        //             {
+        //                 title: '访问员密码',
+        //                 key: 'password',
+        //                 width:"200px"
+        //             },
                    
-                ],
-                data1: [
-                    {
-                        username: 'John Brown',
-                        password: 18000000,
+        //         ],
+        //         data1: [
+        //             {
+        //                 username: 'John Brown',
+        //                 password: 18000000,
                        
-                    },
+        //             },
                     
-                ],
+        //         ],
         // 全选
          indeterminate: true,
                 checkAll: false,
@@ -343,9 +347,7 @@ export default {
   },
 
 methods: {
-            remove (index) {
-                this.shows.splice(index, 1);
-            },
+            
             show (index) {
                 this.$Modal.info({
                     title: 'User Info',
@@ -359,15 +361,16 @@ methods: {
 
             //全选
             selectAbb(value){
-              this.shows=[]
+                this.shows=[]
                console.log(value)
                var objj=value
                for(var i in value){
                    var obj1 = {
                        obj:value[i].obj,
-                       address:value[i].address
+                       address:value[i].address,
+                       pid:value[i].pid
                    }
-                   console.log(value)
+                   console.log(obj1)
                   this.shows.push(obj1)
                   this.pageTotal1 = this.shows.length;
                   //console.log(that.data1.length)
@@ -380,15 +383,20 @@ methods: {
             selectone(value){
               console.log(value)
                var objj=value
-               this.shows=[]
+            //    this.shows=[]
                for(var i in value){
                    var obj1 = {
                        obj:value[i].obj,
-                       address:value[i].address
+                       address:value[i].address,
+                       pid:value[i].pid
                    }
                    console.log(value)
                   this.shows.push(obj1)
                }
+            },
+            //删除
+            remove (index) {
+                this.shows.splice(index, 1);
             },
 
             handleCheckAll () {
@@ -452,12 +460,12 @@ methods: {
             .then(function(data){
                 console.log(data.data)       
                  var arr = data.data
-                //  console.log(,arr.totalCount,,arr.limit,arr.list)
+                
                  var newarr = arr.list;
                  that.pageTotal = arr.totalCount;//总页数
                  that.pageNum = arr.page;//当前页
                  that.pageSize = arr.limit;//每页显示
-                 var tiao = arr.totalCount; //数据总树
+                 that.pageTotal = arr.totalCount; //数据总树
 
                  for(var i in newarr){                      
                       var obj={
@@ -468,6 +476,7 @@ methods: {
                       obj:newarr[i].researchobject,
                       num:newarr[i].researchnum,
                       address:newarr[i].address,
+                      pid:newarr[i].pid
                     
                       }
                        that.message.push(obj) 
@@ -504,32 +513,32 @@ methods: {
                     page:value}
             })
             .then(function(data){
-                console.log(data.data)
-                 var arr = data.data
+                that.message=[]
+                  var arr = data.data
                   var newarr = arr.list;
-                //    that.pageTotal = arr.totalCount;//总页数
-                //  that.pageNum = arr.page;//当前页
-                //  that.pageSize = arr.limit;//每页显示
-                //  var tiao = arr.totalCount; //数据总树
+                   console.log(arr.list)
                  for(var i in newarr){                      
                       var obj={
-                       province:newarr[i].provinceid,
-                      shi:newarr[i].cityid,
-                      qu:newarr[i].projectname,
-                      proname:newarr[i].districtid,
-                      obj:newarr[i].researchobject,
-                      num:newarr[i].researchnum,
-                      address:newarr[i].address,
-                    
-                      }
-                       that.message.push(obj) 
-
+                            province:newarr[i].provinceid,
+                            shi:newarr[i].cityid,
+                            qu:newarr[i].projectname,
+                            proname:newarr[i].districtid,
+                            obj:newarr[i].researchobject,
+                            num:newarr[i].researchnum,
+                            address:newarr[i].address,
+                            pid:newarr[i].pid
+                      }    
+                      console.log(obj)                 
+                     that.message.push(obj)                                           
+                                         
                  }       
-                  var _start = ( value - 1 ) * that.pageSize;
-               var _end = value * that.pageSize;
-               that.dataArr = that.message .slice(_start,_end);
+                 
+                //   var _start = ( value - 1 ) * that.pageSize;
+                //   var _end = value * that.pageSize;
+                //   that.dataArr = that.message .slice(_start,_end);
 
-                       
+                    that.dataArr = that.message;
+                  
             })
         },
          //分页2
@@ -540,6 +549,45 @@ methods: {
             var _end = value * this.pageSize1;
             this.dataArr1 = this.shows .slice(_start,_end);
         },
+        //保存
+        save(){
+            var that = this;
+            var zhanghao = that.visiter
+           console.log(zhanghao)
+
+           if(1){
+              alert()
+           }else{
+               var arr = that.shows;
+           console.log(that.shows)
+           var newarr = []
+           for(var i in arr){
+               var pidd = arr[i].pid
+               newarr.push(pidd)
+           }
+            var str = newarr.toString()
+            var ddd = {reviewInterview:{root:that.visiter,password:that.visiterpassword},                                      
+                     pid:str} 
+           console.log(ddd)
+            axios({ 
+                method:"post",
+                url:"http://192.168.0.135:8080/savaByInterviewProject",
+                params:{
+                    //  reviewInterview:{}, 
+                     root:that.visiter,
+                     password:that.visiterpassword,                                     
+                     pid:str
+                }
+            })
+            .then(function(data){
+                console.log(data.data)       
+               if(data.data.msg=="添加成功"){
+                   alert("添加成功")
+               }
+            })
+           }
+           
+        }
        
 
        },
@@ -572,11 +620,11 @@ methods: {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped  lang="scss">
     .aaa{
-      width: 100%;height: 150px;display:flex;justify-content:space-between;
+      width: 100%;height: 90px;display:flex;justify-content:space-between;
       .bbb{
         width: 100%;height: 150px;
         .tit{
-           width: 100%;height:30px;background: #5BC0DE;line-height: 30px;color: #fff;padding-left: 10px;box-sizing: border-box
+           width: 100%;height:30px;background: #5BC0DE;line-height: 30px;color: #fff;padding-left: 10px;box-sizing: border-box;margin-bottom: 10px;
         }
       }
 
@@ -585,10 +633,10 @@ methods: {
  
  .content{width: 360px;height: 200px;margin-top: 15px;padding: 20px}
 
-.table{width: 68%;height:440px;border:1px solid red;overflow:auto;
+.table{width: 68%;height:520px;border:1px solid red;overflow:auto;
     .other{width: 100%;height:30px;background: #5BC0DE;line-height: 30px;color: #fff;padding-left: 10px;box-sizing: border-box;margin-bottom: 5px}
 }
-.table2{width: 29%;height:440px;border:1px solid red;overflow:auto;
+.table2{width: 29%;height:520px;border:1px solid red;overflow:auto;
     .other{width: 100%;height:30px;background: #5BC0DE;line-height: 30px;color: #fff;padding-left: 10px;box-sizing: border-box;margin-bottom: 5px}
 }
  table{text-align: center;border:1px solid #D2D4D5;margin-top:5px;margin:5px 0 0 0;padding:0;

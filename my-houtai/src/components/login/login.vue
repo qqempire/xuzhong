@@ -19,6 +19,7 @@
           <select id="mySelect">
             <option>员工</option>
             <option>代理</option>
+            <option>审查访问员</option>
           </select>
           <div id="box">
               <input type="submit" id="submit" value="登录" @click="login">  
@@ -124,9 +125,36 @@ export default {
                 that.$router.push("/home")
             }
         })
-     }
+     },
+
+    GetUrlParam(paraName) {
+    　　　　var url = window.location.toString();
+    　　　　var arrObj = url.split("?");
+
+    　　　　if (arrObj.length > 1) {
+    　　　　　　var arrPara = arrObj[1].split("&");
+    　　　　　　var arr;
+
+    　　　　　　for (var i = 0; i < arrPara.length; i++) {
+    　　　　　　　　arr = arrPara[i].split("=");
+
+    　　　　　　　　if (arr != null && arr[0] == paraName) {
+    　　　　　　　　　　return arr[1];
+    　　　　　　　　}
+    　　　　　　}
+    　　　　　　return "";
+    　　　　}
+    　　　　else {
+    　　　　　　return "";
+    　　　　}
+    　　}
   },
   mounted(){
+    
+    console.log("kkkkkkkkkkk"+this.GetUrlParam("ptype"))
+
+    
+
     //  $("#mySelect").change(function(){
     //        console.log($(this).val());
     //    });

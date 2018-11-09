@@ -97,16 +97,17 @@
                                                 <Input v-model="yphone" placeholder="联系方式" style="width: 200px;margin-top:5px" @on-blur="blurphone" />
                                                 <Input v-model="yzhang" placeholder="后台账户" style="width: 200px;margin-top:5px" @on-blur="bluruser" />
                                                 <Input v-model="ymima" placeholder="初始密码" style="width: 120px;margin-top:5px" @on-blur="blurpassword" />
-                                                <Button type="success" >还原密码</Button>
+                                                <!-- <Button type="success" >还原密码</Button> -->
+                                                <Input v-model="aaa" placeholder="初始密码" style="width: 120px;margin-top:5px" @on-blur="blurpassword" />
+
                                                    
                                             </div>
                                         </div>
                                         
                                         
                                     </Modal>
-                                <Button type="success" @click="addshencha" class="addbtn">添加复查访问员</Button>   
-                                <Button type="success" @click="shencha" class="bjbtn">编辑复查访问员</Button>
-                                     
+                                <Button type="success" @click="addshencha" >管理审查访问员</Button>   
+                                
                                  
                            </div>
 
@@ -155,6 +156,7 @@ export default {
   name: 'Addshencha',
    data() {
       return {
+          aaa:"mid",
           tablebianji:false,
           columns1: [
                     {
@@ -375,11 +377,11 @@ export default {
             this.outtime=data
         },
         addshencha(){
-           this.$router.push("./addshen")
+           this.$router.push("./ygrecheck")
         },
-        shencha(){
-            this.$router.push("./addshencha")
-        },
+        // shencha(){
+        //     this.$router.push("./addshencha")
+        // },
         // 部门
         change1(val){
            this.model1=val;
