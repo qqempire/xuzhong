@@ -242,11 +242,11 @@ export default {
         //    console.log(pname,sele,bz,ck)
 
         var that = this;
-             var aaaaa={
-                apptemplate:{atname:pname,attype:sele,atmark:bz},
-                appfunction:{atmark:ck},
-                plist:newarr
-                } 
+            //  var aaaaa={
+            //     apptemplate:{atname:pname,attype:sele,atmark:bz},
+            //     appfunction:{atmark:ck},
+            //     plist:newarr
+            //     } 
                 
              //console.log(aaaaa)
         axios({         

@@ -14,15 +14,15 @@
                         <div id="top">
 
                           <div class="title"><span>个人信息</span></div>
-                           <!-- <p>所属部门：  项目部</p> -->
-                           <!-- <p>职&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;位：  项目经理</p> -->
-                           <!-- <p>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：  王茂如</p> -->
-                           <p>职&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;位：{{this.$store.state.count}}</p>
-                           <p>职&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;位：{{this.$store.state.name}}</p>
+                           <p>所属部门： <span class="bm"></span> </p> 
+                           <p>职&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;位：  <span class="zw"></span></p>
+                           <p>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：  <span class="mc"></span></p>
+                           <!-- <p>职&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;位：{{this.$store.state.count}}</p>
+                           <p>职&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;位：{{this.$store.state.name}}</p> -->
 
-                          <input type="text" v-model="user">
+                          <!-- <input type="text" v-model="user">
                           <button @click="login1()">看看</button>
-                          <button @click="add()">jia</button>
+                          <button @click="add()">jia</button> -->
                         </div>
 
                         <!-- 更新报告 -->
@@ -56,22 +56,9 @@
                                 
                                 <p ><el-input v-model="input" placeholder="请输入调研编号"></el-input>  <span class="search">搜索</span></p>
                              </div>
-              <!-- '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''' -->
-
-                 <div style="border-bottom: 1px solid #e9e9e9;padding-bottom:6px;margin-bottom:6px;">
-                      <Checkbox
-                          :parindex="parindex"
-                          :value="checkany"
-                          @click.prevent.native="parent">全选</Checkbox>
-                  </div>
-                  <CheckboxGroup v-model="quanxuan" @on-change="child">
-                      <Checkbox label="香蕉"></Checkbox>
-                      <Checkbox label="苹果"></Checkbox>
-                      <Checkbox label="西瓜"></Checkbox>
-                  </CheckboxGroup>
-               <!-- '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''' -->
+             
                              <!-- 表格 -->
-                             <table border='1' width="100%" cellpadding='0' cellspacing='0'>
+                             <!-- <table border='1' width="100%" cellpadding='0' cellspacing='0'>
                                   <tr class="header">
                                       <td>项目名称</td>
                                       <td>调研对象</td>
@@ -82,14 +69,11 @@
                                       <td>认证员</td>
                                       <td>确认时间</td>
                                       <td>查看详情</td>
-                                  </tr>
-
-                                  
-                                  
-
-                                  
-                              </table>
-                               
+                                  </tr>                     
+                              </table> -->
+                              <Table border :columns="tabval" :data="dataa"></Table>
+                               <Page :total="pageTotal" :current="pageNum" :page-size="pageSize" 
+                                    show-elevator  show-total placement="top" @on-change="handlePage" style="margin:8px"></Page>
 
                         </div>
 
@@ -110,15 +94,121 @@
 
 <script>
   import {mapGetters,mapActions} from "vuex"
+  import $ from "jquery"
+  import axios from "axios"
 	
 export default {
 
   name: 'Home',
    data() {
-      return {
+      return {        
+        pageTotal: 10,  //数据总数
+        pageNum: 1,  //初始页
+        pageSize: 3,  //每页条数
+        dataArr :[],   //页面显示的数组
+
                 parindex: false,
                 checkany: false,
                 quanxuan: [],
+                tabval: [
+                    {
+                        title: '项目名称',
+                        key: 'pro1'
+                    },
+                    {
+                        title: '调研对象',
+                        key: 'pro2'
+                    },
+                    {
+                        title: '调研编号',
+                        key: 'pro3'
+                    },
+                    {
+                        title: '详细地址',
+                        key: 'pro4'
+                    },
+                    {
+                        title: '访问员',
+                        key: 'pro5'
+                    },
+                    {
+                        title: '上传时间',
+                        key: 'pro6'
+                    },
+                    {
+                        title: '认证员',
+                        key: 'pro7'
+                    },
+                    {
+                        title: '确认时间',
+                        key: 'pro8'
+                    },
+                    {
+                        title: '查看详情',
+                        key: 'pro9',
+                        render: (h, params) => {
+                            return h('div', [
+                                h('Button', {
+                                    props: {
+                                        type: 'primary',
+                                        size: 'small'
+                                    },
+                                    style: {
+                                        marginRight: '5px'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.show(params.index)
+                                        }
+                                    }
+                                }, '查看详情'),
+                               
+                            ]);
+                        }
+                    },
+                ],
+                dataa: [
+                    {
+                        pro1: '0',
+                        pro2: '111',
+                        pro3: '222',
+                        pro4: '333',
+                        pro5: '444',
+                        pro6: '555',
+                        pro7: '666',
+                        pro8: '777',
+                    },
+                    {
+                        pro1: '1',
+                        pro2: '111',
+                        pro3: '222',
+                        pro4: '333',
+                        pro5: '444',
+                        pro6: '555',
+                        pro7: '666',
+                        pro8: '777',
+                    },
+                    {
+                        pro1: '2',
+                        pro2: '111',
+                        pro3: '222',
+                        pro4: '333',
+                        pro5: '444',
+                        pro6: '555',
+                        pro7: '666',
+                        pro8: '777',
+                    },
+                    {
+                        pro1: '3',
+                        pro2: '111',
+                        pro3: '222',
+                        pro4: '333',
+                        pro5: '444',
+                        pro6: '555',
+                        pro7: '666',
+                        pro8: '777',
+                    }
+                ],
         user:"",
         options: [{
           value: '选项1',
@@ -146,7 +236,13 @@ export default {
       methods:{
           
           ...mapActions(["login","add","jian","username"]), //mapActions（[]）为store里的函数名
-          
+
+          show(index) {
+                this.$Modal.info({
+                    title: 'User Info',
+                    content: `Name：${this.dataa[index].pro1}<br>Age：${this.dataa[index].pro1}<br>Address：${this.dataa[index].pro1}`
+                })
+          },
           login1(){
             this.login(this.user) //把this.user传参到store里的login
           },
@@ -154,31 +250,16 @@ export default {
             console.log(a)
          },
         //  ''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        //分页
+         handlePage(value){
+           console.log(value)
+           this.pageNum = value;
+           var _start = ( value - 1 ) * this.pageSize;
+           var _end = value * this.pageSize;
+           this.dataArr = this.data1 .slice(_start,_end);
+       },
 
-         parent () {
-          
-                if (this.parindex) {
-                    this.checkany = false;
-                } else {
-                    this.checkany = !this.checkany;
-                }
-                this.parindex = false;
-
-                // if (this.checkany) {
-                //     this.quanxuan = ['香蕉', '苹果', '西瓜'];
-                // } else {
-                //     this.quanxuan = [];
-                // }
-            },
-            child (data) {
-                if (data.length > 0) {
-                     this.parindex = false;
-                    this.checkany = true;
-                } else{
-                    // this.indeterminate = true;
-                    this.checkany = false;
-                }
-            }
+        
         },
       
      mounted(){
@@ -189,6 +270,10 @@ export default {
           background: 'rgba(0, 0, 0, .9)'
         });
        loading.close();
+
+       $(".bm").text("【"+localStorage.getItem('dname')+"】")
+       $(".zw").text("【"+localStorage.getItem('job')+"】")
+       $(".mc").text("【"+localStorage.getItem('username')+"】")
      } 
 
   

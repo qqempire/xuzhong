@@ -8,9 +8,8 @@
                     <router-link to="./yuangong" tag="span">
                        <Button type="warning" >返回</Button>
                     </router-link>
-                    
                     <Button type="success">保存</Button>
-                    <Button type="error">删除</Button>
+                    <Button type="success">删除</Button>
                 </Breadcrumb>
                 <Card>
                     <div style="height: 600px">
@@ -18,40 +17,8 @@
                             
                              <div class="bbb">
                                <div class="tit">基本信息</div>
-                               <table border="1" width="100%" cellpadding='0' cellspacing='0'>
-                                  <tr class="header">
-                                      <td>访问员账户</td>
-                                      <td>访问员密码</td>
-                                      <td>已绑定手机号</td>
-                                      <td>姓名</td>
-                                      <td>性别</td>
-                                      
-                                      
-                                  </tr>
-
-                                  
-                                  <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    
-
-                                  </tr>
-                                  <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                   
-                                  </tr>
-                                  
-
-                                  
-                              </table>
- 
+                               
+                              <Table border :columns="columns1" :data="data1"></Table>
                            
                              </div>
                             
@@ -65,131 +32,40 @@
                             <div class="table">
                                <div class="other">添加调研对象</div>
                                <br/>
-                               <div>
+                                 <div>
                               
-                                    <Select v-model="model1" style="width:100px" placeholder="省">
-                                            <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                                       <Select v-model="sheng" style="width:80px" placeholder="省" @on-change="change1">
+                                            <Option v-for="item in select1" :value="item.value" :key="item.value">{{ item.label }}</Option>
                                         </Select>
-                                        <Select v-model="model1" style="width:100px" placeholder="市">
-                                            <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                                        <Select v-model="shi" style="width:80px" placeholder="市" @on-change="change2">
+                                            <Option v-for="item in select2" :value="item.value" :key="item.value">{{ item.label }}</Option>
                                         </Select>
-                                        <Select v-model="model1" style="width:100px" placeholder="县/区">
-                                            <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                                        <Select v-model="qu" style="width:80px" placeholder="县/区" @on-change="change3">
+                                            <Option v-for="item in select3" :value="item.value" :key="item.value">{{ item.label }}</Option>
                                         </Select>
-                                    <Select v-model="model1" style="width:100px" placeholder="项目名称">
-                                            <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                                        </Select>
-                                        <Input v-model="value" placeholder="调研编号" style="width: 300px;margin-right:10px;margin-top:10px" /><Button type="success" style="margin-top:10px">搜索</Button>
-                                </div><br/>
+                                        <Input v-model="proname2" placeholder="项目名称" style="width: 100px" />
+                                        <Input v-model="pronum2" placeholder="调研编号" style="width: 100px" />
+                                        <Button type="success" @click="search">搜索</Button>
+                                 </div>
                                 <!-- 批量操作 -->
-                                <div>
-                                      <div style="border-bottom: 1px solid #e9e9e9;padding-bottom:6px;margin-bottom:6px;">
-                                            <Checkbox
-                                                :indeterminate="indeterminate"
-                                                :value="checkAll"
-                                                @click.prevent.native="handleCheckAll">全选</Checkbox>
-
-                                            <Button type="success">批量添加</Button>    
-                                        </div>
-                                        
-
-                                </div>
-
-                             <table border="1" width="100%" cellpadding='0' cellspacing='0'>
-                                 <!-- <CheckboxGroup v-model="checkAllGroup" > -->
-                                            
-                                        
-                                  <tr class="header">
-                                      <td>选择</td>
-                                      <td>用于问题类型</td>
-                                      <td>显示名称</td>
-                                      <td>选择题</td>
-                                      <td>填空题</td>
-                                      <td>选择值</td>
-                                      <td>未选择值</td>
-                                      
-                                  </tr>
-
-                                  <tr>
-                                      <td><Checkbox label="香蕉"></Checkbox></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                     
-                                  </tr>
-                                  <tr>
-                                    <td><Checkbox label="苹果"></Checkbox></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-
-                                  </tr>
-                                  <tr>
-                                    <td> <Checkbox label="西瓜"></Checkbox></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-
-                                  </tr>
-                                  <!-- </CheckboxGroup> -->
-
-                                  
-                              </table>
-                              
-                              
+                                
+                            
+                            <!-- <Button @click="handleSelectAll(true)" type="success" style="margin:5px 0">全选</Button> -->
+                            <!-- <Button @click="handleSelectAll(false)">取消全选</Button> -->
+                            <!-- <Button type="success">批量添加</Button> <br/><br/> -->
+                             <Table border ref="selection" :columns="columns4" :data="message" @on-select-all="selectAbb" @on-select="selectone" 
+                              style="margin-top:5px" 
+                                     @on-row-click="rowval"></Table>
+                            
 
                            </div>
                         <!-- 表格右 -->
                            <div class="table2">
-                               <div class="other">添加调研对象</div>
-                               
-                               
-                                
-                             <table border="1" width="100%" cellpadding='0' cellspacing='0'>
-                                  <tr class="header">
-                                      <td>调研对象</td>
-                                      <td>详细地址</td>
-                                      <td>操作</td>
-                                      
-                                      
-                                  </tr>
-
-                                  <tr>
-                                      <td></td>
-                                      <td></td>
-                                      <td>移除</td>
-                                     
-                                  </tr>
-                                  <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    
-
-                                  </tr>
-                                  <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    
-
-                                  </tr>
-                                  
-
-                                  
-                              </table>
-                              
-                              
-
+                               <div class="other">可见调研对象</div>
+                               <Table border :columns="col" :data="dataArr1"></Table>
+                               <Page :total="pageTotal" :current="pageNum" :page-size="pageSize" 
+                                   placement="top" @on-change="handlePage2" style="margin-top:8px">
+                               </Page>
                            </div>
                           </div>
                           
@@ -204,10 +80,214 @@
 </template>
 
 <script>
+import $ from "jquery"
+import axios from "axios"
+
 export default {
   name: 'Bianji',
   data () {
     return {
+        pageTotal1: 10,  //数据总数
+        pageNum1: 1,  //初始页
+        pageSize1: 2,  //每页条数
+        dataArr1 :[],   //页面显示的数组
+
+        pageTotal: 10,  //数据总数
+        pageNum: 1,  //初始页
+        pageSize: 3,  //每页条数
+        dataArr :[],   //页面显示的数组
+
+        proname2:"",
+        pronum2:"",
+        sheng:"",
+        shi:"",
+        qu:"",
+        select1:[
+            {
+                value: '门头照',
+                label: '门头照'
+            },
+            {
+                value: '问题照片',
+                label: '问题照片'
+            },
+            {
+                value: '货架',
+                label: '货架'
+            }
+        ],
+        select2:[
+            {
+                value: '门头照',
+                label: '门头照'
+            },
+            {
+                value: '问题照片',
+                label: '问题照片'
+            },
+            {
+                value: '货架',
+                label: '货架'
+            }
+        ],
+        select3:[
+            {
+                value: '门头照',
+                label: '门头照'
+            },
+            {
+                value: '问题照片',
+                label: '问题照片'
+            },
+            {
+                value: '货架',
+                label: '货架'
+            }
+        ],
+            col: [
+                    {
+                        title: '调研对象',
+                        key: 'obj'
+                    },
+                    {
+                        title: '详细地址',
+                        key: 'address'
+                    },
+                    {
+                        title: '操作',
+                        key: 'do',
+                        render: (h, params) => {
+                            return h('div', [
+                                
+                                h('Button', {
+                                    props: {
+                                        type: 'error',
+                                        size: 'small'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.remove(params.index)
+                                        }
+                                    }
+                                }, '删除')
+                            ]);
+                        }
+                    }
+                ],
+                shows: [
+                    {  id:0,
+                        obj: 'sssss',
+                        address: "xxxxxxx",                      
+                    },
+                    //  {
+                    //     obj: 'ddddd',
+                    //     address: "ggggggg",                      
+                    // },
+                    
+                ],
+        columns4: [
+                    {
+                        type: 'selection',
+                        width: 60,
+                        align: 'center'
+                    },
+                    {
+                        title: '省',
+                        key: 'province'
+                    },
+                    {
+                        title: '市',
+                        key: 'shi'
+                    },
+                    {
+                        title: '区',
+                        key: 'qu'
+                    },
+                    {
+                        title: '项目名称',
+                        key: 'proname'
+                    },
+                    {
+                        title: '调研对象',
+                        key: 'obj'
+                    },
+                    {
+                        title: '调研编号',
+                        key: 'num'
+                    },
+                    {
+                        title: '详细地址',
+                        key: 'address'
+                    },
+                    
+                ],
+                message: [
+                    {   id:1,
+                        province: '河南',
+                        shi: '郑州',
+                        qu: '二七区',
+                        proname: '呵呵呵',
+                        obj: '000',
+                        num: '111',
+                        address:"222",                
+                    },
+                    {   id:2,
+                        province: '河南1',
+                        shi: '郑州1',
+                        qu: '二七区1',
+                        proname: '呵呵呵1',
+                        obj: '0000',
+                        num: '1111',
+                        address:"2222",                
+                    },
+                     {  id:3,
+                        province: '河北',
+                        shi: '石家庄',
+                        qu: '解放区',
+                        proname: '的方式规范呵1',
+                        obj: '00都是00',
+                        num: '十多个',
+                        address:"三个地方好地方",                
+                    },
+                ],
+        columns1: [
+                    {
+                        title: '访问员账户',
+                        key: 'username',
+                       
+                    },
+                    {
+                        title: '访问员密码',
+                        key: 'password',
+                       
+                    },
+                    {
+                        title: '已绑定手机号',
+                        key: 'phone',
+                      
+                    },
+                    {
+                        title: '姓名',
+                        key: 'name',
+                       
+                    },
+                    {
+                        title: '性别',
+                        key: 'sex',
+                      
+                    },
+                   
+                ],
+                data1: [
+                    {
+                        username: 'John Brown',
+                        password: 18000000,
+                        phone:"222222",
+                        name:"sss",
+                        sex:"dd"                      
+                    },
+                    
+                ],
         // 全选
          indeterminate: true,
                 checkAll: false,
@@ -262,6 +342,93 @@ export default {
   },
 
 methods: {
+            remove (index) {
+                this.shows.splice(index, 1);
+            },
+            show (index) {
+                this.$Modal.info({
+                    title: 'User Info',
+                    content: `Name：${this.message[index].province}<br>Age：${this.message[index].province}<br>Address：${this.message[index].province}`
+                })
+            },
+            
+            // handleSelectAll (status) {
+            //     this.$refs.selection.selectAll(status);
+            // },
+             //全选
+            selectAbb(value){  
+               console.log(value)
+               this.shows=[]
+               for(var i in value){
+                   var obj1 = {
+                       obj:value[i].obj,
+                       address:value[i].address
+                   }        
+                  this.shows.push(obj1)
+               }
+            },
+            change1(val){
+               console.log(val)
+            },
+            change2(val){
+               console.log(val)
+            },
+            change3(val){
+               console.log(val)
+            },
+            search(){
+               console.log("000")
+               var that = this;
+             console.log("00")
+             console.log(that.sheng,that.shi,that.qu,that.proname2,that.pronum2)
+            
+                axios({ 
+                    method:"post",
+                    url:"http://192.168.0.135:8080/queryByResearchobjectId",
+                    params:{
+                        researchobject:{
+                            provinceid:that.sheng,
+                            cityid:that.shi,
+                            districtid:that.qu,
+                            projectname:that.proname2,
+                            researchnum:that.pronum2
+                        },
+                        // researchobject:{},
+                        page:that.pageNum
+                    }
+                })
+                .then(function(data){
+                    console.log(data.data)       
+                    //var arr = data.data
+                    //  for(var i in arr){                      
+                    //       var obj={name:arr[i].producttype,diaoyan:arr[i].projectname,pic:arr[i].projectname}
+                    //        that.data1.push(obj)                                          
+                    //  }
+                    //    that.pageTotal = that.data1.length;
+                    //         var _start = ( that.pageNum - 1 ) * that.pageSize;  //pageNum 第几页  pageSize:每页几条数据
+                    //         var _end = that.pageNum * that.pageSize;
+                    //         that.dataArr = that.data1.slice(_start,_end);
+                        
+                })
+            },
+            //单选
+            selectone(value){
+                 console.log(value)
+               this.shows=[]   
+               for(var i in value){
+                   var obj1 = {
+                       obj:value[i].obj,
+                       address:value[i].address
+                   } 
+                              
+               this.shows.push(obj1)               
+              } 
+               
+            },
+            rowval(val){
+               console.log(val)
+            },
+            
             handleCheckAll () {
                 if (this.indeterminate) {
                     this.checkAll = false;
@@ -287,7 +454,14 @@ methods: {
                     this.indeterminate = false;
                     this.checkAll = false;
                 }
-            }
+            },
+          handlePage2(value){
+            console.log(value)
+            this.pageNum1 = value;
+            var _start = ( value - 1 ) * this.pageSize1;
+            var _end = value * this.pageSize1;
+            this.dataArr1 = this.shows .slice(_start,_end);
+        },
 
        }
 
@@ -314,10 +488,10 @@ methods: {
  
  .content{width: 360px;height: 200px;margin-top: 15px;padding: 20px}
 
-.table{width: 68%;height:320px;margin-top:-10px;
+.table{width: 68%;height:440px;border:1px solid red;overflow:auto;
     .other{width: 100%;height:30px;background: #5BC0DE;line-height: 30px;color: #fff;padding-left: 10px;box-sizing: border-box;margin-bottom: 5px}
 }
-.table2{width: 29%;height:320px;margin-top:-10px;
+.table2{width: 29%;height:440px;border:1px solid red;overflow:auto;
     .other{width: 100%;height:30px;background: #5BC0DE;line-height: 30px;color: #fff;padding-left: 10px;box-sizing: border-box;margin-bottom: 5px}
 }
  table{text-align: center;border:1px solid #D2D4D5;margin-top:5px;margin:5px 0 0 0;padding:0;

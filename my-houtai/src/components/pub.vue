@@ -223,9 +223,9 @@ export default {
        }else{
            biaoqian.css({'display':'block'})
        }
-       console.log(num)
-       console.log(arr)
-       console.log(text)
+    //    console.log(arr)
+    //    console.log(text)
+    //    console.log(num)           
     }
     // 项目管理
        ifquan($(".xmgl1"))

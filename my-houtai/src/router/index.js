@@ -13,14 +13,18 @@ import aaa from "../components/aaa.vue"
 import Login from "../components/login/login.vue" 
 //首页
       import Home from "../components/home/home.vue" 
-
+      import homeDetail from "../components/home/homechild/homedetail.vue" 
+      import homemap from "../components/home/homechild/homeposition.vue" 
 
 // 调研对象管理
     // 调研对象列表
     import researchObjectLists from "../components/researchObject/researchObjectLists.vue"
     // 调研对象列表详情页
-      import researchObjectDetail from "../components/researchObject/researchObjectDetail.vue"
-
+    import researchObjectDetail from "../components/researchObject/researchObjectDetail.vue"
+    //添加调研对象
+    import addresearchObject from "../components/researchObject/addresearchObject.vue"
+    // 最详情页面
+    import superDetails from "../components/researchObject/superDetails.vue"
     // 更新记录
       import updateRecordLists from "../components/researchObject/updateRecordLists.vue"
     // 更新记录详情页
@@ -87,6 +91,7 @@ import Login from "../components/login/login.vue"
       //员工
       import Yuangong from "../components/qiye/yuangong/yuangong.vue" 
       import Addshencha from "../components/qiye/yuangong/addshencha.vue" 
+      import Addrecheck from "../components/qiye/yuangong/addshen.vue" 
       //代理
       import Daili from "../components/qiye/daili/daili.vue" 
       //访问员
@@ -179,10 +184,19 @@ export default new Router({
               path: '/aaa',
               component: aaa
             },
+    //首页
             {  
               path: '/home',
               component: Home
-            },
+            }, 
+            {  
+              path: '/homeDetail',
+              component: homeDetail
+            }, 
+            {  
+              path: '/homeposition',
+              component: homemap
+            },     
 
     //项目管理
 
@@ -257,6 +271,17 @@ export default new Router({
           path: '/researchObjectDetail',
           component: researchObjectDetail
         },
+      // 添加调研对象
+      {
+        path: '/addresearchObject',
+        component: addresearchObject
+      },
+      // 最详情页面
+      {
+        path: '/superDetails',
+        component: superDetails
+      },      
+
     // 更新记录
         {
           path: '/updateRecordLists',
@@ -356,6 +381,10 @@ export default new Router({
             {
               path: '/addshencha',
               component: Addshencha
+            },
+            {
+              path: '/addshen',
+              component: Addrecheck
             },
             //代理
             {
@@ -550,7 +579,7 @@ export default new Router({
 //默认跳转
     {
       path:"/",
-      redirect:"/home"
+      redirect:"/login"
     }
     
   ]

@@ -104,7 +104,8 @@
                                         
                                         
                                     </Modal>
-                                <Button type="success" @click="shencha" class="shenchabtn">审查访问员</Button>
+                                <Button type="success" @click="addshencha" class="addbtn">添加复查访问员</Button>   
+                                <Button type="success" @click="shencha" class="bjbtn">编辑复查访问员</Button>
                                      
                                  
                            </div>
@@ -373,6 +374,9 @@ export default {
             console.log(data)
             this.outtime=data
         },
+        addshencha(){
+           this.$router.push("./addshen")
+        },
         shencha(){
             this.$router.push("./addshencha")
         },
@@ -635,7 +639,7 @@ export default {
             //按钮权限判断         
             function ifquan(biaoqian){
                 var text = $.trim(biaoqian.text());
-                // console.log(text1)                             
+                 console.log(text)                             
                 var str =  localStorage.getItem('Jurisdiction')
                 var arr = str.split(',');
                 var num = $.inArray(text, arr);  //返回 -1则不存在               
@@ -645,12 +649,14 @@ export default {
                 }else{
                     biaoqian.css({'display':'block'})
                 }
-                   
+              
              }
              ifquan($(".bumenbtn"))
              ifquan($(".zhibtn"))
              ifquan($(".yuanbtn"))
-             ifquan($(".shenchabtn"))
+             ifquan($(".addbtn"))
+             ifquan($(".bjbtn"))
+
 
     }
   

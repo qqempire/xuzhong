@@ -80,7 +80,8 @@
                                                                 <Checkbox label="添加部门"></Checkbox>
                                                                 <Checkbox label="添加职位"></Checkbox>
                                                                 <Checkbox label="添加员工"></Checkbox>
-                                                                <Checkbox label="审查访问员"></Checkbox>
+                                                                <Checkbox label="添加复查访问员"></Checkbox>
+                                                                <Checkbox label="编辑复查访问员"></Checkbox>
                                                             </CheckboxGroup><hr>
 
 
@@ -181,7 +182,8 @@
                                                                 <Checkbox label="添加部门"></Checkbox>
                                                                 <Checkbox label="添加职位"></Checkbox>
                                                                 <Checkbox label="添加员工"></Checkbox>
-                                                                <Checkbox label="审查访问员"></Checkbox>
+                                                                <Checkbox label="添加复查访问员"></Checkbox>
+                                                                <Checkbox label="编辑复查访问员"></Checkbox>
                                                             </CheckboxGroup><hr>
                                                            
 

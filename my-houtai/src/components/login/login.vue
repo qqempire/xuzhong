@@ -116,8 +116,9 @@ export default {
               localStorage.setItem('username',data.data.uname) //用户名
               localStorage.setItem('job',data.data.pname)  //职位
               localStorage.setItem('Jurisdiction',data.data.jtype) //权限
+              localStorage.setItem('dname',data.data.dname) //权限
 
-              console.log(localStorage.getItem('Jurisdiction'))
+             // console.log(localStorage.getItem('Jurisdiction'))
                that.openFullScreen2()
               // that.username(data.data.uname) //把this.user传参到store里的login
                 that.$router.push("/home")
