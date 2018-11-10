@@ -198,16 +198,18 @@ export default {
                 //     title: 'User Info',
                 //     content: `Name：${this.data1[index].name}<br>Age：${this.data1[index].id}<br>Address：${this.data1[index].sex}`
                 // })
+                var id = this.data1[index].id;
                 var root = this.data1[index].root;
                 var password = this.data1[index].password;
                 var iphone  = this.data1[index].iphone;
                 var name = this.data1[index].name;
                 var sex = this.data1[index].sex;
                 console.log(root,password,iphone,name,sex)
+                
              this.$router.push({
                 name: 'Addrecheck',
                 params: {
-                    id: {root:root,password:password,iphone:iphone,name:name,sex:sex}
+                    id: {id:id,root:root,password:password,iphone:iphone,name:name,sex:sex}
                 }
              })
                 // console.log(index)

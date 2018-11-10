@@ -9,64 +9,7 @@
                 <Card>
                     <div style="height: 600px">
                         <!-- 表格 -->
-                            <table border='1' width="100%" cellpadding='0' cellspacing='0'>
-                                  <tr class="header">
-                                      <td>用户名</td>
-                                      <td>部门</td>
-                                      <td>职位</td>
-                                      <td>IP</td>
-                                      <td>记录日期</td>
-                                      
-                                      <td>操作</td>
-                                      
-                                  </tr>
-
-                                  <tr>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td>删除</td>
-                                     
-                                      
-                                     
-                                  </tr>
-                                  <tr>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                     
-                                      
-                                     
-                                  </tr>
-                                  <tr>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                     
-                                     
-                                  </tr>
-                                  <tr>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                     
-                                      
-                                  </tr>
-                                  
-
-                                  
-                              </table>
+                          <Table border :columns="history"  align="right" :data="shuju"></Table>    
                     </div>
                 </Card>
             </Content>
@@ -79,8 +22,95 @@ export default {
   name: 'Dodata',
   data () {
     return {
-       
+       history: [
+                    {
+                        title: '用户名',
+                        key: 'name'
+                    },
+                    {
+                        title: '部门',
+                        key: 'bumen'
+                    },
+                    {
+                        title: '职位',                        
+                        key: 'position'
+                    },
+                     {
+                        title: 'IP',
+                        key: 'ip'
+                    },
+                     {
+                        title: '记录日期',
+                        key: 'date'
+                    },
+                     {
+                        title: '操作',
+                        key: 'do',
+                        render: (h, params) => {
+                            return h('div', [
+                                h('Button', {
+                                    props: {
+                                        type: 'primary',
+                                        size: 'small'
+                                    },
+                                    style: {
+                                        marginRight: '5px'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.show(params.index)
+                                        }
+                                    }
+                                }, '编辑'),
+                                h('Button', {
+                                    props: {
+                                        type: 'error',
+                                        size: 'small'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.remove(params.index)
+                                        }
+                                    }
+                                }, '删除')
+                            ]);
+                        }
+                    },
+                ],
+                shuju: [
+                    {  
+                        name: '张三',
+                        bumen: '行政部',
+                        position: '经理',
+                        ip: '123456789',
+                        date: '2016-10-03'
+                    },
+                    {  
+                        name: '李四',
+                        bumen: '市场部',
+                        position: '总经理',
+                        ip: '369258147',
+                        date: '2016-10-03'
+                    },
+                    
+                ]
+
+
+                
   }
+ },
+ methods:{
+      
+      show (index) {
+                this.$Modal.info({
+                    title: 'User Info',
+                    content: `Name：${this.shuju[index].name}<br>Age：${this.shuju[index].bumen}<br>Address：${this.shuju[index].position}`
+                })
+            },
+            remove (index) {
+                this.data6.splice(index, 1);
+            }
+     
  }
 }
 </script>

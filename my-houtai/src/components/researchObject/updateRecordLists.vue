@@ -38,7 +38,7 @@
                             <Button type="success" @click="batchThrough">&nbsp;&nbsp;批量认证&nbsp;&nbsp;</Button>
                         </div>
                         <!-- 表格 -->
-                        <Table border ref="selection" :columns="updateRecord" :data="updateRecordData" size="small"></Table>
+                        <Table border ref="selection" :columns="updateRecord" :data="updateRecordData" size="small" @on-select="selectData" @on-select-cancel="cancelData" @on-select-all="selectAllData"></Table>
                         <!-- 换页 -->
                         <Page :total="dataTotal" show-elevator :page-size=pageNum class-name="page" @on-change="changPage" />                             
                     </div>
@@ -49,54 +49,98 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
-  name: 'updateRecordLists',
-  data () {
-    return {
+    name: 'updateRecordLists',
+    data () {
+        return {
 
-    // 筛选框内容
-        // 查询功能
-        sortLists:{
-            provinceLists: ["河南","广东","江西","湖南","湖北","河北","东北"],
-            cityLists:["安阳"],
-            districtLists: ["文峰"],
-            auditStatusLists:['手动输入'],
-            projectNameLists:['手动输入']
-        },
-        // 点击查询按钮发送的参数 
-        sortList:{province:null,city:null,district:null,startTime:'',overTime:'',auditStatus:'',projectname:"",importObj:""},
-        // 表格内容
-        updateRecord: [{type: 'selection',width: 50,align: 'center'},{title: '项目名称', align: 'center', key: 'projectname'},{title: '调研对象', align: 'center', key: 'researchobject'},{title: '调研编号', align: 'center', key: 'researchnum'},{title: '详细地址', align: 'center', key: 'auditstate'},{title: '复查访问员', align: 'center', key: 'audittime'},                                        
-                    {title: '更新时间', align: 'center', key: '更新时间'},{title: '认证原', align: 'center', key: '认证原'},{title: '确认时间', align: 'center', key: '确认时间'},{title: '认证状态', align: 'center', key: '认证状态'},
-                    {title: '操作', align: 'center', key: '操作', 
-                        render: (h, params) => {
-                                return h('div', [
-                                    h('Button', {
-                                        props: {
-                                            type: 'primary',
-                                            size: 'small'
-                                        },
-                                        style: {
-                                            marginRight: '5px'
-                                        },
-                                        on: {
-                                            click: () => {
-                                                this.show(params.index)
+        // 筛选框内容
+            // 查询功能
+            sortLists:{
+                provinceLists: ["河南","广东","江西","湖南","湖北","河北","东北"],
+                cityLists:["安阳"],
+                districtLists: ["文峰"],
+                auditStatusLists:['手动输入'],
+                projectNameLists:['手动输入']
+            },
+            // 点击查询按钮发送的参数 
+            sortList:{province:null,city:null,district:null,startTime:'',overTime:'',auditStatus:'',projectname:"",importObj:""},
+            // 批量认证
+            attestatioData:[],
+            // 表格内容
+            updateRecord: [{type: 'selection',width: 50,align: 'center'},{title: '项目名称', align: 'center', key: 'projectname'},{title: '调研对象', align: 'center', key: 'researchobject'},{title: '调研编号', align: 'center', key: 'researchnum'},{title: '详细地址', align: 'center', key: 'address'},{title: '复查访问员', align: 'center', key: 'name'},                                        
+                        {title: '更新时间', align: 'center', key: 'updatetime'},{title: '认证员', align: 'center', key: 'attestationuser'},{title: '确认时间', align: 'center', key: 'attestationtime'},{title: '认证状态', align: 'center', key: 'attestationstate'},
+                        {title: '操作', align: 'center', key: '操作', 
+                            render: (h, params) => {
+                                    return h('div', [
+                                        h('Button', {
+                                            props: {
+                                                type: 'primary',
+                                                size: 'small'
+                                            },
+                                            style: {
+                                                marginRight: '5px'
+                                            },
+                                            on: {
+                                                click: () => {
+                                                    this.show(params.index)
+                                                }
                                             }
-                                        }
-                                    }, '查看/认证')
-                            ])             
-                        }                              
-                    }
-                ],
-        updateRecordData: [{projectname: 'John Brown',researchobject: 18,researchnum: 'New York No. 1 Lake Park',auditstate: '2016-10-03', audittime: '2016-10-03',更新时间: '2016-10-03',认证原: '2016-10-03',确认时间: '2016-10-03',认证状态: '2016-10-03',},],       
-       // 分页数据
-        dataTotal:10,
-        pageNum:10,
-        dataPage:[]     
-       
-    }
-  },
+                                        }, '查看/认证')
+                                ])             
+                            }                              
+                        }
+                    ],
+            updateRecordData: [],       
+        // 分页数据
+            dataTotal:10,
+            pageNum:10,
+            dataPage:[]          
+        }
+    },
+    mounted(){
+    // 请求列表总数据
+        axios({
+            url:"http://192.168.0.106:8080/queryReseObjCertRecord",  
+            method:'get',
+            params:{currPage:1}                          
+        }).then((res)=>{
+            let datas = res.data.datas;
+            for(var i = 0 ; i < datas.length ; i++){
+                if (datas[i].attestationstate == 1) {
+                    datas[i].attestationstate = "已认证"
+                }else{
+                    datas[i].attestationstate = "未认证"
+                }
+                if(datas[i].address == undefined){
+                    datas[i].address = "无"
+                }
+                if(datas[i].name == undefined){
+                    datas[i].name = "无"
+                }
+                if(datas[i].updatetime == undefined){
+                    datas[i].updatetime = "无"
+                }                
+                if(datas[i].attestationuser == undefined){
+                    datas[i].attestationuser = "无"
+                }
+                if(datas[i].attestationtime == undefined){
+                    datas[i].attestationtime = "无"
+                }
+
+            }
+            this.updateRecordData = datas;
+            this.dataTotal = res.data.count;
+        });
+    // 三级联动——省(拿数据)
+        axios({
+            url:"http://192.168.0.134:8080/provinceinfo",  
+            method:'get'                           
+        }).then((res)=>{
+            this.sortLists.provinceLists = res.data;
+        }) 
+    },
   methods:{
     // 三级联动——省(发送)
         getProvince(value){
@@ -118,8 +162,6 @@ export default {
             })             
         },
 
-
-
     // 跳转详情页
         show (index) {
                 this.$router.push("/checkLists")  
@@ -137,24 +179,52 @@ export default {
             console.log('搜索功能')
         },
     // 批量通过
-        batchThrough(){
-            console.log("批量通过")
+        selectData(name){
+            this.attestatioData = []
+            name.forEach((item,index)=>{
+                this.attestatioData.push(item.pid)
+            })
         },
-
+        selectAllData(name){
+            this.attestatioData = []
+            name.forEach((item,index)=>{
+                this.attestatioData.push(item.pid)
+            })
+        },
+        cancelData(name){
+            this.attestatioData = []
+            name.forEach((item,index)=>{
+                this.attestatioData.push(item.pid)
+            })
+        },
+        batchThrough(){
+            let pid = ''
+            this.attestatioData.forEach((item)=>{
+                pid += item + ','
+            })
+            axios({
+                url:"http://192.168.0.106:8080/attestationResObj",  
+                method:'post',
+                params:{
+                    pids : pid.slice(0,pid.length-1)
+                }                          
+            }).then((res)=>{
+                this.$Message.info(res.msg);
+            })
+        },
+  
 
     // 换页操作
         changPage(page){
         //切换页码时更改表格相应数据
-            this.updateRecordData = []
-            if (page*10 < this.dataTotal) {
-                for (var index = (page-1)*10; index < (page)*10; index++) {
-                    this.updateRecordData.push(this.dataPage[index])          
-                }  
-            } else {
-                for (var index = (page-1)*10; index < this.dataTotal; index++) {
-                    this.updateRecordData.push(this.dataPage[index])          
-                }                     
-            }                                  
+            axios({
+                url:"http://192.168.0.106:8080/queryReseObjCertRecord",  
+                method:'get',
+                params:{currPage:page}                          
+            }).then((res)=>{
+                console.log(res)
+                this.updateRecordData = res.data.datas;
+            });                                  
         }
 }
 }
@@ -164,10 +234,10 @@ export default {
     .updateRecordLists{
         .title{width: 100%;height: 40px;background: #5BC0DE;line-height: 40px;color: #fff;padding-left:10px;display:flex;justify-content: space-between;align-items:center;margin-bottom: 10px;}
         .select{width: 100%;}
-        .content{height: 600px; overflow: hidden;
+        .content{overflow: hidden;
             .power{margin-bottom: 10px;}
             .title{width: 100%;height: 40px;background: #5BC0DE;line-height: 40px;color: #fff;padding-left:10px;display:flex;justify-content: space-between;align-items:center;margin-bottom: 10px;}
-            .page{float: right; margin-top: 10px;}
+            .page{float: right; margin-top: 10px; margin-bottom: 5px;}
         }
     }
 </style>

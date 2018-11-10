@@ -24,7 +24,7 @@ import Login from "../components/login/login.vue"
     //添加调研对象
     import addresearchObject from "../components/researchObject/addresearchObject.vue"
     // 最详情页面
-    import superDetails from "../components/researchObject/superDetails.vue"
+    import mapDetails from "../components/researchObject/mapDetails.vue"
     // 更新记录
       import updateRecordLists from "../components/researchObject/updateRecordLists.vue"
     // 更新记录详情页
@@ -188,11 +188,12 @@ export default new Router({
             },
     //首页
             {  
-              path: '/home',
+              path: '/home',           
               component: Home
             }, 
             {  
               path: '/homeDetail',
+              name: 'homeDetail',
               component: homeDetail
             }, 
             {  
@@ -280,8 +281,8 @@ export default new Router({
       },
       // 最详情页面
       {
-        path: '/superDetails',
-        component: superDetails
+        path: '/mapDetails',
+        component: mapDetails
       },      
 
     // 更新记录
@@ -294,6 +295,7 @@ export default new Router({
         path: '/checkLists',
         component: checkLists
       }, 
+
 
     //审核管理
 

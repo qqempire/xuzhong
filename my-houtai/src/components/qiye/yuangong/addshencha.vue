@@ -31,12 +31,12 @@
                                       <td>姓名</td>
                                       <td>性别</td>                                                                       
                                   </tr>
-                                  <tr v-for="(item, index) in data1">
-                                      <td >{{item.username}}</td>
-                                      <td><input v-model="item.password"/></td>
-                                      <td>{{item.phone}}</td>
-                                      <td><input v-model="item.name"/></td>
-                                      <td><input v-model="item.sex"/></td>                                                                                                       
+                                  <tr>
+                                      <td >{{root1}}</td>
+                                      <td><input v-model="password"/></td>
+                                      <td>{{iphone}}</td>
+                                      <td><input v-model="name"/></td>
+                                      <td><input v-model="sex"/></td>                                                                                                       
                                   </tr>   
                               </table>
                              </div>
@@ -109,6 +109,12 @@ export default {
   name: 'Addrecheck',
   data () {
     return {
+        sex:"",
+        name:"",
+        iphone:"",
+        password:"",
+        username:"",
+        id:"",
         root1:'',
         visiter:"",
         visiterpassword:"",
@@ -570,7 +576,7 @@ methods: {
                 that.message=[]
                   var arr = data.data
                   var newarr = arr.list;
-                   console.log(arr.list)
+                //    console.log(arr.list)
                  for(var i in newarr){                      
                       var obj={
                             province:newarr[i].provinceid,
@@ -582,7 +588,7 @@ methods: {
                             address:newarr[i].address,
                             pid:newarr[i].pid
                       }    
-                      console.log(obj)                 
+                    //   console.log(obj)                 
                      that.message.push(obj)                                           
                                          
                  }       
@@ -597,7 +603,7 @@ methods: {
         },
          //分页2
          handlePage2(value){
-            console.log(value)
+            // console.log(value)
             this.pageNum1 = value;
             var _start = ( value - 1 ) * this.pageSize1;
             var _end = value * this.pageSize1;
@@ -607,29 +613,34 @@ methods: {
       //保存
         save(){
             var that = this; 
-           var arr = that.shows;
-          // console.log(that.shows)
-           var newarr = []
+            var arr = that.shows;
+           console.log(that.shows)
+            var newarr = []
            for(var i in arr){
                var pidd = arr[i].pid
                newarr.push(pidd)
            }
             var str = newarr.toString()
-           console.log(str)
+           console.log(str,that.password,that.name,that.sex,that.id)
+
             axios({ 
                 method:"post",
                 url:"http://192.168.0.135:8080/updateByInterviewProject",
                 params:{
                     //  reviewInterview:{}, 
+                     id:that.id,
                      pid:str,
-                     root:that.root1,                         
+                     root:that.root1,        
+                     password:that.password,
+                     name:that.name,
+                     sex:that.sex                 
                 }
             })
             .then(function(data){
                 console.log(data.data)       
-            //    if(data.data.msg=="添加成功"){
-            //        alert("添加成功")
-            //    }
+               if(data.data.msg=="修改成功"){
+                   alert("修改成功")
+               }
             })
         }
            
@@ -639,15 +650,19 @@ methods: {
        mounted(){
            //路由传值
          var obj = this.$route.params.id  ;   
-           this.root1 = obj.root
+           this.id = obj.id;
+           this.root1 = obj.root;
+           this.iphone = obj.iphone
+           this.name = obj.name
+           this.password = obj.password
+           this.sex = obj.sex
+
                 var newobj = {
-                    username: obj.root,
                     password: obj.password,
                     phone: obj.iphone,
                     name: obj.name,
                     sex:obj.sex
                 }    
-              this.data1.push(newobj)
              
             var zhanghao =  obj.root;
              console.log(obj)
@@ -662,6 +677,7 @@ methods: {
                 var arr = data.data;
                 for(var i in arr){
                     var obj = {
+                        pid:arr[i].pid,
                         obj:arr[i].researchobject,
                         address:arr[i].researchobject
                     }

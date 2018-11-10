@@ -5,12 +5,13 @@
             <Content :style="{padding: '0 16px 16px'}">
                 <Breadcrumb :style="{margin: '16px 0'}">
                     
-                    <el-button type="info" size="small">&nbsp;&nbsp;返&nbsp;回&nbsp;&nbsp;</el-button>
+                    
                    
                 </Breadcrumb>
                 <Card>
-                    <div style="height: 600px">
-                        地图
+                    <div style="height: 600px;position:relative">
+                        <el-button type="info" size="small" @click="tohomedetail" class="back">&nbsp;&nbsp;返&nbsp;回&nbsp;&nbsp;</el-button>
+                        <div id="allmap" style="height:600px"></div>	
                     </div>
                 </Card>
             </Content>
@@ -19,17 +20,46 @@
 </template>
 
 <script>
+// 导入BMap组件
+import $ from "jquery"
+import axios from "axios"
+// import BMap from 'BMap'
+
 export default {
   name: 'homemap',
   data () {
     return {
        
   }
- }
+ },
+ methods: {
+    ready: function() {
+      var map = new BMap.Map('allmap')//显示标签
+      var point = new BMap.Point(121.47, 31.23)
+      
+      map.addControl(new BMap.MapTypeControl())
+      map.enableScrollWheelZoom(true)//启用滚轮放大缩小，默认禁用
+      map.enableContinuousZoom(); //启用地图惯性拖拽，默认禁用
+      map.enableDoubleClickZoom(true)
+      var marker = new BMap.Marker(point)
+      map.addOverlay(marker)
+
+      map.centerAndZoom(point, 15)// 初始化地图,设置城市和地图级别。
+      map.centerAndZoom(point, 14)// 初始化地图,设置城市和地图级别。
+    },
+    tohomedetail(){
+        this.$router.push("/homedetail")
+    }
+  },
+   mounted() {
+
+    this.ready()
+
+  },
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped  lang="scss">
-    
+    .back{position:absolute;top:5px;left:10px;z-index: 999}
 </style>

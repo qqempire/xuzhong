@@ -90,6 +90,7 @@ export default {
   name: 'Addrecheck',
   data () {
     return {
+        ptypeid:"",
         visiter:"",
         visiterpassword:"",
         proname:"",
@@ -437,11 +438,12 @@ methods: {
             console.log(val)
             this.model3 = val
         },
+        //搜索
          search(){
              var that = this; 
        
-             console.log("00")
-             console.log(that.model1,that.model2,that.model3,that.proname,that.pronum)
+            //  console.log("00")
+            //  console.log(that.model1,that.model2,that.model3,that.proname,that.pronum)
             that.pageTotal
             axios({ 
                 method:"post",
@@ -460,24 +462,23 @@ methods: {
             .then(function(data){
                 console.log(data.data)       
                  var arr = data.data
-                
+                 that.message=[]
                  var newarr = arr.list;
                  that.pageTotal = arr.totalCount;//总页数
                  that.pageNum = arr.page;//当前页
                  that.pageSize = arr.limit;//每页显示
-                 that.pageTotal = arr.totalCount; //数据总树
+                //  that.pageTotal = arr.totalCount; //数据总树
 
                  for(var i in newarr){                      
                       var obj={
-                       province:newarr[i].provinceid,
-                      shi:newarr[i].cityid,
-                      qu:newarr[i].projectname,
-                      proname:newarr[i].districtid,
-                      obj:newarr[i].researchobject,
-                      num:newarr[i].researchnum,
-                      address:newarr[i].address,
-                      pid:newarr[i].pid
-                    
+                            province:newarr[i].provinceid,
+                            shi:newarr[i].cityid,
+                            qu:newarr[i].projectname,
+                            proname:newarr[i].districtid,
+                            obj:newarr[i].researchobject,
+                            num:newarr[i].researchnum,
+                            address:newarr[i].address,
+                            pid:newarr[i].pid                   
                       }
                        that.message.push(obj) 
 
@@ -553,11 +554,8 @@ methods: {
         save(){
             var that = this;
             var zhanghao = that.visiter
-           console.log(zhanghao)
+          
 
-           if(1){
-              alert()
-           }else{
                var arr = that.shows;
            console.log(that.shows)
            var newarr = []
@@ -566,9 +564,8 @@ methods: {
                newarr.push(pidd)
            }
             var str = newarr.toString()
-            var ddd = {reviewInterview:{root:that.visiter,password:that.visiterpassword},                                      
-                     pid:str} 
-           console.log(ddd)
+            
+           console.log(that.ptypeid,that.visiter,that.visiterpassword, str,)
             axios({ 
                 method:"post",
                 url:"http://192.168.0.135:8080/savaByInterviewProject",
@@ -576,7 +573,8 @@ methods: {
                     //  reviewInterview:{}, 
                      root:that.visiter,
                      password:that.visiterpassword,                                     
-                     pid:str
+                     pid:str,
+                     columu1:that.ptypeid
                 }
             })
             .then(function(data){
@@ -585,9 +583,10 @@ methods: {
                    alert("添加成功")
                }
             })
+
            }
            
-        }
+       
        
 
        },
@@ -610,7 +609,9 @@ methods: {
         //                 that.dataArr = that.data1.slice(_start,_end);
                        
         //     })
-
+          var ptypeid =  localStorage.getItem('ptypeid')
+          this.ptypeid = ptypeid;
+          console.log(ptypeid)
        }
 
   

@@ -98,24 +98,21 @@
                                                 <Input v-model="yzhang" placeholder="后台账户" style="width: 200px;margin-top:5px" @on-blur="bluruser" />
                                                 <Input v-model="ymima" placeholder="初始密码" style="width: 120px;margin-top:5px" @on-blur="blurpassword" />
                                                 <!-- <Button type="success" >还原密码</Button> -->
-                                                <Input v-model="aaa" placeholder="初始密码" style="width: 120px;margin-top:5px" @on-blur="blurpassword" />
-
-                                                   
+                                                <!-- <Input v-model="aaa" placeholder="初始密码" style="width: 120px;margin-top:5px" @on-blur="blurpassword" /> -->
+                                               
                                             </div>
                                         </div>
                                         
                                         
                                     </Modal>
                                 <Button type="success" @click="addshencha" >管理审查访问员</Button>   
-                                
-                                 
                            </div>
 
                         </div>
 
                         <!-- 更新报告 -->
                         <div id="update">
-                             <div class="title title2"><span>状态列表</span><el-button type="info">导出表格</el-button></div>
+                             <div class="title title2"><span>状态列表</span><el-button type="info" size="default">导出表格</el-button></div>
                             
                              <!-- 表格 -->
                              <Table border :columns="columns1" :data="data1"></Table>
@@ -217,26 +214,26 @@ export default {
                     }
                 ],
                 data1: [
-                    {
-                        ynum: '001',
-                        yname: '张三',
-                        yuser: '123456',
-                        ybumen: '行政',
-                        yposition:"总裁",
-                        yphone:"6668888",
-                        ystatus:"在职",
-                        yquan:"001",                      
-                    },
-                     {
-                        ynum: '002',
-                        yname: '王五',
-                        yuser: '1288856',
-                        ybumen: '行政',
-                        yposition:"总经理",
-                        yphone:"99998888",
-                        ystatus:"在职",
-                        yquan:"001",                      
-                    },
+                    // {
+                    //     ynum: '001',
+                    //     yname: '张三',
+                    //     yuser: '123456',
+                    //     ybumen: '行政',
+                    //     yposition:"总裁",
+                    //     yphone:"6668888",
+                    //     ystatus:"在职",
+                    //     yquan:"001",                      
+                    // },
+                    //  {
+                    //     ynum: '002',
+                    //     yname: '王五',
+                    //     yuser: '1288856',
+                    //     ybumen: '行政',
+                    //     yposition:"总经理",
+                    //     yphone:"99998888",
+                    //     ystatus:"在职",
+                    //     yquan:"001",                      
+                    // },
                     
                 ],
         options: [{
@@ -653,12 +650,16 @@ export default {
                 }
               
              }
+
              ifquan($(".bumenbtn"))
              ifquan($(".zhibtn"))
              ifquan($(".yuanbtn"))
              ifquan($(".addbtn"))
              ifquan($(".bjbtn"))
 
+        var ptypeid =  localStorage.getItem('ptypeid')
+          //this.ptypeid = ptypeid;
+          console.log(ptypeid)
 
     }
   

@@ -43,7 +43,7 @@ export default {
   data () {
     return {
       aaa:[],
-
+      ptypeid:"",
       cityList: [
                     {
                         value: 'New York',
@@ -94,19 +94,19 @@ export default {
                     break;
             }
         },
+
      login(){
-     
-
       var val = $('#mySelect') .val();//选中的值
-
+   
       var ins = $("#mySelect").get(0).selectedIndex;;//选中的索引
       
-      console.log(val,ins)
+      // console.log(val,ins)
         var that = this;
-        console.log(that.loginuser,that.loginpassword)
+        // console.log(that.loginuser,that.loginpassword)
+        console.log(that.ptypeid)
         axios({
             url:"http://192.168.0.135:8080/login",
-            params:{account:that.loginuser,password:that.loginpassword,id:ins}
+            params:{mid:that.ptypeid,account:that.loginuser,password:that.loginpassword,id:ins}
         })
         .then(function(data){
             console.log(data.data)
@@ -150,11 +150,10 @@ export default {
     　　}
   },
   mounted(){
-    
-    console.log("kkkkkkkkkkk"+this.GetUrlParam("ptype"))
-
-    
-
+    var ptypeid = this.GetUrlParam("ptype")
+    this.ptypeid = ptypeid;
+    console.log(this.GetUrlParam("ptype"))
+   localStorage.setItem('ptypeid',ptypeid)
     //  $("#mySelect").change(function(){
     //        console.log($(this).val());
     //    });

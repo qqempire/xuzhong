@@ -76,7 +76,7 @@ export default {
             sortList:{province:null,city:null,district:null,startTime:'',overTime:'',auditStatus:'',importObj:""},
 
             // 表格内容
-            researchObject: [{type: 'selection',width: 50,align: 'center'},{title: '项目名称', align: 'center', key: 'projectname'},{title: '地区', align: 'center', key: '地区'},{title: '调研编号', align: 'center', key: 'researchnum'},{title: '调研对象', align: 'center', key: 'researchobject'},{title: '关联日期', align: 'center', key: '关联日期'},{title: '二维码关联状态', align: 'center', key: '二维码关联状态'},                                        
+            researchObject: [{type: 'selection',width: 50,align: 'center'},{title: '项目名称', align: 'center', key: 'projectname'},{title: '地区', align: 'center', key: 'address'},{title: '调研编号', align: 'center', key: 'researchnum'},{title: '调研对象', align: 'center', key: 'researchobject'},{title: '关联日期', align: 'center', key: 'relationdate'},{title: '二维码关联状态', align: 'center', key: 'relationstate'},                                        
                         {title: '查看详情', align: 'center', key: '查看详情', 
                             render: (h, params) => {
                                     return h('div', [
@@ -90,7 +90,7 @@ export default {
                                             },
                                             on: {
                                                 click: () => {
-                                                    this.show(params.index)
+                                                    this.show(params.row.pid)
                                                 }
                                             }
                                         }, '详情')
@@ -98,7 +98,7 @@ export default {
                             }                              
                         }
                     ],
-            researchObjectData: [{projectname: 'John Brown',地区:"dalian",researchnum: '555',researchobject: 18,关联日期: '2016-10-03', 二维码关联状态: '已关联'},],
+            researchObjectData: [],
 
             // 分页数据
                 dataTotal:10,
@@ -109,23 +109,13 @@ export default {
     mounted(){
     // 请求列表总数据
         axios({
-            url:"http://192.168.0.134:8080/querystorestate",  
-            method:'get'                           
+            url:"http://192.168.0.106:8080/queryResObjAndCodeCola",  
+            method:'get',
+            params:{currPage:1}                          
         }).then((res)=>{
-            this.dataPage = res.data;
-            this.dataTotal = res.data.length;
+            this.researchObjectData = res.data.datas;
+            this.dataTotal = res.data.count;
             // 初始页面数据
-            if (this.dataTotal<10) {
-                for (let index = 0; index < this.dataTotal; index++) {
-                    this.researchObjectData.push(this.dataPage[index])
-                    this.researchObjectData[index].area = this.dataPage[index].province+this.dataPage[index].city+this.dataPage[index].district           
-                }
-            } else {
-                for (let index = 0; index < 10; index++) {
-                    this.researchObjectData.push(this.dataPage[index])
-                    this.researchObjectData[index].area = this.dataPage[index].province+this.dataPage[index].city+this.dataPage[index].district                      
-                }                
-            }
         });
     // 三级联动——省(拿数据)
         axios({
@@ -141,8 +131,8 @@ export default {
             this.$router.push("/addresearchObject")  
         },
     // 跳转到相应项目的位置
-        show (index) {
-            this.$router.push("/researchObjectDetail")  
+        show (id) {
+            this.$router.push({path:"/researchObjectDetail",query:{pid:id}})  
         },    
     // 三级联动——省(发送)
         getProvince(value){
@@ -164,16 +154,19 @@ export default {
             })             
         },
     // 生成二维码
-        ok () {
-            setTimeout(() => {
+        ok () {        
+            axios({
+                url:"http://192.168.0.106:8080/generTwoDimensCode",  
+                method:'get',
+                params:{count:this.codeNum}                          
+            }).then((res)=>{
                 this.modal1 = false;
-            }, 1000);            
-            // this.$Modal.info('已成功生成二维码');
+                window.location.href=res.data
+            })
         },
         cancel () {
             this.$Modal.info('已取消');
         },     
-
 
     // 条件搜索
     sort(){
@@ -182,20 +175,9 @@ export default {
                 url:"http://192.168.0.134:8080/querystorestate",              
                 params:this.sortList                           
             }).then((res)=>{
-                this.dataPage = res.data;
-                this.dataTotal = res.data.length;
-                // 初始页面数据
-                if (this.dataTotal<10) {
-                    for (let index = 0; index < this.dataTotal; index++) {
-                        this.researchObjectData.push(this.dataPage[index])
-                        this.researchObjectData[index].area = this.dataPage[index].province+this.dataPage[index].city+this.dataPage[index].district           
-                    }
-                } else {
-                    for (let index = 0; index < 10; index++) {
-                        this.researchObjectData.push(this.dataPage[index])
-                        this.researchObjectData[index].area = this.dataPage[index].province+this.dataPage[index].city+this.dataPage[index].district                      
-                    }                
-                }                                     
+                this.researchObjectData = res.data.datas;
+                this.dataTotal = res.data.count;
+                // 初始页面数据                                    
             }) 
     },
 
@@ -203,16 +185,14 @@ export default {
         changPage(page){
         //切换页码时更改表格相应数据
             this.researchObjectData = []
-            if (page*10 < this.dataTotal) {
-                for (var index = (page-1)*10; index < (page)*10; index++) {
-                    this.researchObjectData.push(this.dataPage[index])          
-                }  
-            } else {
-                for (var index = (page-1)*10; index < this.dataTotal; index++) {
-                    this.researchObjectData.push(this.dataPage[index])          
-                }                     
-            }                                  
-        } 
+            axios({
+                url:"http://192.168.0.106:8080/queryResObjAndCodeCola",  
+                method:'get',
+                params:{currPage:page}                          
+            }).then((res)=>{
+                this.researchObjectData = res.data.datas;
+            });
+        }
     }
 }
 </script>
