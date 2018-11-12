@@ -55,7 +55,7 @@
                             <!-- <Button @click="handleSelectAll(false)">取消全选</Button> -->
                             <!-- <Button type="success">批量添加</Button>  -->
                            
-                            <Table border ref="selection" :columns="columns4" :data="dataArr" @on-select-all="selectAbb" @on-select="selectone" style="margin-top:5px"></Table>
+                            <Table border ref="selection" :columns="columns4" :data="message" @on-select-all="selectAbb" @on-select="selectone" style="margin-top:5px"></Table>
                             <Page :total="pageTotal" :current="pageNum" :page-size="pageSize" 
                                 show-elevator  show-total placement="top" @on-change="handlePage" style="margin-top:8px">
                             </Page>
@@ -183,60 +183,60 @@ export default {
                    
                 ],
                 message: [
-                    // {   id:1,
-                    //     province: '河南',
-                    //     shi: '郑州',
-                    //     qu: '二七区',
-                    //     proname: '呵呵呵',
-                    //     obj: '111',
-                    //     num: '111',
-                    //     address:"222",                
-                    // },
-                    // {   id:2,
-                    //     province: '河南1',
-                    //     shi: '郑州1',
-                    //     qu: '二七区1',
-                    //     proname: '呵呵呵1',
-                    //     obj: '222',
-                    //     num: '1111',
-                    //     address:"2222",                
-                    // },
-                    //  {  id:3,
-                    //     province: '河北',
-                    //     shi: '石家庄',
-                    //     qu: '解放区',
-                    //     proname: '的方式规范呵1',
-                    //     obj: '333',
-                    //     num: '十多个',
-                    //     address:"三个地方好地方",                
-                    // },
-                    // {  id:3,
-                    //     province: '河北',
-                    //     shi: '石家庄',
-                    //     qu: '解放区',
-                    //     proname: '的方式规范呵1',
-                    //     obj: '333',
-                    //     num: '十多个',
-                    //     address:"三个地方好地方",                
-                    // },
-                    // {  id:3,
-                    //     province: '河北',
-                    //     shi: '石家庄',
-                    //     qu: '解放区',
-                    //     proname: '的方式规范呵1',
-                    //     obj: '333',
-                    //     num: '十多个',
-                    //     address:"三个地方好地方",                
-                    // },
-                    // {  id:3,
-                    //     province: '河北',
-                    //     shi: '石家庄',
-                    //     qu: '解放区',
-                    //     proname: '的方式规范呵1',
-                    //     obj: '333',
-                    //     num: '十多个',
-                    //     address:"三个地方好地方",                
-                    // },
+                    {   id:1,
+                        province: '河南',
+                        shi: '郑州',
+                        qu: '二七区',
+                        proname: '呵呵呵',
+                        obj: '111',
+                        num: '111',
+                        address:"222",                
+                    },
+                    {   id:2,
+                        province: '河南1',
+                        shi: '郑州1',
+                        qu: '二七区1',
+                        proname: '呵呵呵1',
+                        obj: '222',
+                        num: '1111',
+                        address:"2222",                
+                    },
+                     {  id:3,
+                        province: '河北',
+                        shi: '石家庄',
+                        qu: '解放区',
+                        proname: '的方式规范呵1',
+                        obj: '333',
+                        num: '十多个',
+                        address:"三个地方好地方",                
+                    },
+                    {  id:3,
+                        province: '河北',
+                        shi: '石家庄',
+                        qu: '解放区',
+                        proname: '的方式规范呵1',
+                        obj: '333',
+                        num: '十多个',
+                        address:"三个地方好地方",                
+                    },
+                    {  id:3,
+                        province: '河北',
+                        shi: '石家庄',
+                        qu: '解放区',
+                        proname: '的方式规范呵1',
+                        obj: '333',
+                        num: '十多个',
+                        address:"三个地方好地方",                
+                    },
+                    {  id:3,
+                        province: '河北',
+                        shi: '石家庄',
+                        qu: '解放区',
+                        proname: '的方式规范呵1',
+                        obj: '333',
+                        num: '十多个',
+                        address:"三个地方好地方",                
+                    },
                    
                 ],
         // columns1: [
@@ -286,48 +286,48 @@ export default {
                     },
                 ],
             cityList1: [
-                    {
-                        value: '门头照',
-                        label: '门头照'
-                    },
-                    {
-                        value: '问题照片',
-                        label: '问题照片'
-                    },
-                    {
-                        value: '货架',
-                        label: '货架'
-                    }
+                    // {
+                    //     value: '门头照',
+                    //     label: '门头照'
+                    // },
+                    // {
+                    //     value: '问题照片',
+                    //     label: '问题照片'
+                    // },
+                    // {
+                    //     value: '货架',
+                    //     label: '货架'
+                    // }
                     
                 ],
                  cityList2: [
-                    {
-                        value: '门头照',
-                        label: '门头照'
-                    },
-                    {
-                        value: '问题照片',
-                        label: '问题照片'
-                    },
-                    {
-                        value: '货架',
-                        label: '货架'
-                    }
+                    // {
+                    //     value: '门头照',
+                    //     label: '门头照'
+                    // },
+                    // {
+                    //     value: '问题照片',
+                    //     label: '问题照片'
+                    // },
+                    // {
+                    //     value: '货架',
+                    //     label: '货架'
+                    // }
                     
                 ],
                  cityList3: [
-                    {
-                        value: '门头照',
-                        label: '门头照'
-                    },
-                    {
-                        value: '问题照片',
-                        label: '问题照片'
-                    },
-                    {
-                        value: '货架',
-                        label: '货架'
-                    }
+                    // {
+                    //     value: '门头照',
+                    //     label: '门头照'
+                    // },
+                    // {
+                    //     value: '问题照片',
+                    //     label: '问题照片'
+                    // },
+                    // {
+                    //     value: '货架',
+                    //     label: '货架'
+                    // }
                     
                 ],
                 model2: '',
@@ -363,7 +363,7 @@ methods: {
             //全选
             selectAbb(value){
                 this.shows=[]
-               console.log(value)
+            //    console.log(value)
                var objj=value
                for(var i in value){
                    var obj1 = {
@@ -371,7 +371,7 @@ methods: {
                        address:value[i].address,
                        pid:value[i].pid
                    }
-                   console.log(obj1)
+                //    console.log(obj1)
                   this.shows.push(obj1)
                   this.pageTotal1 = this.shows.length;
                   //console.log(that.data1.length)
@@ -382,18 +382,27 @@ methods: {
             },
             //单选
             selectone(value){
-              console.log(value)
-               var objj=value
-            //    this.shows=[]
+               console.log(value);
+            //    var objj=value;
+            //    var oldarr = this.shows;
+            //    console.log(oldarr);
+            //    var newarr = [];
+            //   for(var j in oldarr){
+            //        newarr.push(oldarr[j].pid);                              
+            //   }
+            //   console.log(newarr)
+               var newarr1 = []
                for(var i in value){
                    var obj1 = {
                        obj:value[i].obj,
                        address:value[i].address,
                        pid:value[i].pid
                    }
-                   console.log(value)
+                //    newarr1.push(value[i].pid)
+                //    console.log(value)
                   this.shows.push(obj1)
                }
+                // console.log(newarr1)
             },
             //删除
             remove (index) {
@@ -440,14 +449,13 @@ methods: {
         },
         //搜索
          search(){
-             var that = this; 
-       
+             var that = this;        
             //  console.log("00")
             //  console.log(that.model1,that.model2,that.model3,that.proname,that.pronum)
-            that.pageTotal
+            // that.pageTotal
             axios({ 
                 method:"post",
-                url:"http://192.168.0.135:8080/queryByResearchobjectId",
+                url:"http://192.168.0.134:8080/queryByResearchobjectId",
                 params:{
                     researchobject:{
                         provinceid:that.model1,
@@ -480,6 +488,7 @@ methods: {
                             address:newarr[i].address,
                             pid:newarr[i].pid                   
                       }
+
                        that.message.push(obj) 
 
                  }
@@ -496,13 +505,11 @@ methods: {
             console.log(value)
             // this.pageNum = value;
           
-              var that = this; 
-       
-           
+            var that = this; 
             that.pageTotal
             axios({ 
                 method:"post",
-                url:"http://192.168.0.135:8080/queryByResearchobjectId",
+                url:"http://192.168.0.134:8080/queryByResearchobjectId",
                 params:{ 
                  researchobject:{
                         provinceid:that.model1,
@@ -554,9 +561,7 @@ methods: {
         save(){
             var that = this;
             var zhanghao = that.visiter
-          
-
-               var arr = that.shows;
+            var arr = that.shows;
            console.log(that.shows)
            var newarr = []
            for(var i in arr){
@@ -568,7 +573,7 @@ methods: {
            console.log(that.ptypeid,that.visiter,that.visiterpassword, str,)
             axios({ 
                 method:"post",
-                url:"http://192.168.0.135:8080/savaByInterviewProject",
+                url:"http://192.168.0.134:8080/savaByInterviewProject",
                 params:{
                     //  reviewInterview:{}, 
                      root:that.visiter,
@@ -612,7 +617,15 @@ methods: {
           var ptypeid =  localStorage.getItem('ptypeid')
           this.ptypeid = ptypeid;
           console.log(ptypeid)
-       }
+       },
+      watch: {    
+        shows:{
+            handler: function (newarr,oldarr) {
+                console.log("000"+ newarr.obj, oldarr.obj); 
+            },      
+           deep: true    //深度监听
+        } 
+      }
 
   
 }

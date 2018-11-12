@@ -97,7 +97,6 @@ export default {
 
      login(){
       var val = $('#mySelect') .val();//选中的值
-   
       var ins = $("#mySelect").get(0).selectedIndex;;//选中的索引
       
       // console.log(val,ins)
@@ -105,8 +104,8 @@ export default {
         // console.log(that.loginuser,that.loginpassword)
         console.log(that.ptypeid)
         axios({
-            url:"http://192.168.0.135:8080/login",
-            params:{mid:that.ptypeid,account:that.loginuser,password:that.loginpassword,id:ins}
+            url:"http://192.168.0.134:8080/login",
+            params:{mid:that.ptypeid,account:that.loginuser,password:that.loginpassword,id:ins,mid:1}
         })
         .then(function(data){
             console.log(data.data)

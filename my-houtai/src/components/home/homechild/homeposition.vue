@@ -30,12 +30,12 @@ export default {
   data () {
     return {
        
-  }
+    }
  },
  methods: {
-    ready: function() {
+    ready: function(x, y) {
       var map = new BMap.Map('allmap')//显示标签
-      var point = new BMap.Point(121.47, 31.23)
+      var point = new BMap.Point(x, y)
       
       map.addControl(new BMap.MapTypeControl())
       map.enableScrollWheelZoom(true)//启用滚轮放大缩小，默认禁用
@@ -52,8 +52,12 @@ export default {
     }
   },
    mounted() {
+       var obj = this.$route.params.id ;   
+       
+       var x = obj.jing;
+       var y = obj.wei;
 
-    this.ready()
+    this.ready(x,y)
 
   },
 }

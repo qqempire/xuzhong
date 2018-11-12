@@ -201,18 +201,32 @@ export default {
                         //     title: 'User Info',
                         //     content: `Name：${this.dataa[index].pid}<br>`
                         // })
-                    // this.$router.push({
-                    //     name: 'homeDetail',
-                    //     // params: {
-                    //     //     // id: {id:this.dataa[index].pid}
-                    //     //     id: "0000000"
-                    //     // }
+                        var pid = this.dataa[index].pid
+                        var address = this.dataa[index].address
+                        var confirmtime = this.dataa[index].confirmtime
+                        var name = this.dataa[index].name
+                        var projectname = this.dataa[index].projectname
+                        var researchnum = this.dataa[index].researchnum
+                        var researchobject = this.dataa[index].researchobject
+                        var uname = this.dataa[index].uname
+                        var uploadtime = this.dataa[index].uploadtime
 
-                    // })
+                    
+
                           this.$router.push({
                             name: 'homeDetail',
                             params: {
-                             id: '000'
+                             id: {
+                                 pid:pid,
+                                 address:address,
+                                 confirmtime:confirmtime,
+                                 name:name,
+                                 projectname:projectname,
+                                 researchnum:researchnum,
+                                 researchobject:researchobject,
+                                 uname:uname,
+                                 uploadtime:uploadtime
+                              }
                             }
                          })
 
@@ -235,7 +249,7 @@ export default {
                     var that = this;
                      console.log(that.proname,that.pronum)
                         axios({
-                            url:"http://192.168.0.135:8080/queryByDetailsAll",
+                            url:"http://192.168.0.134:8080/queryByDetailsAll",
                             params:{
                                 startime:that.startdate,
                                 endtime:that.enddate,
@@ -275,7 +289,7 @@ export default {
                      console.log(that.proname,that.pronum)
                     //    if()
                         axios({
-                            url:"http://192.168.0.135:8080/queryByDetailsAll",
+                            url:"http://192.168.0.134:8080/queryByDetailsAll",
                             params:{
                                 startime:that.startdate,
                                 endtime:that.enddate,

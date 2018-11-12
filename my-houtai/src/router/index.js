@@ -136,6 +136,19 @@ import Login from "../components/login/login.vue"
       // 已生成报告
       import generatedReportList from "../components/reportManagement/generatedReport/generatedReportList.vue"
 
+
+  // 可视化数据
+      // 全国区域
+      import countryVisual from "../components/visualData/countryVisual.vue"
+      // 大省区域
+      import provinceVisual from "../components/visualData/provinceVisual.vue"
+      // 城区区域
+      import cityVisual from "../components/visualData/cityVisual.vue"
+      // 可视化数据
+      import visualData from "../components/visualData/visualData.vue"     
+      // 设置
+      import visualSet from "../components/visualData/visualSet.vue"     
+
 // 我的任务
 
 
@@ -192,12 +205,13 @@ export default new Router({
               component: Home
             }, 
             {  
-              path: '/homeDetail',
+              path: '/homedetail',
               name: 'homeDetail',
               component: homeDetail
             }, 
             {  
               path: '/homeposition',
+              name:"homemap",
               component: homemap
             },     
 
@@ -507,6 +521,27 @@ export default new Router({
         {
           path: '/generatedReportList',
           component: generatedReportList
+        },
+// 可视化数据
+        {
+          path: '/countryVisual',
+          component: countryVisual
+        },
+        {
+          path: '/provinceVisual',
+          component: provinceVisual
+        },
+        {
+          path: '/cityVisual',
+          component: cityVisual
+        },
+        {
+          path: '/visualData',
+          component: visualData
+        },
+        {
+          path: '/visualSet',
+          component: visualSet
         },
 
 //我的任务（一级）

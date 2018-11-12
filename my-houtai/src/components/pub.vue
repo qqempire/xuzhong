@@ -132,7 +132,21 @@
                         <Icon type="md-eye" />
                         可视化管理
                     </template>
-                   
+                    <MenuItem name="8-1">
+                        <router-link to="/countryVisual" tag="span">全国区域</router-link>                    
+                    </MenuItem>
+                    <MenuItem name="8-2">
+                        <router-link to="/provinceVisual" tag="span">大省区域</router-link>                    
+                    </MenuItem>
+                    <MenuItem name="8-3">
+                        <router-link to="/cityVisual" tag="span">城区区域</router-link>                    
+                    </MenuItem>
+                    <MenuItem name="8-4">
+                        <router-link to="/visualData" tag="span">可视化数据</router-link>                                       
+                    </MenuItem>
+                    <MenuItem name="8-5">
+                        <router-link to="/visualSet" tag="span">设置</router-link>
+                    </MenuItem>                   
                 </Submenu>
               <Submenu name="9">
                     <template slot="title">
