@@ -16,9 +16,9 @@
                             <div v-for="(item,index) in leftData" :key="index">
                                 <br>
                                 <div class="row">
-                                    <img :src=item.img alt="" >                                   
+                                    <!-- <img :src=item.image alt="" >-->
                                     <p>二维码位置:<br/>
-                                        {{item.address}}
+                                        {{item.remark}}
                                     </p>
                                      
                                 </div><br><hr :style="{width:'360px'}"> 
@@ -26,80 +26,64 @@
                         </div>
                         <div class="right">
                            <span>所有问题</span>
-                           <div>
+                           <div v-for="(item,index) in rightData" :key="index">
                                <br>
-                                <div class="row" >
-                                    <div class="rowDetail">                                   
-                                        <img :src=img alt="" >                                   
+                                <div class="row">
+                                    <div class="rowDetail" >                                   
+                                        <!-- <img :src=item.laoobject.photo alt="" >   -->
                                         <ul class="list">
-                                            <li>类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;型:2342dsafsddddfasdvfdafdasfasdfasdfasdgdas</li>
-                                            <li>归&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;类:234</li>
-                                            <li>拍摄时间:2342</li>                                            
-                                            <li>地点备注:234</li>
-                                            <li>问题备注:234</li>
-                                            <li><el-button type="success" @click="details = true" size="small">详情</el-button></li>
-                                            <li><el-button type="success" @click="goLocation" size="small">查看定位</el-button></li>                                        
+                                            <li>类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;型:{{item.laoobject.type}}</li> 
+                                            <li>归&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;类:{{item.laoobject.classify}}</li>
+                                            <li>拍摄时间:{{item.laoobject.shoottime}}</li>
+                                            <li>问题类型:{{item.laoobject.problemtypes}}</li>
+                                            <li>地点备注:{{item.laoobject.placenotes}}</li>
+                                            <li>问题备注:{{item.laoobject.questionnotes}}</li>
+                                            <li><el-button type="success" @click="goDetail(item.laoobject)" size="small">详情</el-button></li>
+                                            <li><el-button type="success" @click="goLocation(item.laoobject.latitude,item.laoobject.longitude,item.laoobject.pid)" size="small">查看定位</el-button></li>                                        
                                         </ul>                                                                        
                                     </div>
-                                    <div class="rowDetail">                                   
-                                        <img :src=img alt="" >                                   
+                                     <div class="rowDetail">                                   
+                                        <!-- <img :src=item.xinobject.photo alt="" > -->
                                         <ul class="list">
-                                            <li>类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;型:342</li>
-                                            <li>归&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;类:234</li>
-                                            <li>拍摄时间:2342dsafsddddfasdvfdafdasfasdfasdfasdgdas</li>                                            
-                                            <li>地点备注:234</li>
-                                            <li>问题备注:234</li>
-                                            <li><el-button type="success" @click="details = true" size="small">详情</el-button></li>
-                                            <li><el-button type="success" @click="goLocation" size="small">查看定位</el-button></li>                                        
+                                            <li>类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;型:{{item.xingobject.type}}</li>
+                                            <li>归&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;类:{{item.xingobject.classify}}</li>
+                                            <li>拍摄时间:{{item.xingobject.shoottime}}</li>
+                                            <li>问题类型:{{item.laoobject.problemtypes}}</li>                                            
+                                            <li>地点备注:{{item.xingobject.placenotes}}</li>
+                                            <li>问题备注:{{item.xingobject.questionnotes}}</li>
+                                            <li><el-button type="success" @click="goDetail(item.xingobject)" size="small">详情</el-button></li>
+                                            <li><el-button type="success" @click="goLocation(item.xingobject.latitude,item.xingobject.longitude,item.xingobject.pid)" size="small">查看定位</el-button></li>                                        
                                         </ul>                                                                        
-                                    </div>                                                                                                                                    
+                                    </div>                                                                                                                                   
                                 </div><br><hr> 
                            </div>
                         </div>   
                     </div>
  
                         <Modal
-                            title="查看详情"
-                            ok-text='保存'
-                            v-model="details"
-                            @on-ok="handleSuccess()"
+                            title="查看详情"                            
+                            v-model="details"                            
                             draggable
                             width=880
                             class-name="vertical-center-modal">
                             <div :style="{width:'880px',height:'600px',display:'flex',justifyContent:'space-around',alignItems:'center'}">
-                                <Carousel :style="{width:'600px',height:'600px',textAlign:'center',lineHeight:'300px',border:'1px solid #cccccc'}"
-                                    v-model="value1"
-                                    :loop="setting.loop"
-                                    :autoplay="setting.autoplay"
-                                    :autoplay-speed="setting.autoplaySpeed"
-                                    :dots="setting.dots"
-                                    :radius-dot="setting.radiusDot"
-                                    :trigger="setting.trigger"
-                                    :arrow="setting.arrow"
-                                >
+                                <Carousel v-model="value1"  loop :style="{width:'600px',height:'600px',textAlign:'center',lineHeight:'300px',border:'1px solid #cccccc'}">
                                     <CarouselItem>
-                                        <div  :style="{width:'600px',height:'600px',backgroundSize: '100% 100%',backgroundImage:'url(' + img + ')',}">1</div>
+                                        <div class="demo-carousel" :style="{width:'600px',height:'600px',backgroundSize: '100% 100%',backgroundImage:'url(' + img + ')',}">1</div>
                                     </CarouselItem>
                                     <CarouselItem>
-                                        <div  :style="{width:'600px',height:'600px',backgroundSize: '100% 100%',backgroundImage:'url(' + img1 + ')',}">2</div>
+                                        <div class="demo-carousel" :style="{width:'600px',height:'600px',backgroundSize: '100% 100%',backgroundImage:'url(' + img1 + ')',}">2</div>
                                     </CarouselItem>
                                 </Carousel>                                                                       
-                                <ul :style="{width:'240px',height:'600px',listStyle:'none',fontSize:'14px'}">
-                                    <li :style="{height:'50px',}">
-                                        照片类型:&nbsp;&nbsp;无问题照片
-                                    </li>
-                                    <li :style="{height:'50px',}">
-                                        问题归类:&nbsp;&nbsp;门头照                                           
-                                    </li>
-                                    <li :style="{height:'40px',}">时&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;间:&nbsp;&nbsp;234</li>
-                                    <li :style="{height:'40px',}">经&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;度:&nbsp;&nbsp;234</li>
-                                    <li :style="{height:'40px',}">纬&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;度:&nbsp;&nbsp;234</li>
-                                    <li :style="{height:'64px',}">
-                                        地点备注:&nbsp;&nbsp;路不太好走                                          
-                                    </li>
-                                    <li :style="{height:'64px',}">
-                                        问题备注:&nbsp;&nbsp;暂无                                                                                   
-                                    </li>
+                                <ul :style="{width:'180px',height:'600px',listStyle:'none',fontSize:'14px'}">
+                                    <li :style="{height:'40px',}">照片类型:&nbsp;&nbsp;{{detailsData.type}}</li>
+                                    <li :style="{height:'40px',}">问题归类:&nbsp;&nbsp;{{detailsData.classify}}</li>
+                                    <li :style="{height:'40px',}">时&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;间:&nbsp;&nbsp;{{detailsData.shoottime}}</li>
+                                    <li :style="{height:'40px',}">经&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;度:&nbsp;&nbsp;{{detailsData.longitude}}</li>
+                                    <li :style="{height:'40px',}">纬&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;度:&nbsp;&nbsp;{{detailsData.latitude}}</li>
+                                    <li :style="{height:'100px',overflow:'hidden', marginBottom:'10px', textOverflow:'ellipsis',whiteSpace:'wrap', }">问题类型:&nbsp;&nbsp;{{detailsData.problemtypes}}</li>                                    
+                                    <li :style="{height:'100px',overflow:'hidden', marginBottom:'10px', textOverflow:'ellipsis',whiteSpace:'wrap', }">地点备注:&nbsp;&nbsp;{{detailsData.placenotes}}</li>
+                                    <li :style="{height:'100px',overflow:'hidden', textOverFlow:'ellipsis',whiteSpace:'wrap',}">问题备注:&nbsp;&nbsp;{{detailsData.questionnotes}}</li>
                                 </ul>
                             </div> 
                         </Modal>
@@ -111,70 +95,84 @@
 </template>
 <script>
 import axios from "axios"
+import ports from "../../assets/js/ports"
 import img from '../../assets/img/login/logo.png'
 import img1 from '../../assets/img/login/earth.png'
 export default {
     name: 'researchObjectDetail',
     data () {
         return {
+            portA: ports.a,
             // 表格数据
             img: img,
             img1: img1,
             // left数据
-            leftData:[{img:img,address:"南门"},{img:img,address:"南门"}],
+            leftData:[{image:img,remark:"南门"},],
             // right数据
-            rightData:[[],[]],
-            // 弹出详情页
-            details: false,
-            setting: {
-                loop:true,
-                autoplay: false,
-                autoplaySpeed: 2000,
-                dots: 'outside',
-                radiusDot: false,
-                trigger: 'click',
-                arrow: 'hover'
-            }, 
-        // 查询功能
-            sortLists:{
-                provinceLists: ["河南","广东","江西","湖南","湖北","河北","东北"],
-                cityLists:["安阳"],
-                districtLists: ["文峰"],
-                storeNameLists:['手动输入'],
-                storeLevelLists:["AA"],
-                storeAreaLists:[333]
-            },
-
-            // 点击查询按钮发送的参数 
-            sortList:{province:null,city:null,district:null,storename:null,storelevel:null,storearea:null},           
-
+            rightData:[],
+        // 弹出详情页
+            detailsData:{type:"无",classify:"无",shoottime:"无",longitude:"无",latitude:"无",problemtypes:"无",placenotes:"无",questionnotes:"无",},
+            details: false, 
             // 走马灯
-            value1:0,
+            value1: 0,                      
         }
     },
   mounted(){
             axios({
-                url:"http://192.168.0.106:8080/queryTwoDimsCdAddr",  
+                url:this.portA+"queryByProjectDetails",  
                 method:'get',
-                params:{pid:this.$route.query.pid}  //路由接参                         
+                params:{apid:this.$route.query.apid}  //路由接参                         
             }).then((res)=>{
                 // 初始页面数据
-                console.log(res)
-                // this.detailData = res.data
-            });       
+                let datas = res.data;
+                for(var i = 0 ; i < datas.length ; i++){
+                    if (datas[i].laoobject.classify == 0) {
+                        datas[i].laoobject.classify = "门头"
+                    }else{
+                        datas[i].laoobject.classify = "问题照片"
+                    }
+                    if (datas[i].xingobject.classify == 0) {
+                        datas[i].xingobject.classify = "门头"
+                    }else{
+                        datas[i].xingobject.classify = "问题照片"
+                    }
+                    if (datas[i].laoobject.type == 0) {
+                        datas[i].laoobject.type = "照片"
+                    }else{
+                        datas[i].laoobject.type = "视频"
+                    }
+                    if (datas[i].xingobject.type == 0) {
+                        datas[i].xingobject.type = "照片"
+                    }else{
+                        datas[i].xingobject.type = "视频"
+                    }                                         
+
+                }                
+                this.rightData = datas
+
+            }); 
+            axios({
+                url:this.portA+"queryTwoDimsCdAddr",  
+                method:'get',
+                params:{apid:this.$route.query.apid}  //路由接参                         
+            }).then((res)=>{
+                // 初始页面数据
+                this.leftData = res.data
+            });                  
   },    
     methods:{
         // 返回按钮
         goBack(){
             this.$router.push('/researchObjectLists')
         },
-        // 详情查看成功
-        handleSuccess(){
-            console.log("查看成功")
+        // 查看详情
+        goDetail(obj){
+            this.details = true
+            this.detailsData = obj
         },
         // 查看地图
-        goLocation(){
-            this.$router.push({path:'/mapDetails',query:{lat:120.496670,long:31.385815}})
+        goLocation(lat,long,apid){
+            this.$router.push({path:'/mapDetails',query:{lat:lat,long:long,resource:'/researchObjectDetail',apid:apid}})
         }
     }
 }
@@ -196,7 +194,7 @@ export default {
         .right{width: 66%;
             span{display: inline-block; width: 80px; height: 20px; line-height: 20px; text-align: center; border-radius: 3px; background: #5BC0DE; color: white;}            
             .row{width: 100%; display: flex; justify-content: space-between; margin-bottom: 5px; margin-top: 5px;
-                .rowDetail{width: 360px; height: 220px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #cccccc; border-radius: 3px;
+                .rowDetail{width: 360px; height: 220px; display: flex; justify-content: space-between; align-items: center; 
                     img{display: block; width: 160px;height: 160px; margin-right: 20px;}
                     .list{width: 180px; height: 200px; list-style: none; 
                         li{height: 24px; line-height: 24px; width: 160px; overflow:hidden; text-overflow:ellipsis;white-space:nowrap;}

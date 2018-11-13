@@ -16,22 +16,23 @@
                         </Modal>                        
                     </div>
                     <div class="select">
-                            <Select v-model="sortList.province" style="width:100px" placeholder="省" filterable @on-change="getProvince">
-                                <Option v-for="(item,index) in sortLists.provinceLists" :value="item" :key="index">{{ item }}</Option>
+                            <Select v-model="sortList.provinceid" style="width:100px" placeholder="省" filterable @on-change="getProvince">
+                                <Option v-for="item in sortLists.provinceLists" :value="item.value" :key="item.value">{{ item.label }}</Option>
                             </Select>
-                            <Select v-model="sortList.city" style="width:100px" placeholder="市" filterable @on-change="getCity">
-                                <Option v-for="(item,index) in sortLists.cityLists" :value="item" :key="index">{{ item }}</Option>
+                            <Select v-model="sortList.cityid" style="width:100px" placeholder="市" filterable @on-change="getCity">
+                                <Option v-for="item in sortLists.cityLists" :value="item.value" :key="item.value">{{ item.label }}</Option>
                             </Select>
-                            <Select v-model="sortList.district" style="width:100px" placeholder="县/区" filterable>
-                                <Option v-for="(item,index) in sortLists.districtLists" :value="item" :key="index">{{ item }}</Option>
-                            </Select>&nbsp;&nbsp;
+                            <Select v-model="sortList.districtid" style="width:100px" placeholder="县/区" filterable>
+                                <Option v-for="item in sortLists.districtLists" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                            </Select>&nbsp;&nbsp; 
+
                             <Select v-model="sortList.projectname" style="width:150px" placeholder="项目名称">
                                 <Option v-for="(item,index) in sortLists.projectNameLists" :value="item" :key="index">{{ item }}</Option>
                             </Select>                            
-                            <Select v-model="sortList.codeState" style="width:150px" placeholder="二维码关联状态">
-                                <Option v-for="(item,index) in sortLists.codeStateLists" :value="item" :key="index">{{ item }}</Option>
+                            <Select v-model="sortList.relationstate" style="width:150px" placeholder="二维码关联状态">
+                                <Option v-for="(item,index) in sortLists.auditStatusLists" :value="item" :key="index">{{ item }}</Option>
                             </Select>
-                            <Input v-model="sortList.importObj" placeholder="调研编号" style="width:150px"/>&nbsp;&nbsp;
+                            <Input v-model="sortList.researchnum" placeholder="调研编号" style="width:150px"/>&nbsp;&nbsp;
                             <Button type="success" @click="sort">搜索</Button>&nbsp;&nbsp;
                             <Button type="success" @click="importObj">导入调研对象</Button>                                           
                     </div>
@@ -40,7 +41,7 @@
                     <div class="content">                       
                         <div class="title">
                             <span>列表状态</span>
-                            <el-button type="info">导出表格</el-button>
+                            <el-button type="info" @click="exportData">导出表格</el-button>
                         </div>
                         <!-- 表格 -->
                         <Table border ref="selection" :columns="researchObject" :data="researchObjectData" size="small"></Table>
@@ -55,10 +56,15 @@
 
 <script>
 import axios from "axios"
+import ports from "../../assets/js/ports"
 export default {
     name: 'researchObjectLists',
     data () {
         return {
+            portA: ports.a,
+        // 存贮省市区
+            city:[], 
+
             // 二维码生成
             modal1:false,
             loading:"",
@@ -66,14 +72,14 @@ export default {
         // 筛选框内容
             // 查询功能
             sortLists:{
-                provinceLists: ["河南","广东","江西","湖南","湖北","河北","东北"],
-                cityLists:["安阳"],
-                districtLists: ["文峰"],
-                auditStatusLists:['手动输入'],
-                projectNameLists:['手动输入']
+                provinceLists: [],
+                cityLists:[],
+                districtLists: [],
+                auditStatusLists:[],
+                projectNameLists:[]
             },
             // 点击查询按钮发送的参数 
-            sortList:{province:null,city:null,district:null,startTime:'',overTime:'',auditStatus:'',importObj:""},
+            sortList:{provinceid:'',cityid:'',districtid:'',relationstate:'',researchnum:'',projectname:'',},
 
             // 表格内容
             researchObject: [{type: 'selection',width: 50,align: 'center'},{title: '项目名称', align: 'center', key: 'projectname'},{title: '地区', align: 'center', key: 'address'},{title: '调研编号', align: 'center', key: 'researchnum'},{title: '调研对象', align: 'center', key: 'researchobject'},{title: '关联日期', align: 'center', key: 'relationdate'},{title: '二维码关联状态', align: 'center', key: 'relationstate'},                                        
@@ -99,7 +105,6 @@ export default {
                         }
                     ],
             researchObjectData: [],
-
             // 分页数据
                 dataTotal:10,
                 pageNum:10,
@@ -109,54 +114,122 @@ export default {
     mounted(){
     // 请求列表总数据
         axios({
-            url:"http://192.168.0.106:8080/queryResObjAndCodeCola",  
+            url:this.portA+"queryResObjAndCodeCola",
             method:'get',
-            params:{currPage:1}                          
+            params:{currPage:1,sortList:this.sortList}                          
         }).then((res)=>{
-            this.researchObjectData = res.data.datas;
+            let datas = res.data.datas;
+            for(var i = 0 ; i < datas.length ; i++){
+                if (datas[i].relationstate == 1) {
+                    datas[i].relationstate = "已认证"
+                }else{
+                    datas[i].relationstate = "未认证"
+                }
+                if(datas[i].address == undefined){
+                    datas[i].address = "无"
+                }
+                if(datas[i].name == undefined){
+                    datas[i].name = "无"
+                }
+                if(datas[i].relationdate == undefined){
+                    datas[i].relationdate = "无"
+                }                
+                if(datas[i].attestationuser == undefined){
+                    datas[i].attestationuser = "无"
+                }
+                if(datas[i].attestationtime == undefined){
+                    datas[i].attestationtime = "无"
+                }
+                // 项目名称列表关联状态
+                if(this.sortLists.auditStatusLists.indexOf(datas[i].relationstate) == -1){
+                    this.sortLists.auditStatusLists.push(datas[i].relationstate);
+                }
+                if(this.sortLists.projectNameLists.indexOf(datas[i].projectname) == -1){
+                    this.sortLists.projectNameLists.push(datas[i].projectname);
+                }
+            }            
+            this.researchObjectData = datas;
             this.dataTotal = res.data.count;
-            // 初始页面数据
         });
     // 三级联动——省(拿数据)
         axios({
-            url:"http://192.168.0.134:8080/provinceinfo",  
-            method:'get'                           
-        }).then((res)=>{
-            this.sortLists.provinceLists = res.data;
-        }) 
+        method:'get',
+        url:"../../../static/city.json"
+        }).then((data)=>{                       
+            var city = this.city = data.data;
+            for(var i in city){
+                var obj = {
+                    value:city[i].id,
+                    label:city[i].name
+                }
+                this.sortLists.provinceLists.push(obj)                                
+            }
+        })
     },
-    methods:{       
+    methods:{
+    // 导出表格数据
+        exportData(){
+            axios({
+                url:this.portA+"exporttable",  
+                method:'get',                         
+            }).then((res)=>{
+                window.location.href=res.data
+            })            
+        },   
     // 添加调研对象
         importObj (index) {
             this.$router.push("/addresearchObject")  
         },
     // 跳转到相应项目的位置
         show (id) {
-            this.$router.push({path:"/researchObjectDetail",query:{pid:id}})  
+            this.$router.push({path:"/researchObjectDetail",query:{apid:id}})  
         },    
     // 三级联动——省(发送)
-        getProvince(value){
-            axios({
-                url:"http://192.168.0.134:8080/querycity",  
-                params:{province:value},
-            }).then((res)=>{
-                this.sortLists.cityLists = res.data;
-            }) 
+        getProvince(val){
+            this.sortLists.cityLists=[]
+            this.sortList.provinceid = val
+                              
+            var city = this.city;  
+             for(var i in city){
+                if(val == city[i].id){                 
+                   var shi = city[i].child
+                   for(var j in shi){
+                       var obj = {
+                           value:shi[j].id,
+                           label:shi[j].name
+                       }                      
+                        this.sortLists.cityLists.push(obj)
+                   }
+                   
+                }
+              }
         },
     // 三级联动——市(发送)
-        getCity(value){
-            axios({
-                url:"http://192.168.0.134:8080/querydistrict",  
-                method:'get',
-                params:{city:value},
-            }).then((res)=>{
-                this.sortLists.districtLists = res.data;
-            })             
+        getCity(val2){
+            this.sortLists.districtLists=[]          
+            this.sortList.cityid = val2                   
+            var city = this.city;  
+             for(var i in city){                            
+                   var shi = city[i].child
+                   for(var j in shi){
+                        if(val2==shi[j].id){  
+                            var qu = shi[j].child;                                                                 
+                            for(var k in qu){
+                                 var obj = {
+                                    value:qu[k].id,
+                                    label:qu[k].name
+                                 }    
+                                 this.sortLists.districtLists.push(obj)
+                            }
+                        }                       
+                   }                   
+              }             
         },
+
     // 生成二维码
         ok () {        
             axios({
-                url:"http://192.168.0.106:8080/generTwoDimensCode",  
+                url:this.portA+"generTwoDimensCode",  
                 method:'get',
                 params:{count:this.codeNum}                          
             }).then((res)=>{
@@ -165,20 +238,44 @@ export default {
             })
         },
         cancel () {
-            this.$Modal.info('已取消');
+            this.$Message.success("已取消")
         },     
 
     // 条件搜索
     sort(){
         this.researchObjectData = [];
+        console.log(this.sortList)
         axios({
-                url:"http://192.168.0.134:8080/querystorestate",              
-                params:this.sortList                           
-            }).then((res)=>{
-                this.researchObjectData = res.data.datas;
-                this.dataTotal = res.data.count;
-                // 初始页面数据                                    
-            }) 
+            url:this.portA+"queryResObjAndCodeCola",
+            method:'get',
+            params:{currPage:1,sortList:this.sortList}                          
+        }).then((res)=>{
+            let datas = res.data.datas;
+            for(var i = 0 ; i < datas.length ; i++){
+                if (datas[i].relationstate == 1) {
+                    datas[i].relationstate = "已认证"
+                }else{
+                    datas[i].relationstate = "未认证"
+                }
+                if(datas[i].address == undefined){
+                    datas[i].address = "无"
+                }
+                if(datas[i].name == undefined){
+                    datas[i].name = "无"
+                }
+                if(datas[i].relationdate == undefined){
+                    datas[i].relationdate = "无"
+                }                
+                if(datas[i].attestationuser == undefined){
+                    datas[i].attestationuser = "无"
+                }
+                if(datas[i].attestationtime == undefined){
+                    datas[i].attestationtime = "无"
+                }
+            }
+            this.researchObjectData= datas;
+            this.dataTotal = res.data.count;
+        });
     },
 
     // 换页操作
@@ -186,12 +283,36 @@ export default {
         //切换页码时更改表格相应数据
             this.researchObjectData = []
             axios({
-                url:"http://192.168.0.106:8080/queryResObjAndCodeCola",  
+                url:this.portA+"queryResObjAndCodeCola",
                 method:'get',
-                params:{currPage:page}                          
+                params:{currPage:1,sortlist:this.sortList}                          
             }).then((res)=>{
-                this.researchObjectData = res.data.datas;
+                let datas = res.data.datas;
+                for(var i = 0 ; i < datas.length ; i++){
+                    if (datas[i].relationstate == 1) {
+                        datas[i].relationstate = "已认证"
+                    }else{
+                        datas[i].relationstate = "未认证"
+                    }
+                    if(datas[i].address == undefined){
+                        datas[i].address = "无"
+                    }
+                    if(datas[i].name == undefined){
+                        datas[i].name = "无"
+                    }
+                    if(datas[i].relationdate == undefined){
+                        datas[i].relationdate = "无"
+                    }                
+                    if(datas[i].attestationuser == undefined){
+                        datas[i].attestationuser = "无"
+                    }
+                    if(datas[i].attestationtime == undefined){
+                        datas[i].attestationtime = "无"
+                    }
+                }
+                this.researchObjectData = datas;
             });
+        
         }
     }
 }

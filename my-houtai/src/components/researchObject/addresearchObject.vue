@@ -14,7 +14,7 @@
                             :format="['xls','xlsx']"                            
                             :on-format-error="handleFormatError"
                             :on-success="handleSuccess1"
-                            action="http://192.168.0.134:8080/researchObjectUpload"
+                            :action=action
                             style="display: inline-block;"     
                         >   
                             <Button icon="ios-cloud-upload-outline">上传调研对象</Button>
@@ -39,17 +39,19 @@
 
 <script>
 import axios from "axios"
+import ports from "../../assets/js/ports"
 export default {
     name: 'addresearchObject',
     data () {
         return {
+            portA: ports.a,
+            action:ports.a+'researchObjectUpload',
             // 表格内容
             addResearchObject: [{title: '项目名称', align: 'center', key: 'projectname'},{title: '调研对象', align: 'center', key: 'researchobject'},{title: '调研编号', align: 'center', key: 'researchnum'},
             {title: '照片', align: 'center', key: 'photo'},{title: '归类', align: 'center', key: 'classify'},{title: '经度', align: 'center', key: 'longitude'},{title: '纬度', align: 'center', key: 'latitude'},
             {title: '地点备注', align: 'center', key: 'placenotes'},{title: '问题类型', align: 'center', key: 'problemtypes'},{title: '问题备注', align: 'center', key: 'questionnotes'}],
             
             addResearchObjectData: [],
-
             // 分页数据
                 dataTotal:10,
                 pageNum:10,
@@ -66,7 +68,7 @@ export default {
         },
         // 下载模板
         downloadTemplate(){        
-            window.location.href="http://192.168.0.134:8080/researchObjectTemDown"
+            window.location.href=this.portA+"researchObjectTemDown"
         },        
         // 导入调研对象
         handleSuccess1 (res, file) {
@@ -74,7 +76,7 @@ export default {
             this.$Message.info(res.msg);
             this.gsu = res.gsu;
             axios({
-                url:"http://192.168.0.134:8080/queryReseObjAndProb",  
+                url:this.portA+"queryReseObjAndProb",  
                 method:'get',
                 params:{currPage:1,gsu:this.gsu}                           
             }).then((data)=>{
@@ -95,7 +97,6 @@ export default {
             setTimeout(() => {
                 this.modal1 = false;
             }, 1000);            
-            // this.$Modal.info('已成功生成二维码');
         },
         cancel () {
             this.$Modal.info('已取消');
@@ -106,7 +107,7 @@ export default {
         //切换页码时更改表格相应数据
             this.researchObjectData = []
             axios({
-                url:"http://192.168.0.134:8080/queryReseObjAndProb",  
+                url:this.portA+"queryReseObjAndProb",  
                 method:'get',
                 params:{currPage:page,gsu:this.gsu}                           
             }).then((res)=>{
