@@ -114,6 +114,8 @@ export default {
             }else{
               //console.log(data.data.uname)
               localStorage.setItem('username',data.data.uname) //用户名
+              localStorage.setItem('uid',data.data.uid) //用户id
+
               localStorage.setItem('job',data.data.pname)  //职位
               localStorage.setItem('Jurisdiction',data.data.jtype) //权限
               localStorage.setItem('dname',data.data.dname) //权限

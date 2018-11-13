@@ -109,6 +109,10 @@ export default {
   name: 'Addrecheck',
   data () {
     return {
+        sheng:"",
+        shi:"",
+        city:[],
+        shi:[],
         sex:"",
         name:"",
         iphone:"",
@@ -343,48 +347,48 @@ export default {
                     },
                 ],
             cityList1: [
-                    {
-                        value: '门头照',
-                        label: '门头照'
-                    },
-                    {
-                        value: '问题照片',
-                        label: '问题照片'
-                    },
-                    {
-                        value: '货架',
-                        label: '货架'
-                    }
+                    // {
+                    //     value: '门头照',
+                    //     label: '门头照'
+                    // },
+                    // {
+                    //     value: '问题照片',
+                    //     label: '问题照片'
+                    // },
+                    // {
+                    //     value: '货架',
+                    //     label: '货架'
+                    // }
                     
                 ],
                  cityList2: [
-                    {
-                        value: '门头照',
-                        label: '门头照'
-                    },
-                    {
-                        value: '问题照片',
-                        label: '问题照片'
-                    },
-                    {
-                        value: '货架',
-                        label: '货架'
-                    }
+                    // {
+                    //     value: '门头照',
+                    //     label: '门头照'
+                    // },
+                    // {
+                    //     value: '问题照片',
+                    //     label: '问题照片'
+                    // },
+                    // {
+                    //     value: '货架',
+                    //     label: '货架'
+                    // }
                     
                 ],
                  cityList3: [
-                    {
-                        value: '门头照',
-                        label: '门头照'
-                    },
-                    {
-                        value: '问题照片',
-                        label: '问题照片'
-                    },
-                    {
-                        value: '货架',
-                        label: '货架'
-                    }
+                    // {
+                    //     value: '门头照',
+                    //     label: '门头照'
+                    // },
+                    // {
+                    //     value: '问题照片',
+                    //     label: '问题照片'
+                    // },
+                    // {
+                    //     value: '货架',
+                    //     label: '货架'
+                    // }
                     
                 ],
                 model2: '',
@@ -485,13 +489,59 @@ methods: {
                     this.checkAll = false;
                 }
             },
-        change1(val){
-            console.log(val)
-            this.model1 = val
+         change1(val){
+            // console.log(val,this.city) 
+            this.cityList2=[]
+            this.model2 = "",
+            this.model3 = ""
+            this.sheng = val
+                              
+            var city = this.city;  
+             for(var i in city){
+                if(val == city[i].id){                 
+                //    console.log(city[i].child) ;
+                   var shi = city[i].child
+                   for(var j in shi){
+                       var obj = {
+                           value:shi[j].id,
+                           label:shi[j].name
+                       }
+                       
+                        this.cityList2.push(obj)
+                   }
+                   
+                }
+              }
+
         },
-        change2(val){
-            console.log(val)
-            this.model2 = val
+
+        change2(val2){
+            this.cityList3=[]          
+            var val = this.sheng;
+            //  console.log(val,val2)                   
+            var city = this.city;  
+             for(var i in city){
+                            
+                   var shi = city[i].child
+                   for(var j in shi){
+                        if(val2==shi[j].id){  
+                            var qu = shi[j].child;
+                            // console.log(qu)               
+                          
+                          
+                            for(var k in qu){
+                                 var obj = {
+                                    value:qu[k].id,
+                                    label:qu[k].name
+                                 }    
+                                 this.cityList3.push(obj)
+                            }
+                            // console.log(obj)
+                        }
+                       
+                   }
+                   
+              }
         },
         change3(val){
             console.log(val)
@@ -648,6 +698,27 @@ methods: {
        
        },
        mounted(){
+            //省市区
+          var that = this;
+          axios({
+            method:'get',
+            url:"../../static/city.json"
+            }).then(function(data){
+                //  console.log(data.data)       
+                var city = that.city = data.data;
+                for(var i in city){
+                    var obj = {
+                        value:city[i].id,
+                        label:city[i].name
+                    }
+                   that.cityList1.push(obj)              
+                   that.shi.push(city[i].child);
+                   
+                }
+                //  console.log(that.shi)
+            })
+
+
            //路由传值
          var obj = this.$route.params.id  ;   
            this.id = obj.id;
@@ -691,6 +762,8 @@ methods: {
                         that.dataArr1 = that.shows.slice(_start,_end);
                 console.log(that.shows)
             })
+
+           
        },
      
   

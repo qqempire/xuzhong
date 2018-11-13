@@ -10,7 +10,7 @@
                     <div style="height: 600px">
                         <!-- 表格 -->
                           <Table border :columns="history"  align="right" :data="dataArr"></Table>    
-                          <Page :total="pageTotal" :current="pageNum" :page-size="pageSize" 
+                          <Page :total="pageTotal" :current="pageNum" :page-size="pageSize"  style="margin:10px"
                             show-elevator  show-total placement="top" @on-change="handlePage" 
                             >
                             
@@ -26,15 +26,18 @@
 <script>
  import $ from "jquery"
   import axios from "axios"
+  
 
 export default {
   name: 'Dodata',
+  inject : ["reload"],
   data () {
     return {
-        pageTotal: 10,  //数据总数
+        pageTotal: 1,  //数据总数
         pageNum: 1,  //初始页
         pageSize: 3,  //每页条数
         dataArr :[],   //页面显示的数组
+        uid:"",
 
        history: [
                     {
@@ -149,8 +152,7 @@ export default {
                             that.shuju = arr
                        
                      }
-                    //  var _start = ( that.pageNum - 1 ) * that.pageSize;  //pageNum 第几页  pageSize:每页几条数据
-                    //  var _end = that.pageNum * that.pageSize;
+                   
                      that.dataArr = that.shuju
                     
                 })
@@ -158,25 +160,37 @@ export default {
        },
      remove (index) {
         console.log(this.shuju)
-        // this.shuju.splice(index, 1);
-        //   console.log(this.shuju[index])
           var lid = this.shuju[index].lid
-          console.log(lid)
-          var that = this;    
+          console.log(this.uid)
+          var that = this;  
          axios({
                    method:"post",
                     url:"http://192.168.0.134:8080/deleteLog",
-                    params:{lid:lid}
+                    params:{lid:lid,uid:that.uid}
                 })
                 .then(function(data){
                      console.log(data.data)   
+                     if(data.data.msg = "删除成功"){
+                         alert("删除成功")
+                         location.reload()
+                     }
              })
 
     },
-
+      todate(time){
+          var d = new Date(time);
+          var times=d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds(); 
+          return times
+      }
+    
      
  },
  mounted(){
+    
+
+       console.log(localStorage.getItem('uid'))
+       var uid = localStorage.getItem('uid')
+       this.uid = uid
           var that = this;
           axios({
                     url:"http://192.168.0.134:8080/queryByLog",
@@ -189,14 +203,30 @@ export default {
                      that.pageSize = data.data.limit; //每页条数
 
                      var arr = data.data.list;
-                   
-                            that.shuju = arr
+                      for(var i in arr){
+                          var ltime = arr[i].ltime;
+                          console.log(ltime)
+                        //   var time="2018-05-19T08:04:52.000+0000";
+                        //   that.todate(time)
+
+                        //   var time="2018-05-19T08:04:52.000+0000";
+                          var d = new Date(ltime);
+                          var times=d.getFullYear() + '-' + (d.getMonth()) + '-' + d.getDate() ; 
+
+                            console.log(times)
+                      }
                      
-                    
+                     
+                     
+                     that.shuju = arr                    
                      that.dataArr = that.shuju
                      console.log(that.shuju)
                        
                 })
+
+
+        
+         
  }
 }
 </script>

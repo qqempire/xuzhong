@@ -90,6 +90,10 @@ export default {
   name: 'Addrecheck',
   data () {
     return {
+        sheng:"",
+        shi:"",
+        city:[],
+        shi:[],
         ptypeid:"",
         visiter:"",
         visiterpassword:"",
@@ -183,7 +187,7 @@ export default {
                    
                 ],
                 message: [
-                    {   id:1,
+                    {   pid:1,
                         province: '河南',
                         shi: '郑州',
                         qu: '二七区',
@@ -192,7 +196,7 @@ export default {
                         num: '111',
                         address:"222",                
                     },
-                    {   id:2,
+                    {   pid:2,
                         province: '河南1',
                         shi: '郑州1',
                         qu: '二七区1',
@@ -201,39 +205,39 @@ export default {
                         num: '1111',
                         address:"2222",                
                     },
-                     {  id:3,
+                     {  pid:3,
                         province: '河北',
                         shi: '石家庄',
                         qu: '解放区',
                         proname: '的方式规范呵1',
-                        obj: '333',
+                        obj: '444',
                         num: '十多个',
                         address:"三个地方好地方",                
                     },
-                    {  id:3,
+                    {  pid:3,
                         province: '河北',
                         shi: '石家庄',
                         qu: '解放区',
                         proname: '的方式规范呵1',
-                        obj: '333',
+                        obj: '555',
                         num: '十多个',
                         address:"三个地方好地方",                
                     },
-                    {  id:3,
+                    {  pid:3,
                         province: '河北',
                         shi: '石家庄',
                         qu: '解放区',
                         proname: '的方式规范呵1',
-                        obj: '333',
+                        obj: '666',
                         num: '十多个',
                         address:"三个地方好地方",                
                     },
-                    {  id:3,
+                    {  pid:3,
                         province: '河北',
                         shi: '石家庄',
                         qu: '解放区',
                         proname: '的方式规范呵1',
-                        obj: '333',
+                        obj: '777',
                         num: '十多个',
                         address:"三个地方好地方",                
                     },
@@ -285,49 +289,16 @@ export default {
                         label: 'Sydney'
                     },
                 ],
-            cityList1: [
-                    // {
-                    //     value: '门头照',
-                    //     label: '门头照'
-                    // },
-                    // {
-                    //     value: '问题照片',
-                    //     label: '问题照片'
-                    // },
-                    // {
-                    //     value: '货架',
-                    //     label: '货架'
-                    // }
+               cityList1: [
+                   
                     
                 ],
                  cityList2: [
-                    // {
-                    //     value: '门头照',
-                    //     label: '门头照'
-                    // },
-                    // {
-                    //     value: '问题照片',
-                    //     label: '问题照片'
-                    // },
-                    // {
-                    //     value: '货架',
-                    //     label: '货架'
-                    // }
+                   
                     
                 ],
                  cityList3: [
-                    // {
-                    //     value: '门头照',
-                    //     label: '门头照'
-                    // },
-                    // {
-                    //     value: '问题照片',
-                    //     label: '问题照片'
-                    // },
-                    // {
-                    //     value: '货架',
-                    //     label: '货架'
-                    // }
+                   
                     
                 ],
                 model2: '',
@@ -362,7 +333,7 @@ methods: {
 
             //全选
             selectAbb(value){
-                this.shows=[]
+                // this.shows=[]
             //    console.log(value)
                var objj=value
                for(var i in value){
@@ -371,26 +342,28 @@ methods: {
                        address:value[i].address,
                        pid:value[i].pid
                    }
-                //    console.log(obj1)
-                  this.shows.push(obj1)
-                  this.pageTotal1 = this.shows.length;
-                  //console.log(that.data1.length)
-                        var _start = ( this.pageNum1 - 1 ) * this.pageSize1;  //pageNum 第几页  pageSize:每页几条数据
-                        var _end = this.pageNum1 * this.pageSize1;
-                        this.dataArr1 = this.shows.slice(_start,_end);
-               }
+                  this.shows.push(obj1)                   
+               }              
+                  var arr = this.shows
+                //   console.log(arr)
+
+              //数组去重
+                var hash = {};
+                var result = [];
+                for(var i = 0, len = arr.length; i < len; i++){
+                    if(!hash[arr[i].pid+arr[i].obj+arr[i].address]){
+                        result.push(arr[i]);
+                        hash[arr[i].pid+arr[i].obj+arr[i].address] = true;
+                    }
+                }            
+                       console.log(result)
+                       this.pageTotal1 = result.length;
+                        
+                       this.dataArr1 = result;
             },
             //单选
             selectone(value){
                console.log(value);
-            //    var objj=value;
-            //    var oldarr = this.shows;
-            //    console.log(oldarr);
-            //    var newarr = [];
-            //   for(var j in oldarr){
-            //        newarr.push(oldarr[j].pid);                              
-            //   }
-            //   console.log(newarr)
                var newarr1 = []
                for(var i in value){
                    var obj1 = {
@@ -398,50 +371,84 @@ methods: {
                        address:value[i].address,
                        pid:value[i].pid
                    }
-                //    newarr1.push(value[i].pid)
-                //    console.log(value)
+             
                   this.shows.push(obj1)
                }
-                // console.log(newarr1)
+               var arr = this.shows
+              //数组去重
+                var hash = {};
+                var result = [];
+                for(var i = 0, len = arr.length; i < len; i++){
+                    if(!hash[arr[i].pid+arr[i].obj+arr[i].address]){
+                        result.push(arr[i]);
+                        hash[arr[i].pid+arr[i].obj+arr[i].address] = true;
+                    }
+                }            
+                       console.log(result)              
             },
             //删除
             remove (index) {
                 this.shows.splice(index, 1);
+                console.log(this.shows)
             },
 
-            handleCheckAll () {
-                if (this.indeterminate) {
-                    this.checkAll = false;
-                } else {
-                    this.checkAll = !this.checkAll;
-                }
-                this.indeterminate = false;
-
-                if (this.checkAll) {
-                    this.checkAllGroup = ['香蕉', '苹果', '西瓜'];
-                } else {
-                    this.checkAllGroup = [];
-                }
-            },
-            checkAllGroupChange (data) {
-                if (data.length === 3) {
-                    this.indeterminate = false;
-                    this.checkAll = true;
-                } else if (data.length > 0) {
-                    this.indeterminate = true;
-                    this.checkAll = false;
-                } else {
-                    this.indeterminate = false;
-                    this.checkAll = false;
-                }
-            },
+            
         change1(val){
-            console.log(val)
-            this.model1 = val
+            // console.log(val,this.city) 
+            
+            this.cityList2=[]
+            this.model2 = "",
+            this.model3 = ""
+            this.sheng = val
+                              
+            var city = this.city;  
+             for(var i in city){
+                if(val == city[i].id){                 
+                //    console.log(city[i].child) ;
+                   var shi = city[i].child
+                   for(var j in shi){
+                       var obj = {
+                           value:shi[j].id,
+                           label:shi[j].name
+                       }
+                       
+                        this.cityList2.push(obj)
+                   }
+                   
+                }
+              }
+              this.model1 = val
         },
-        change2(val){
-            console.log(val)
-            this.model2 = val
+
+        change2(val2){
+            this.cityList3=[]          
+            var val = this.sheng;
+            //  console.log(val,val2)                   
+            var city = this.city;  
+             for(var i in city){
+                            
+                   var shi = city[i].child
+                   for(var j in shi){
+                        if(val2==shi[j].id){  
+                            var qu = shi[j].child;
+                            // console.log(qu)               
+                          
+                          
+                            for(var k in qu){
+                                 var obj = {
+                                    value:qu[k].id,
+                                    label:qu[k].name
+                                 }    
+                                 this.cityList3.push(obj)
+                            }
+                            // console.log(obj)
+                        }
+                       
+                   }
+                   
+              }
+              this.model2 = val2
+
         },
         change3(val){
             console.log(val)
@@ -590,41 +597,43 @@ methods: {
             })
 
            }
-           
-       
-       
+ 
 
        },
        mounted(){
-        //    var that = this;
-        //     axios({ 
-        //         url:"http://192.168.0.134:8080/queryPastHousepj",
-        //         // params:{projectname:that.proname,projectnum:that.pronum}
-        //     })
-        //     .then(function(data){
-        //         console.log(data.data)       
-        //         var arr = data.data
-        //         //  for(var i in arr){                      
-        //         //       var obj={name:arr[i].producttype,diaoyan:arr[i].projectname,pic:arr[i].projectname}
-        //         //        that.data1.push(obj)                                          
-        //         //  }
-        //            that.pageTotal = that.data1.length;
-        //                 var _start = ( that.pageNum - 1 ) * that.pageSize;  //pageNum 第几页  pageSize:每页几条数据
-        //                 var _end = that.pageNum * that.pageSize;
-        //                 that.dataArr = that.data1.slice(_start,_end);
-                       
-        //     })
+       
           var ptypeid =  localStorage.getItem('ptypeid')
           this.ptypeid = ptypeid;
           console.log(ptypeid)
+
+          //省市区
+          var that = this;
+          axios({
+            method:'get',
+            url:"../../static/city.json"
+            }).then(function(data){
+                 //console.log(data.data)       
+                var city = that.city = data.data;
+                for(var i in city){
+                    var obj = {
+                        value:city[i].id,
+                        label:city[i].name
+                    }
+                   that.cityList1.push(obj)              
+                   that.shi.push(city[i].child);
+                   
+                }
+                // console.log(that.shi)
+            })
+                
        },
       watch: {    
-        shows:{
-            handler: function (newarr,oldarr) {
-                console.log("000"+ newarr.obj, oldarr.obj); 
-            },      
-           deep: true    //深度监听
-        } 
+        // shows:{
+        //     handler: function (newarr,oldarr) {
+        //         console.log("000"+ newarr.obj, oldarr.obj); 
+        //     },      
+        //    deep: true    //深度监听
+        // } 
       }
 
   
@@ -647,10 +656,10 @@ methods: {
  
  .content{width: 360px;height: 200px;margin-top: 15px;padding: 20px}
 
-.table{width: 68%;height:520px;border:1px solid red;overflow:auto;
+.table{width: 68%;height:520px;overflow:auto;
     .other{width: 100%;height:30px;background: #5BC0DE;line-height: 30px;color: #fff;padding-left: 10px;box-sizing: border-box;margin-bottom: 5px}
 }
-.table2{width: 29%;height:520px;border:1px solid red;overflow:auto;
+.table2{width: 31%;height:520px;overflow:auto;
     .other{width: 100%;height:30px;background: #5BC0DE;line-height: 30px;color: #fff;padding-left: 10px;box-sizing: border-box;margin-bottom: 5px}
 }
  table{text-align: center;border:1px solid #D2D4D5;margin-top:5px;margin:5px 0 0 0;padding:0;
