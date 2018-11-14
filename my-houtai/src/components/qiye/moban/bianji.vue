@@ -76,7 +76,7 @@
                                       
                                   </tr>
                                 
-                                     <tr v-for="(item,index) in lists">
+                                     <tr v-for="(item,index) in lists" :key="index">
                                         <td style="width:5%"><input type="checkbox" :value='item.lid'/> {{item.lid}}</td>                                     
                                         <td style="width:30%"><input type="text" style="width:100%" v-model="item.name"></td>
                                         <td style="width:5%"><input type="radio" :name="item.lid" value="1" v-model="item.xuan" class="radiocheck"/></td>
@@ -250,7 +250,7 @@ export default {
                 
              //console.log(aaaaa)
         axios({         
-            url:"http://192.168.0.135:8080/SavaAppFunction",
+            url:"http://192.168.0.134:8080/SavaAppFunction",
             params:{
                 apptemplate:{atname:pname,attype:sele,atmark:bz},
                 appfunction:{atmark:ck},

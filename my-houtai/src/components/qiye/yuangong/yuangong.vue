@@ -112,7 +112,7 @@
 
                         <!-- 更新报告 -->
                         <div id="update">
-                             <div class="title title2"><span>状态列表</span><el-button type="info" size="default">导出表格</el-button></div>
+                             <div class="title title2"><span>状态列表</span><el-button type="info" size="small">导出表格</el-button></div>
                             
                              <!-- 表格 -->
                              <Table border :columns="columns1" :data="data1"></Table>
@@ -153,6 +153,7 @@ export default {
   name: 'Addshencha',
    data() {
       return {
+          uid:"",
           aaa:"mid",
           tablebianji:false,
           columns1: [
@@ -386,7 +387,7 @@ export default {
           // 职位
             
             axios({         
-            url:"http://192.168.0.135:8080/QueryByPositionId",
+            url:"http://192.168.0.134:8080/QueryByPositionId",
             params:{did:that.model1}       
             })
             .then(function(data){
@@ -486,7 +487,7 @@ export default {
              var that = this;
              var em = that.email;
              axios({          
-                        url:"http://192.168.0.135:8080/QueryByAccount",
+                        url:"http://192.168.0.134:8080/QueryByAccount",
                         params:{account:that.yzhang}
                     })
                     .then(function(data){
@@ -496,7 +497,7 @@ export default {
                                console.log("222")
                                 axios({
                                         method:"post",               
-                                        url:"http://192.168.0.135:8080/SavaUser",
+                                        url:"http://192.168.0.134:8080/SavaUser",
                                         params:{
                                             did:that.addvalue1,
                                             pid:that.addvalue2,
@@ -511,7 +512,8 @@ export default {
                                             education:that.yxueli,
                                             iphone:that.yphone,
                                             account:that.yzhang,
-                                            password: that.ymima
+                                            password: that.ymima,
+                                            uid:that.uid
                                         }
                                     })
                                     .then(function(data){
@@ -538,7 +540,7 @@ export default {
             var that = this;
             console.log(that.addbumen)
             axios({       
-                url:"http://192.168.0.135:8080/QueryByDname",
+                url:"http://192.168.0.134:8080/QueryByDname",
                 params:{dname:that.addbumen}
             })
             .then(function(data){         
@@ -548,7 +550,7 @@ export default {
                 }else{
                     axios({ 
                             method:"post",               
-                            url:"http://192.168.0.135:8080/SavaDepartment",
+                            url:"http://192.168.0.134:8080/SavaDepartment",
                             params:{dname:that.addbumen}
                         })
                         .then(function(data){
@@ -568,7 +570,7 @@ export default {
            var that = this;
             console.log(that.addzhi,that.model1)
              axios({                
-                url:"http://192.168.0.135:8080/QueryByPname",
+                url:"http://192.168.0.134:8080/QueryByPname",
                 params:{pname:that.addzhi}
             })
             .then(function(data){
@@ -578,7 +580,7 @@ export default {
                 }else if(data.data.msg=="职位可用"){
                    axios({ 
                         method:"post",               
-                        url:"http://192.168.0.135:8080/SavaPosition",
+                        url:"http://192.168.0.134:8080/SavaPosition",
                         params:{did:that.model1,pname:that.addzhi}
                     })
                     .then(function(data){
@@ -599,7 +601,7 @@ export default {
             var that = this;
             console.log(that.model1,that.model2,that.model3)
            axios({        
-                url:"http://192.168.0.135:8080/QueryByUser",
+                url:"http://192.168.0.134:8080/QueryByUser",
                 params:{did:that.model1,pid:that.model2,utype:that.model3}
             })
             .then(function(data){
@@ -609,10 +611,14 @@ export default {
         }
     },
     mounted(){
+        var uid = localStorage.getItem('uid')
+        this.uid = uid;
+        console.log(uid)
+
          var that = this;
         //  部门
            axios({         
-            url:"http://192.168.0.135:8080/QueryByDepartment",        
+            url:"http://192.168.0.134:8080/QueryByDepartment",        
             })
             .then(function(data){
                 console.log(data.data)
@@ -624,7 +630,7 @@ export default {
             });
             //权限类型
              axios({         
-            url:"http://192.168.0.135:8080/selectJuisdiction",        
+            url:"http://192.168.0.134:8080/selectJuisdiction",        
             })
             .then(function(data){
                 console.log(data.data)

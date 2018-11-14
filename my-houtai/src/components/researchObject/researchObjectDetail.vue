@@ -119,7 +119,7 @@ export default {
     },
   mounted(){
             axios({
-                url:this.portA+"queryByProjectDetails",  
+                url:this.portA+"queryByProjectDetail",  
                 method:'get',
                 params:{apid:this.$route.query.apid}  //路由接参                         
             }).then((res)=>{

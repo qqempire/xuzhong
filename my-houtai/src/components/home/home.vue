@@ -89,7 +89,7 @@ export default {
         startdate:"",
         enddate:"",   
 
-        pageTotal: 10,  //数据总数
+        pageTotal: 1,  //数据总数
         pageNum: 1,  //初始页
         pageSize: 3,  //每页条数
         dataArr :[],   //页面显示的数组
@@ -163,19 +163,7 @@ export default {
                 value: '选项1',
                 label: '黄金糕'
             }, 
-        // {
-        //   value: '选项2',
-        //   label: '双皮奶'
-        // }, {
-        //   value: '选项3',
-        //   label: '蚵仔煎'
-        // }, {
-        //   value: '选项4',
-        //   label: '龙须面'
-        // }, {
-        //   value: '选项5',
-        //   label: '北京烤鸭'
-        // }
+        
         ],
         value: '',
         input: ''
@@ -211,7 +199,7 @@ export default {
                         var uname = this.dataa[index].uname
                         var uploadtime = this.dataa[index].uploadtime
 
-                    
+                       localStorage.setItem('apid',pid) //详情id
 
                           this.$router.push({
                             name: 'homeDetail',
@@ -342,9 +330,43 @@ export default {
        $(".bm").text("【"+localStorage.getItem('dname')+"】")
        $(".zw").text("【"+localStorage.getItem('job')+"】")
        $(".mc").text("【"+localStorage.getItem('username')+"】")
+
+
+                //    axios({
+                //             url:"http://192.168.0.134:8080/queryByDetailsAll",
+                           
+                //         })
+                //         .then(function(data){
+                //             console.log(data.data) 
+                //             //     that.dataa=[]
+                //             // that.pageTotal = data.data.totalCount;
+                //             // that.pageNum =data.data.page;
+                //             // that.pageSize = data.data.limit;
+                //             // console.log( that.pageTotal)
+                //             // var arr = data.data.list
+                //             // for(var i in arr){
+                //             //     var obj = {
+                //             //         pid:arr[i].pid,
+                //             //         address:arr[i].address,
+                //             //         confirmtime:arr[i].confirmtime,
+                //             //         name:arr[i].name,
+                //             //         projectname:arr[i].projectname,
+                //             //         researchnum:arr[i].researchnum,
+                //             //         researchobject:arr[i].researchobject,
+                //             //         uname:arr[i].uname,
+                //             //         uploadtime:arr[i].uploadtime
+                //             //     }
+                //             //    that.dataa.push(obj) 
+                //             // }
+                           
+                //             // var _start = ( that.pageNum - 1 ) * that.pageSize;  //pageNum 第几页  pageSize:每页几条数据
+                //             // var _end = that.pageNum * that.pageSize;
+                //             // that.dataArr = that.dataa.slice(_start,_end);
+
+                //         })
      } 
 
-  
+      
 }
 </script>
 

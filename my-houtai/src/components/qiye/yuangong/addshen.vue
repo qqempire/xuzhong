@@ -65,7 +65,7 @@
                         <!-- 表格右 -->
                            <div class="table2">
                                <div class="other">可见调研对象</div>
-                               <Table border :columns="col" :data="dataArr1"></Table>
+                               <Table border :columns="col" :data="dataArr1" class="bbb"></Table>
                                <Page :total="pageTotal" :current="pageNum" :page-size="pageSize" 
                                    placement="top" @on-change="handlePage2" style="margin-top:8px">
                                </Page>
@@ -276,18 +276,18 @@ export default {
        single2: false,
        single3: false,
        cityList: [
-                    {
-                        value: 'New York',
-                        label: 'New York'
-                    },
-                    {
-                        value: 'London',
-                        label: 'London'
-                    },
-                    {
-                        value: 'Sydney',
-                        label: 'Sydney'
-                    },
+                    // {
+                    //     value: 'New York',
+                    //     label: 'New York'
+                    // },
+                    // {
+                    //     value: 'London',
+                    //     label: 'London'
+                    // },
+                    // {
+                    //     value: 'Sydney',
+                    //     label: 'Sydney'
+                    // },
                 ],
                cityList1: [
                    
@@ -333,7 +333,7 @@ methods: {
 
             //全选
             selectAbb(value){
-                // this.shows=[]
+                 this.shows=[]
             //    console.log(value)
                var objj=value
                for(var i in value){
@@ -344,8 +344,9 @@ methods: {
                    }
                   this.shows.push(obj1)                   
                }              
-                  var arr = this.shows
-                //   console.log(arr)
+                  
+                  var arr=this.dataArr1.concat(this.shows)
+                   console.log(arr)
 
               //数组去重
                 var hash = {};
@@ -358,11 +359,12 @@ methods: {
                 }            
                        console.log(result)
                        this.pageTotal1 = result.length;
-                        
+                        // $(".bbb  tr:not(:first)").html("");
                        this.dataArr1 = result;
             },
             //单选
             selectone(value){
+                  this.shows=[]
                console.log(value);
                var newarr1 = []
                for(var i in value){
@@ -371,10 +373,10 @@ methods: {
                        address:value[i].address,
                        pid:value[i].pid
                    }
-             
+                
                   this.shows.push(obj1)
                }
-               var arr = this.shows
+                var arr=this.dataArr1.concat(this.shows)
               //数组去重
                 var hash = {};
                 var result = [];
@@ -384,7 +386,8 @@ methods: {
                         hash[arr[i].pid+arr[i].obj+arr[i].address] = true;
                     }
                 }            
-                       console.log(result)              
+                       console.log(result)  
+                 this.dataArr1 = result;            
             },
             //删除
             remove (index) {

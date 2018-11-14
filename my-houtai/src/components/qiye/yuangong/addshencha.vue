@@ -72,7 +72,7 @@
                             <!-- <Button @click="handleSelectAll(false)">取消全选</Button> -->
                             <!-- <Button type="success">批量添加</Button>  -->
                            
-                            <Table border ref="selection" :columns="columns4" :data="dataArr" @on-select-all="selectAbb" @on-select="selectone" style="margin-top:5px"></Table>
+                            <Table border ref="selection" :columns="columns4" :data="dataArr1" @on-select-all="selectAbb" @on-select="selectone" style="margin-top:5px"></Table>
                             <Page :total="pageTotal" :current="pageNum" :page-size="pageSize" 
                                 show-elevator  show-total placement="top" @on-change="handlePage" style="margin-top:8px">
                             </Page>
@@ -244,60 +244,60 @@ export default {
                    
                 ],
                 message: [
-                    // {   id:1,
-                    //     province: '河南',
-                    //     shi: '郑州',
-                    //     qu: '二七区',
-                    //     proname: '呵呵呵',
-                    //     obj: '111',
-                    //     num: '111',
-                    //     address:"222",                
-                    // },
-                    // {   id:2,
-                    //     province: '河南1',
-                    //     shi: '郑州1',
-                    //     qu: '二七区1',
-                    //     proname: '呵呵呵1',
-                    //     obj: '222',
-                    //     num: '1111',
-                    //     address:"2222",                
-                    // },
-                    //  {  id:3,
-                    //     province: '河北',
-                    //     shi: '石家庄',
-                    //     qu: '解放区',
-                    //     proname: '的方式规范呵1',
-                    //     obj: '333',
-                    //     num: '十多个',
-                    //     address:"三个地方好地方",                
-                    // },
-                    // {  id:3,
-                    //     province: '河北',
-                    //     shi: '石家庄',
-                    //     qu: '解放区',
-                    //     proname: '的方式规范呵1',
-                    //     obj: '333',
-                    //     num: '十多个',
-                    //     address:"三个地方好地方",                
-                    // },
-                    // {  id:3,
-                    //     province: '河北',
-                    //     shi: '石家庄',
-                    //     qu: '解放区',
-                    //     proname: '的方式规范呵1',
-                    //     obj: '333',
-                    //     num: '十多个',
-                    //     address:"三个地方好地方",                
-                    // },
-                    // {  id:3,
-                    //     province: '河北',
-                    //     shi: '石家庄',
-                    //     qu: '解放区',
-                    //     proname: '的方式规范呵1',
-                    //     obj: '333',
-                    //     num: '十多个',
-                    //     address:"三个地方好地方",                
-                    // },
+                    {   id:1,
+                        province: '河南',
+                        shi: '郑州',
+                        qu: '二七区',
+                        proname: '呵呵呵',
+                        obj: '111',
+                        num: '111',
+                        address:"222",                
+                    },
+                    {   id:2,
+                        province: '河南1',
+                        shi: '郑州1',
+                        qu: '二七区1',
+                        proname: '呵呵呵1',
+                        obj: '222',
+                        num: '1111',
+                        address:"2222",                
+                    },
+                     {  id:3,
+                        province: '河北',
+                        shi: '石家庄',
+                        qu: '解放区',
+                        proname: '的方式规范呵1',
+                        obj: '333',
+                        num: '十多个',
+                        address:"三个地方好地方",                
+                    },
+                    {  id:3,
+                        province: '河北',
+                        shi: '石家庄',
+                        qu: '解放区',
+                        proname: '的方式规范呵1',
+                        obj: '333',
+                        num: '十多个',
+                        address:"三个地方好地方",                
+                    },
+                    {  id:3,
+                        province: '河北',
+                        shi: '石家庄',
+                        qu: '解放区',
+                        proname: '的方式规范呵1',
+                        obj: '333',
+                        num: '十多个',
+                        address:"三个地方好地方",                
+                    },
+                    {  id:3,
+                        province: '河北',
+                        shi: '石家庄',
+                        qu: '解放区',
+                        proname: '的方式规范呵1',
+                        obj: '333',
+                        num: '十多个',
+                        address:"三个地方好地方",                
+                    },
                    
                 ],
         // columns1: [
@@ -424,8 +424,8 @@ methods: {
 
             //全选
             selectAbb(value){
-                this.shows=[]
-               console.log(value)
+                 this.shows=[]
+            //    console.log(value)
                var objj=value
                for(var i in value){
                    var obj1 = {
@@ -433,31 +433,54 @@ methods: {
                        address:value[i].address,
                        pid:value[i].pid
                    }
-                   console.log(obj1)
+                  this.shows.push(obj1)                   
+               }              
                   
-                  this.shows.push(obj1)
-                  this.pageTotal1 = this.shows.length;
-                  //console.log(that.data1.length)
-                        var _start = ( this.pageNum1 - 1 ) * this.pageSize1;  //pageNum 第几页  pageSize:每页几条数据
-                        var _end = this.pageNum1 * this.pageSize1;
-                        this.dataArr1 = this.shows.slice(_start,_end);
-               }
+                  var arr=this.dataArr1.concat(this.shows)
+                   console.log(arr)
+
+              //数组去重
+                var hash = {};
+                var result = [];
+                for(var i = 0, len = arr.length; i < len; i++){
+                    if(!hash[arr[i].pid+arr[i].obj+arr[i].address]){
+                        result.push(arr[i]);
+                        hash[arr[i].pid+arr[i].obj+arr[i].address] = true;
+                    }
+                }            
+                       console.log(result)
+                       this.pageTotal1 = result.length;
+                        // $(".bbb  tr:not(:first)").html("");
+                       this.dataArr1 = result;
             },
             //单选
             selectone(value){
-              console.log(value)
-               var objj=value
-            //    this.shows=[]
+                  this.shows=[]
+               console.log(value);
+               var newarr1 = []
                for(var i in value){
                    var obj1 = {
                        obj:value[i].obj,
                        address:value[i].address,
                        pid:value[i].pid
                    }
-                   console.log(value)
+                
                   this.shows.push(obj1)
                }
+                var arr=this.dataArr1.concat(this.shows)
+              //数组去重
+                var hash = {};
+                var result = [];
+                for(var i = 0, len = arr.length; i < len; i++){
+                    if(!hash[arr[i].pid+arr[i].obj+arr[i].address]){
+                        result.push(arr[i]);
+                        hash[arr[i].pid+arr[i].obj+arr[i].address] = true;
+                    }
+                }            
+                       console.log(result)  
+                 this.dataArr1 = result;            
             },
+
             //删除
             remove (index) {
                 this.shows.splice(index, 1);
@@ -555,7 +578,7 @@ methods: {
             that.pageTotal
             axios({ 
                 method:"post",
-                url:"http://192.168.0.135:8080/queryByResearchobjectId",
+                url:"http://192.168.0.134:8080/queryByResearchobjectId",
                 params:{
                     researchobject:{
                         provinceid:that.model1,
@@ -611,7 +634,7 @@ methods: {
             that.pageTotal
             axios({ 
                 method:"post",
-                url:"http://192.168.0.135:8080/queryByResearchobjectId",
+                url:"http://192.168.0.134:8080/queryByResearchobjectId",
                 params:{ 
                  researchobject:{
                         provinceid:that.model1,
@@ -675,7 +698,7 @@ methods: {
 
             axios({ 
                 method:"post",
-                url:"http://192.168.0.135:8080/updateByInterviewProject",
+                url:"http://192.168.0.134:8080/updateByInterviewProject",
                 params:{
                     //  reviewInterview:{}, 
                      id:that.id,
@@ -740,7 +763,7 @@ methods: {
               //可见调研对象
              var that = this;
             axios({ 
-                url:"http://192.168.0.135:8080/queryByInterviewProjectXid",
+                url:"http://192.168.0.134:8080/queryByInterviewProjectXid",
                 params:{ id:zhanghao }
             })
             .then(function(data){
@@ -773,7 +796,7 @@ methods: {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped  lang="scss">
     .aaa{
-      width: 100%;height: 155px;display:flex;justify-content:space-between;border:1px solid green;
+      width: 100%;height: 100px;display:flex;justify-content:space-between;
       .bbb{
         width: 100%;height: 250px;
         .tit{
@@ -786,10 +809,10 @@ methods: {
  
  .content{width: 360px;height: 200px;margin-top: 15px;padding: 20px}
 
-.table{width: 68%;height:450px;border:1px solid red;overflow:auto;border:1px solid red;
+.table{width: 68%;height:450px;overflow:auto;
     .other{width: 100%;height:30px;background: #5BC0DE;line-height: 30px;color: #fff;padding-left: 10px;box-sizing: border-box;margin-bottom: 5px}
 }
-.table2{width: 29%;height:450px;border:1px solid red;overflow:auto;
+.table2{width: 29%;height:450px;overflow:auto;
     .other{width: 100%;height:30px;background: #5BC0DE;line-height: 30px;color: #fff;padding-left: 10px;box-sizing: border-box;margin-bottom: 5px}
 }
  table{text-align: center;border:1px solid #D2D4D5;margin-top:5px;margin:5px 0 0 0;padding:0;

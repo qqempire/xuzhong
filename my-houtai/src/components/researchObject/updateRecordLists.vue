@@ -55,11 +55,10 @@ export default {
     name: 'updateRecordLists',
     data () {
         return {
-        // 存贮省市区
-            city:[], 
-
             portA: ports.a,
         // 筛选框内容
+            // 存贮省市区
+            city:[], 
             // 查询功能
             sortLists:{
                 provinceLists: [],
@@ -100,7 +99,8 @@ export default {
         // 分页数据
             dataTotal:10,
             pageNum:10,
-            dataPage:[]          
+            dataPage:[],       
+        
         }
     },
     mounted(){
@@ -139,6 +139,8 @@ export default {
                 if(this.sortLists.projectNameLists.indexOf(datas[i].projectname) == -1){
                     this.sortLists.projectNameLists.push(datas[i].projectname);
                 }
+
+
             }
             this.updateRecordData = datas;
             this.dataTotal = res.data.count;            
@@ -253,7 +255,6 @@ export default {
                     if(datas[i].attestationtime == undefined){
                         datas[i].attestationtime = "无"
                     }
-
                 }
                 this.updateRecordData = datas;
                 this.dataTotal = res.data.count;

@@ -67,21 +67,20 @@
                                 </Carousel>                                                                       
                                 <ul :style="{width:'200px',height:'600px',listStyle:'none',fontSize:'14px'}">
                                     <li :style="{height:'50px',}">
-                                        类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;型:&nbsp;&nbsp;
-                                        <Select v-model="detailsData.type" :style="{width:'100px'}" filterable >
+                                        类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;型:&nbsp;&nbsp;<Select v-model="detailsData.type" :style="{width:'100px'}">
                                             <Option v-for="(item,index) in detailsDatas.photoTypes" :value="item" :key="index">{{ item }}</Option>
-                                        </Select>              
-                                    </li>
+                                        </Select>                                            
+                                    </li>                                    
                                     <li :style="{height:'50px',}">
-                                        问题归类:&nbsp;&nbsp;<Select v-model="detailsData.classify" :style="{width:'100px'}" filterable >
+                                        问题归类:&nbsp;&nbsp;<Select v-model="detailsData.classify" :style="{width:'100px'}">
                                             <Option v-for="(item,index) in detailsDatas.problemsClassify" :value="item" :key="index">{{ item }}</Option>
                                         </Select>                                            
-                                    </li>                                   
+                                    </li>                  
                                     <li :style="{height:'40px',}">时&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;间:&nbsp;&nbsp;{{detailsData.shoottime}}</li>
                                     <li :style="{height:'40px',}">经&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;度:&nbsp;&nbsp;{{detailsData.longitude}}</li>
                                     <li :style="{height:'40px',}">纬&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;度:&nbsp;&nbsp;{{detailsData.latitude}}</li>
                                     <li :style="{height:'50px',}">
-                                        问题类型:&nbsp;&nbsp;<Select v-model="detailsData.problemtypes" :style="{width:'100px'}" filterable >
+                                        问题类型:&nbsp;&nbsp;<Select v-model="detailsData.problemtypes" :style="{width:'100px'}">
                                             <Option v-for="(item,index) in detailsDatas.problemsTypes" :value="item" :key="index">{{ item }}</Option>
                                         </Select>                                            
                                     </li>                                   
@@ -117,11 +116,10 @@ export default {
             rightData:[],
             // 弹出详情页            
             detailsDatas:{
-                photoTypes:["门头照","问题照片"],
-                problemsClassify:["已审核","问题照片","已改善"],
-                problemsTypes:["垃圾不清扫","垃圾未归类"],
+                photoTypes:["照片","视频"],
+                problemsClassify:["问题照片","门头"],
+                problemsTypes:["垃圾不清扫","垃圾未归类",1],
             },
-            obj:{},
             detailsData:{},            
             // 轮播
             details: false,
@@ -130,7 +128,7 @@ export default {
     },
   mounted(){
             axios({
-                url:this.portA+"queryByProjectDetails",  
+                url:this.portA+"queryByProjectDetail",  
                 method:'get',
                 params:{apid:this.$route.query.apid}  //路由接参                         
             }).then((res)=>{
@@ -170,27 +168,33 @@ export default {
         // 查看详情(对象不能应用)
         goDetail(obj){
             this.details = true
-            this.detailsData={}
-            this.obj = {}
-            
-            this.obj = obj
-            this.detailsData = obj
-            console.log(this.detailsData.type)
-            console.log(this.obj)
+            this.detailsData=JSON.parse(JSON.stringify(obj))
         },
         // 详情查看成功
         handleSuccess(){
+            var par = this.detailsData;
+
+            if (par.classify == "门头") {
+                par.classify = 0
+            }else{
+                par.classify = 1
+            }
+            if (par.type == "照片") {
+                par.type = 0
+            }else{
+                par.type = 1
+            } 
+
             axios({
                 url:this.portA+"revisionProblem",
                 method:'post',
-                params:{pc:this.detailsData}                          
+                params:{pc:par}                          
             }).then((res)=>{
                 this.$Message.success(res.data.msg)
+                this.$router.go(0)
             })
         },
         cancel(){
-            this.detailsData = this.obj
-            console.log(this.detailsData.type)
             this.$Message.success("已取消")
         },
         // 查看地图

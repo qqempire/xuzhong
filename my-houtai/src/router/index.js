@@ -190,7 +190,6 @@ export default new Router({
       component: Login
     },
 
-
     {
       path:"/pub",
       component:Pub,

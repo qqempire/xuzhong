@@ -481,7 +481,7 @@ export default {
                 
                 axios({
                     method: 'post',
-                    url:"http://192.168.0.135:8080/addJuisdiction",
+                    url:"http://192.168.0.134:8080/addJuisdiction",
                     params:{jtype:str,jname:jname}
                 })
                 .then(function(data){
@@ -515,7 +515,7 @@ export default {
                 var that = this;
                   axios({
                         method: 'post',
-                        url:"http://192.168.0.135:8080/updateJuisdiction",
+                        url:"http://192.168.0.134:8080/updateJuisdiction",
                         params:{jid:that.jid,jtype:str,jname:jname}
                     })
                     .then(function(data){
@@ -543,7 +543,7 @@ export default {
     //      var that = this
     //      axios({
                    
-    //             url:"http://192.168.0.135:8080/selectJuisdiction",
+    //             url:"http://192.168.0.134:8080/selectJuisdiction",
                    
     //             })
     //             .then(function(data){
@@ -558,7 +558,7 @@ export default {
     mounted(){
           var that = this
          axios({         
-                url:"http://192.168.0.135:8080/selectJuisdiction",       
+                url:"http://192.168.0.134:8080/selectJuisdiction",       
                 })
                 .then(function(data){
                      // console.log(data.data)   

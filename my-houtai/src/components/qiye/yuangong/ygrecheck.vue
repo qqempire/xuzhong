@@ -25,7 +25,7 @@
 
                         <!-- 更新报告 -->
                         <div id="update">
-                             <div class="title title2"><span>状态列表</span><el-button type="info">导出表格</el-button></div>
+                             <div class="title title2"><span>状态列表</span><el-button type="info" size="small">导出表格</el-button></div>
                             
                              <!-- 表格 -->
                              <Table border :columns="columns1" :data="data1"></Table>
@@ -264,7 +264,7 @@ export default {
             var that = this;
             console.log(that.searchipt)
             axios({        
-                url:"http://192.168.0.135:8080/queryByReviewInterviewName",
+                url:"http://192.168.0.134:8080/queryByReviewInterviewName",
                 params:{root:that.searchipt}
             })
             .then(function(data){
@@ -291,7 +291,7 @@ export default {
          var that = this;
             //权限类型
              axios({         
-            url:"http://192.168.0.135:8080/selectJuisdiction",        
+            url:"http://192.168.0.134:8080/selectJuisdiction",        
             })
             .then(function(data){
                 console.log(data.data)

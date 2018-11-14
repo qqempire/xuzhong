@@ -70,7 +70,6 @@
                                      </div>
                                  </div>
 
-                                 <hr style= "border: 1px dotted #5BC0DE" /> 
                                  <Page :total="pageTotal" :current="pageNum" :page-size="pageSize" 
                                     show-elevator  show-total placement="top" @on-change="handlePage" 
                                  ></Page>
@@ -227,15 +226,20 @@ export default {
 
   mounted(){
       var obj = this.$route.params.id ;   
-    //    this.pppid = obj.pid
-    //   console.log(this.pppid)
+    //    var apid;
+    //      this.pppid = apid = obj.pid
+        
+      var xid = localStorage.getItem('apid')
+       console.log(xid)
+       
+    //    var xid = 1
           var that = this;
           axios({
                     url:"http://192.168.0.134:8080/queryByProjectDetails",
-                    params:{apid:1,page:1}
+                    params:{apid:xid,page:1}
                 })
                 .then(function(data){
-                     console.log(data.data)   
+                    //  console.log(data.data)   
                      that.pageTotal = data.data.totalCount;
                     //  that.pageNum = data.data.totalCount; //初始页
                      that.pageSize = data.data.limit; //每页条数
@@ -248,7 +252,7 @@ export default {
                              that.ifding = "点定位"
                          }
                      }
-                     console.log(obj)
+                    //  console.log(obj)
                      that.shudata=data.data.list
                     //  console.log(that.shudata)
                      var _start = ( that.pageNum - 1 ) * that.pageSize;  //pageNum 第几页  pageSize:每页几条数据
@@ -268,25 +272,25 @@ export default {
 <style scoped  lang="scss">
    .wrop{
        display: flex;justify-content: space-between;
-       .left{width:100%;height: 600px;border: 1px solid red;overflow: auto;
-       .row{width:100%;height:190px;border: 1px solid greenyellow;margin:10px 0 ;display:flex;justify-content: space-between;
-            .picwwrop{width:50%;height: 190px;border: 1px solid yellow;display: flex;justify-content: space-between;
+       .left{width:100%;height: 600px;overflow: auto;
+       .row{width:100%;height:190px;margin:10px 0 ;display:flex;justify-content: space-between;border-bottom: 1px dotted #5BC0DE;
+            .picwwrop{width:50%;height: 190px;display: flex;justify-content: space-between;
                      .pic{width:190px ;height: 190px;
                          img{width:190px ;height: 190px;}
                       }
-                     .zi{width: 45%;height:190px;background: #fff;font-size: 10px;box-sizing:border-box;border: 1px solid red;
+                     .zi{width: 45%;height:185px;background: #fff;font-size: 10px;box-sizing:border-box;
                         p{padding: 1px}
                      }
             }
-        }
+         }
        }
-       .xia{width: 100%;height: 570px;border: 1px solid blue}
+       .xia{width: 100%;height: 570px;}
    }
     .tit{
         width: 100%;height: 30px;background: #5BC0DE;line-height: 30px;padding-left:5px;color: #fff;
     }
-    .modelwrop{border:1px solid red;display:flex;justify-content:space-between;margin:0;padding:0;
-           .you{border:1px solid blue;width:35%;height:350px;padding:10px;position: relative;
+    .modelwrop{display:flex;justify-content:space-between;margin:0;padding:0;
+           .you{width:35%;height:350px;padding:10px;position: relative;
                div{margin:5px}
            }
     }
