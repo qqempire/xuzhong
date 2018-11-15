@@ -20,7 +20,7 @@
                                 
                                 <Button type="success" @click="search">&nbsp;&nbsp;搜索&nbsp;&nbsp;</Button>
 
-                                <Button type="success" @click="modal1 = true">&nbsp;&nbsp;添加&nbsp;&nbsp;</Button>
+                                <Button type="success" @click="add">&nbsp;&nbsp;添加&nbsp;&nbsp;</Button>
                                 
                                    
                                         <Modal
@@ -236,11 +236,11 @@
 
                         <!-- 更新报告 -->
                         <div id="update">
-                             <div class="title title2"><span>状态列表</span><el-button type="info">导出表格</el-button></div>
+                             <div class="title title2"><span>状态列表</span><el-button type="info" size="small">导出表格</el-button></div>
                              
                              <!-- 表格 -->
                               
-                               <el-table :data="dataArr" stripe border style="width:100%" highlight-current-row>
+                               <el-table :data="dataArr" stripe border style="width:100%" highlight-current-row size="small">
                                 　　
                                 　　<el-table-column prop="jid" label="权限组编号" align="center" min-width="120">
                                 　　</el-table-column>
@@ -251,7 +251,7 @@
                                 　
                                 　　<el-table-column label="操作" align="center" min-width="100">
                                 　　　　<template slot-scope="scope">
-                                　　　　　　<el-button type="info" @click="modifyUser(scope.row.jid,scope.row.jname,scope.row.jtype);modal2 = true" >修改</el-button>
+                                　　　　　　<el-button type="info" @click="modifyUser(scope.row.jid,scope.row.jname,scope.row.jtype);modal2 = true" size="small">修改</el-button>
                                 　　　　</template>
                                 　　</el-table-column>
                                 </el-table>
@@ -463,21 +463,28 @@ export default {
       
             // 权限组选中值
             change(val){
-                 console.log(val)
-                 //把选中的值放到全局变量上select
-                 //this.select = val
+                 
+                 this.select = val
             },
             //搜索
             search(){
-                     
+                var that = this;
+                 that.dataArr=[]
+                axios({                  
+                    url:"http://192.168.0.134:8080/QueryByJuisdictionId",
+                    params:{jid:that.select}
+                })
+                .then(function(data){                     
+                    var arr = data.data;    
+                    that.dataArr.push(arr)
+                })
             },
             //添加权限组
             clickok(){
-               
+                
                 var checkedarr = this.checked;
                 var str = checkedarr.toString(); 
-                var jname = this.quanname;
-                console.log(str,jname)
+                var jname = this.quanname;              
                 
                 axios({
                     method: 'post',
@@ -492,6 +499,11 @@ export default {
                     }
                        
                 })
+            },
+            add(){
+                this.checked=[]
+                this.modal1 = true
+                
             },
             
            //点击修改按钮获取对应行
@@ -539,22 +551,7 @@ export default {
                         
             
     },
-    // created(){
-    //      var that = this
-    //      axios({
-                   
-    //             url:"http://192.168.0.134:8080/selectJuisdiction",
-                   
-    //             })
-    //             .then(function(data){
-    //                  var arr = that.tableData.concat(data.data)
-    //                  that.tableData=arr
-    //             })
-    // },
-                    // {
-                    //     value: 'New York',
-                    //     label: 'New York'
-                    // },
+   
     mounted(){
           var that = this
          axios({         
@@ -565,7 +562,7 @@ export default {
                       var arr = data.data;                   
                       var newarr = that.tableData.concat(arr);
                       that.tableData=newarr;
-                        console.log(newarr.length);
+                        console.log(newarr);
                         that.pageTotal = that.tableData.length;
                         var _start = ( that.pageNum - 1 ) * that.pageSize;  //pageNum 第几页  pageSize:每页几条数据
                         var _end = that.pageNum * that.pageSize;
@@ -587,7 +584,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped  lang="scss">
     .back{width:80px;height:30px;background:#39435B;color: #fff;text-align: center;line-height: 30px;border-radius: 5px}
-    .title{width: 100%;height: 40px;background: #5BC0DE;line-height: 40px;color: #fff;padding:0 0 0 10px;display: flex;justify-content: space-between;}
+    .title{width: 100%;height: 30px;background: #5BC0DE;line-height: 30px;color: #fff;padding:0 0 0 10px;display: flex;justify-content: space-between;}
     .title2{margin-bottom: 10px; }
     .ipt{width: 400px;height: 60px;display: flex;justify-content: space-around;align-items: center}
 

@@ -9,7 +9,7 @@
                        <el-button type="info" size="small">返回</el-button>                   
                     </router-link>
                      <Button type="success" @click="save" size="default" >保存</Button>
-                     <Button type="warning" size="default">删除</Button>
+                     <!-- <Button type="warning" size="default">删除</Button> -->
                      
                 </Breadcrumb>
                 <Card>
@@ -33,10 +33,10 @@
                                   </tr>
                                   <tr>
                                       <td >{{root1}}</td>
-                                      <td><input v-model="password"/></td>
+                                      <td><input v-model="password" class="passw"/></td>
                                       <td>{{iphone}}</td>
-                                      <td><input v-model="name"/></td>
-                                      <td><input v-model="sex"/></td>                                                                                                       
+                                      <td><input v-model="name" class="name"/></td>
+                                      <td><input v-model="sex" class="sex"/></td>                                                                                                       
                                   </tr>   
                               </table>
                              </div>
@@ -52,18 +52,18 @@
                               
                                <div>
                               
-                                        <Select v-model="model1" style="width:80px" placeholder="省" @on-change="change1">
+                                        <Select v-model="model1" style="width:80px" placeholder="省" @on-change="change1" size="default"> 
                                             <Option v-for="item in cityList1" :value="item.value" :key="item.value">{{ item.label }}</Option>
                                         </Select>
-                                        <Select v-model="model2" style="width:80px" placeholder="市" @on-change="change2">
+                                        <Select v-model="model2" style="width:80px" placeholder="市" @on-change="change2" size="default">
                                             <Option v-for="item in cityList2" :value="item.value" :key="item.value">{{ item.label }}</Option>
                                         </Select>
-                                        <Select v-model="model3" style="width:80px" placeholder="县/区" @on-change="change3">
+                                        <Select v-model="model3" style="width:80px" placeholder="县/区" @on-change="change3" size="default">
                                             <Option v-for="item in cityList3" :value="item.value" :key="item.value">{{ item.label }}</Option>
                                         </Select>
-                                        <Input v-model="proname" placeholder="项目名称" style="width: 100px" />
-                                        <Input v-model="pronum" placeholder="调研编号" style="width: 100px" />
-                                        <Button type="success" @click="search" style="margin:8px">搜索</Button>
+                                        <Input v-model="proname" placeholder="项目名称" style="width: 100px" size="default"/>
+                                        <Input v-model="pronum" placeholder="调研编号" style="width: 100px" size="default"/>
+                                        <Button type="success" @click="search" style="margin:8px" size="default">搜索</Button>
                                 </div>
                                 <!-- 批量操作 -->
                                 
@@ -72,18 +72,17 @@
                             <!-- <Button @click="handleSelectAll(false)">取消全选</Button> -->
                             <!-- <Button type="success">批量添加</Button>  -->
                            
-                            <Table border ref="selection" :columns="columns4" :data="dataArr1" @on-select-all="selectAbb" @on-select="selectone" style="margin-top:5px"></Table>
+                            <Table border ref="selection" :columns="columns4" :data="dataArr" @on-select-all="selectAbb" @on-select="selectone" style="margin-top:5px" size="small"></Table>
                             <Page :total="pageTotal" :current="pageNum" :page-size="pageSize" 
                                 show-elevator  show-total placement="top" @on-change="handlePage" style="margin-top:8px">
                             </Page>
-
 
                            </div>
                         <!-- 表格右 -->
                            <div class="table2">
                                <div class="other">可见调研对象</div>
-                               <Table border :columns="col" :data="dataArr1"></Table>
-                               <Page :total="pageTotal" :current="pageNum" :page-size="pageSize" 
+                               <Table border :columns="col" :data="dataArr1" size="small"></Table>
+                               <Page :total="pageTotal1" :current="pageNum1" :page-size="pageSize1" 
                                    placement="top" @on-change="handlePage2" style="margin-top:8px">
                                </Page>
                            </div>
@@ -156,12 +155,12 @@ export default {
                 ],
         proname:"",
         pronum:"",
-        pageTotal1:"",  //数据总数
+        pageTotal1:1,  //数据总数
         pageNum1: 1,  //初始页
-        pageSize1: 6,  //每页条数
+        pageSize1: 8,  //每页条数
         dataArr1 :[],   //页面显示的数组
 
-        pageTotal: 10,  //数据总数
+        pageTotal: 1,  //数据总数
         pageNum: 1,  //初始页
         pageSize: 3,  //每页条数
         dataArr :[],   //页面显示的数组
@@ -244,60 +243,60 @@ export default {
                    
                 ],
                 message: [
-                    {   id:1,
-                        province: '河南',
-                        shi: '郑州',
-                        qu: '二七区',
-                        proname: '呵呵呵',
-                        obj: '111',
-                        num: '111',
-                        address:"222",                
-                    },
-                    {   id:2,
-                        province: '河南1',
-                        shi: '郑州1',
-                        qu: '二七区1',
-                        proname: '呵呵呵1',
-                        obj: '222',
-                        num: '1111',
-                        address:"2222",                
-                    },
-                     {  id:3,
-                        province: '河北',
-                        shi: '石家庄',
-                        qu: '解放区',
-                        proname: '的方式规范呵1',
-                        obj: '333',
-                        num: '十多个',
-                        address:"三个地方好地方",                
-                    },
-                    {  id:3,
-                        province: '河北',
-                        shi: '石家庄',
-                        qu: '解放区',
-                        proname: '的方式规范呵1',
-                        obj: '333',
-                        num: '十多个',
-                        address:"三个地方好地方",                
-                    },
-                    {  id:3,
-                        province: '河北',
-                        shi: '石家庄',
-                        qu: '解放区',
-                        proname: '的方式规范呵1',
-                        obj: '333',
-                        num: '十多个',
-                        address:"三个地方好地方",                
-                    },
-                    {  id:3,
-                        province: '河北',
-                        shi: '石家庄',
-                        qu: '解放区',
-                        proname: '的方式规范呵1',
-                        obj: '333',
-                        num: '十多个',
-                        address:"三个地方好地方",                
-                    },
+                    // {   id:1,
+                    //     province: '河南',
+                    //     shi: '郑州',
+                    //     qu: '二七区',
+                    //     proname: '呵呵呵',
+                    //     obj: '111',
+                    //     num: '111',
+                    //     address:"222",                
+                    // },
+                    // {   id:2,
+                    //     province: '河南1',
+                    //     shi: '郑州1',
+                    //     qu: '二七区1',
+                    //     proname: '呵呵呵1',
+                    //     obj: '222',
+                    //     num: '1111',
+                    //     address:"2222",                
+                    // },
+                    //  {  id:3,
+                    //     province: '河北',
+                    //     shi: '石家庄',
+                    //     qu: '解放区',
+                    //     proname: '的方式规范呵1',
+                    //     obj: '333',
+                    //     num: '十多个',
+                    //     address:"三个地方好地方",                
+                    // },
+                    // {  id:3,
+                    //     province: '河北',
+                    //     shi: '石家庄',
+                    //     qu: '解放区',
+                    //     proname: '的方式规范呵1',
+                    //     obj: '333',
+                    //     num: '十多个',
+                    //     address:"三个地方好地方",                
+                    // },
+                    // {  id:3,
+                    //     province: '河北',
+                    //     shi: '石家庄',
+                    //     qu: '解放区',
+                    //     proname: '的方式规范呵1',
+                    //     obj: '333',
+                    //     num: '十多个',
+                    //     address:"三个地方好地方",                
+                    // },
+                    // {  id:3,
+                    //     province: '河北',
+                    //     shi: '石家庄',
+                    //     qu: '解放区',
+                    //     proname: '的方式规范呵1',
+                    //     obj: '333',
+                    //     num: '十多个',
+                    //     address:"三个地方好地方",                
+                    // },
                    
                 ],
         // columns1: [
@@ -424,7 +423,7 @@ methods: {
 
             //全选
             selectAbb(value){
-                 this.shows=[]
+                //  this.shows=[]
             //    console.log(value)
                var objj=value
                for(var i in value){
@@ -449,13 +448,16 @@ methods: {
                     }
                 }            
                        console.log(result)
-                       this.pageTotal1 = result.length;
-                        // $(".bbb  tr:not(:first)").html("");
-                       this.dataArr1 = result;
+                       this.pageTotal1 =result.length;
+                       console.log(this.pageTotal1)
+                       var _start = ( this.pageNum1 - 1 ) * this.pageSize1;
+                       var _end = this.pageNum1 * this.pageSize1;
+                       this.dataArr1 = result.slice(_start,_end);
+                    //    this.dataArr1 = result;
             },
             //单选
             selectone(value){
-                  this.shows=[]
+                //   this.shows=[]
                console.log(value);
                var newarr1 = []
                for(var i in value){
@@ -477,8 +479,12 @@ methods: {
                         hash[arr[i].pid+arr[i].obj+arr[i].address] = true;
                     }
                 }            
-                       console.log(result)  
-                 this.dataArr1 = result;            
+                       console.log(result.length)  
+                       this.pageTotal1 = result.length;
+                       var _start = ( this.pageNum1 - 1 ) * this.pageSize1;
+                       var _end = this.pageNum1 * this.pageSize1;
+                       this.dataArr1 = result .slice(_start,_end);
+                           
             },
 
             //删除
@@ -570,11 +576,12 @@ methods: {
             console.log(val)
             this.model3 = val
         },
-         search(){
+        //搜索
+        search(){
              var that = this; 
-       
-             console.log("00")
-             console.log(that.model1,that.model2,that.model3,that.proname,that.pronum)
+             that.pronum =  $.trim(that.pronum)       
+            //  console.log("00")
+            //  console.log(that.model1,that.model2,that.model3,that.proname,that.pronum)
             that.pageTotal
             axios({ 
                 method:"post",
@@ -598,7 +605,7 @@ methods: {
                  that.pageTotal = arr.totalCount;//总页数
                  that.pageNum = arr.page;//当前页
                  that.pageSize = arr.limit;//每页显示
-                 that.pageTotal = arr.totalCount; //数据总树
+                //  that.pageTotal = arr.totalCount; //数据总树
 
                  for(var i in newarr){                      
                       var obj={
@@ -666,9 +673,6 @@ methods: {
                                          
                  }       
                  
-                //   var _start = ( value - 1 ) * that.pageSize;
-                //   var _end = value * that.pageSize;
-                //   that.dataArr = that.message .slice(_start,_end);
 
                     that.dataArr = that.message;
                   
@@ -796,7 +800,7 @@ methods: {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped  lang="scss">
     .aaa{
-      width: 100%;height: 100px;display:flex;justify-content:space-between;
+      width: 100%;height: 120px;display:flex;justify-content:space-between;
       .bbb{
         width: 100%;height: 250px;
         .tit{
@@ -809,10 +813,10 @@ methods: {
  
  .content{width: 360px;height: 200px;margin-top: 15px;padding: 20px}
 
-.table{width: 68%;height:450px;overflow:auto;
+.table{width: 68%;height:490px;overflow:auto;border:1px solid #ccc;
     .other{width: 100%;height:30px;background: #5BC0DE;line-height: 30px;color: #fff;padding-left: 10px;box-sizing: border-box;margin-bottom: 5px}
 }
-.table2{width: 29%;height:450px;overflow:auto;
+.table2{width: 31%;height:490px;overflow:auto;border:1px solid #ccc;
     .other{width: 100%;height:30px;background: #5BC0DE;line-height: 30px;color: #fff;padding-left: 10px;box-sizing: border-box;margin-bottom: 5px}
 }
  table{text-align: center;border:1px solid #D2D4D5;margin-top:5px;margin:5px 0 0 0;padding:0;
@@ -821,6 +825,9 @@ methods: {
 .header{background: #1D95C9;color: #fff}
 
 .xia{display: flex;justify-content: space-between}
-
+.passw{text-align: center;width: 100%;height: 100%}
+.name{text-align: center;width: 100%;height: 100%}
+.sex{text-align: center;width: 100%;height: 100%}
+table tr{height: 30px;}
 
 </style>

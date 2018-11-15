@@ -16,9 +16,9 @@
 
                           <div class="title"><span>筛选条件</span></div>
                            <div class="ipt">
-                               <Input v-model="searchipt" placeholder="请输入查询内容" style="width: 300px" />
-                                <Button type="success" @click="search">搜索</Button>                       
-                                <Button type="success" @click="addvisiter">添加访问员</Button>                                 
+                               <Input v-model="searchipt" placeholder="请输入查询内容" style="width: 300px" size="default"/>
+                                <Button type="success" @click="search" size="default">搜索</Button>                       
+                                <Button type="success" @click="addvisiter" size="default">添加访问员</Button>                                 
                            </div>
 
                         </div>
@@ -28,7 +28,7 @@
                              <div class="title title2"><span>状态列表</span><el-button type="info" size="small">导出表格</el-button></div>
                             
                              <!-- 表格 -->
-                             <Table border :columns="columns1" :data="data1"></Table>
+                             <Table border :columns="columns1" :data="data1" size="small"></Table>
 
                             
 
@@ -113,21 +113,21 @@ export default {
                     }
                 ],
                 data1: [
-                    {
-                        id: '001',
-                        name: '张三',
-                        sex:"男",  
-                        root:"6668888",
-                        iphone: '1288856',                  
-                    },
-                     {
-                        id: '001',
-                        name: '张三',
-                        sex:"男",  
-                        root:"6668888",
-                        iphone: '1288856',   
+                    // {
+                    //     id: '001',
+                    //     name: '张三',
+                    //     sex:"男",  
+                    //     root:"6668888",
+                    //     iphone: '1288856',                  
+                    // },
+                    //  {
+                    //     id: '001',
+                    //     name: '张三',
+                    //     sex:"男",  
+                    //     root:"6668888",
+                    //     iphone: '1288856',   
                                       
-                    },                   
+                    // },                   
                 ],
         options: [{
           value: '选项1',
@@ -261,6 +261,7 @@ export default {
     
         //搜索
         search(){
+            this.searchipt =  $.trim(this.searchipt) 
             var that = this;
             console.log(that.searchipt)
             axios({        
@@ -270,6 +271,7 @@ export default {
             .then(function(data){
                 console.log(data.data)
                 var arr = data.data;
+                that.data1=[]
                 for(var i in arr){
                     var obj = {
                         id: arr[i].id,
@@ -322,6 +324,29 @@ export default {
              ifquan($(".bjbtn"))
 
 
+
+          this.searchipt =  $.trim(this.searchipt) 
+            var that = this;
+            console.log(that.searchipt)
+            axios({        
+                url:"http://192.168.0.134:8080/queryByReviewInterviewName",
+                params:{root:that.searchipt}
+            })
+            .then(function(data){
+                console.log(data.data)
+                var arr = data.data;
+                for(var i in arr){
+                    var obj = {
+                        id: arr[i].id,
+                        name: arr[i].name,
+                        sex: arr[i].sex,  
+                        root: arr[i].root,
+                        iphone: arr[i].iphone, 
+                    }
+                    that.data1.push(obj)
+                }
+                
+            });
     }
   
 }
@@ -332,7 +357,7 @@ export default {
     .back{width:80px;height:30px;background:#39435B;color: #fff;text-align: center;line-height: 30px;border-radius: 5px}
     .title{width: 100%;height: 30px;background: #5BC0DE;line-height: 30px;color: #fff;padding:0 0 0 10px;display: flex;justify-content: space-between;}
     .title2{margin-bottom: 10px; }
-    .ipt{width: 100%;height: 60px;display: flex;justify-content: space-around;align-items: center}
+    .ipt{width: 500px;height: 60px;display: flex;justify-content: space-around;align-items: center}
 
      #top{height: 100px;width: 100%;background:#fff;box-shadow: 0 1px 1px rgba(0,0,0,.1);border-radius:5px;overflow: hidden;
         
@@ -341,7 +366,7 @@ export default {
         }
      }
      #update{
-        width: 100%;height: 500px;background:#fff;box-shadow: 0 1px 1px rgba(0,0,0,.1);margin-top: 8px;border-radius: 5px;overflow: hidden;border: 1px solid red
+        width: 100%;height: 500px;background:#fff;box-shadow: 0 1px 1px rgba(0,0,0,.1);margin-top: 8px;border-radius: 5px;overflow: hidden;
        
      }
 table{text-align: center;

@@ -52,7 +52,7 @@
                                              <p>问题类型：{{item.laoobject.problemtypes}}</p>
                                              <p>地点备注：{{item.laoobject.placenotes}}</p>
                                              <p>问题备注：{{item.laoobject.questionnotes}}</p>
-                                             <Button type="success" size="small" style="margin-left:5px" @click="dingweiold(i)">{{ifding}}</Button>
+                                             <Button type="success" size="small" style="margin-left:5px;margin-top:10px" @click="dingweiold(i)">{{ifding}}</Button>
                                          </div>
                                      </div>
                                      <div class="picwwrop" >
@@ -65,7 +65,7 @@
                                              <p>问题类型：{{item.xingobject.problemtypes}}</p>
                                              <p>地点备注：{{item.xingobject.placenotes}}</p>
                                              <p>问题备注：{{item.xingobject.questionnotes}}</p>
-                                             <Button type="success" size="small" style="margin-left:5px" @click="dingweinew(i)">点定位</Button>
+                                             <Button type="success" size="small" style="margin-left:5px;margin-top:10px" @click="dingweinew(i)">点定位</Button>
                                          </div>
                                      </div>
                                  </div>

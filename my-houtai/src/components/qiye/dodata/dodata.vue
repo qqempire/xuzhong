@@ -9,13 +9,12 @@
                 <Card>
                     <div style="height: 600px">
                         <!-- 表格 -->
-                          <Table border :columns="history"  align="right" :data="dataArr"></Table>    
+                          <Table border :columns="history"  align="right" :data="dataArr" size="small"></Table>    
                           <Page :total="pageTotal" :current="pageNum" :page-size="pageSize"  style="margin:10px"
                             show-elevator  show-total placement="top" @on-change="handlePage" 
                             >
                             
                          </Page>
-
                     </div>
                 </Card>
             </Content>
@@ -187,7 +186,6 @@ export default {
  },
  mounted(){
     
-
        console.log(localStorage.getItem('uid'))
        var uid = localStorage.getItem('uid')
        this.uid = uid

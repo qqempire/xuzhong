@@ -19,8 +19,8 @@
                                <div class="tit">基本信息</div>
                                
                               <!-- <Table border :columns="columns1" :data="data1"></Table> -->
-                                <Input v-model="visiter" placeholder="访问员账户" style="width: 200px" />
-                                <Input v-model="visiterpassword" placeholder="访问员密码" style="width: 200px" />
+                                <Input v-model="visiter" placeholder="访问员账户" style="width: 200px" size="default"/>
+                                <Input v-model="visiterpassword" placeholder="访问员密码" style="width: 200px" size="default"/>
 
                              </div>
                             
@@ -35,18 +35,18 @@
                               
                                <div>
                               
-                                        <Select v-model="model1" style="width:80px" placeholder="省" @on-change="change1">
+                                        <Select v-model="model1" style="width:80px" placeholder="省" @on-change="change1" size="default">
                                             <Option v-for="item in cityList1" :value="item.value" :key="item.value">{{ item.label }}</Option>
                                         </Select>
-                                        <Select v-model="model2" style="width:80px" placeholder="市" @on-change="change2">
+                                        <Select v-model="model2" style="width:80px" placeholder="市" @on-change="change2" size="default">
                                             <Option v-for="item in cityList2" :value="item.value" :key="item.value">{{ item.label }}</Option>
                                         </Select>
-                                        <Select v-model="model3" style="width:80px" placeholder="县/区" @on-change="change3">
+                                        <Select v-model="model3" style="width:80px" placeholder="县/区" @on-change="change3" size="default">
                                             <Option v-for="item in cityList3" :value="item.value" :key="item.value">{{ item.label }}</Option>
                                         </Select>
-                                        <Input v-model="proname" placeholder="项目名称" style="width: 100px" />
-                                        <Input v-model="pronum" placeholder="调研编号" style="width: 100px" />
-                                        <Button type="success" @click="search" style="margin:8px">搜索</Button>
+                                        <Input v-model="proname" placeholder="项目名称" style="width: 100px" size="default"/>
+                                        <Input v-model="pronum" placeholder="调研编号" style="width: 100px" size="default"/>
+                                        <Button type="success" @click="search" style="margin:8px" size="default">搜索</Button>
                                 </div>
                                 <!-- 批量操作 -->
                                 
@@ -55,18 +55,17 @@
                             <!-- <Button @click="handleSelectAll(false)">取消全选</Button> -->
                             <!-- <Button type="success">批量添加</Button>  -->
                            
-                            <Table border ref="selection" :columns="columns4" :data="message" @on-select-all="selectAbb" @on-select="selectone" style="margin-top:5px"></Table>
+                           <Table border ref="selection" :columns="columns4" :data="dataArr" @on-select-all="selectAbb" @on-select="selectone" style="margin-top:5px" size="small"></Table>
                             <Page :total="pageTotal" :current="pageNum" :page-size="pageSize" 
                                 show-elevator  show-total placement="top" @on-change="handlePage" style="margin-top:8px">
                             </Page>
-
 
                            </div>
                         <!-- 表格右 -->
                            <div class="table2">
                                <div class="other">可见调研对象</div>
-                               <Table border :columns="col" :data="dataArr1" class="bbb"></Table>
-                               <Page :total="pageTotal" :current="pageNum" :page-size="pageSize" 
+                               <Table border :columns="col" :data="dataArr1" size="small"></Table>
+                               <Page :total="pageTotal1" :current="pageNum1" :page-size="pageSize1" 
                                    placement="top" @on-change="handlePage2" style="margin-top:8px">
                                </Page>
                            </div>
@@ -99,14 +98,15 @@ export default {
         visiterpassword:"",
         proname:"",
         pronum:"",
-        pageTotal1:"",  //数据总数
+
+        pageTotal1:1,  //数据总数
         pageNum1: 1,  //初始页
-        pageSize1: 6,  //每页条数
+        pageSize1: 8,  //每页条数
         dataArr1 :[],   //页面显示的数组
 
-        pageTotal: 10,  //数据总数
+        pageTotal: 1,  //数据总数
         pageNum: 1,  //初始页
-        pageSize: 3,  //每页条数
+        pageSize: 1,  //每页条数
         dataArr :[],   //页面显示的数组
 
             col: [
@@ -333,7 +333,7 @@ methods: {
 
             //全选
             selectAbb(value){
-                 this.shows=[]
+                //  this.shows=[]
             //    console.log(value)
                var objj=value
                for(var i in value){
@@ -358,13 +358,16 @@ methods: {
                     }
                 }            
                        console.log(result)
-                       this.pageTotal1 = result.length;
-                        // $(".bbb  tr:not(:first)").html("");
-                       this.dataArr1 = result;
+                       this.pageTotal1 =result.length;
+                       console.log(this.pageTotal1)
+                       var _start = ( this.pageNum1 - 1 ) * this.pageSize1;
+                       var _end = this.pageNum1 * this.pageSize1;
+                       this.dataArr1 = result.slice(_start,_end);
+                    //    this.dataArr1 = result;
             },
             //单选
             selectone(value){
-                  this.shows=[]
+                //   this.shows=[]
                console.log(value);
                var newarr1 = []
                for(var i in value){
@@ -386,13 +389,18 @@ methods: {
                         hash[arr[i].pid+arr[i].obj+arr[i].address] = true;
                     }
                 }            
-                       console.log(result)  
-                 this.dataArr1 = result;            
+                       console.log(result.length)  
+                       this.pageTotal1 = result.length;
+                       var _start = ( this.pageNum1 - 1 ) * this.pageSize1;
+                       var _end = this.pageNum1 * this.pageSize1;
+                       this.dataArr1 = result .slice(_start,_end);
+                           
             },
+
             //删除
             remove (index) {
-                this.shows.splice(index, 1);
-                console.log(this.shows)
+                this.dataArr1.splice(index, 1);
+                console.log(this.dataArr1)
             },
 
             
@@ -459,7 +467,8 @@ methods: {
         },
         //搜索
          search(){
-             var that = this;        
+             var that = this;   
+             that.pronum =  $.trim(that.pronum)       
             //  console.log("00")
             //  console.log(that.model1,that.model2,that.model3,that.proname,that.pronum)
             // that.pageTotal
@@ -559,45 +568,84 @@ methods: {
                   
             })
         },
-         //分页2
+        //分页2
          handlePage2(value){
-            console.log(value)
+            // console.log(value)
             this.pageNum1 = value;
             var _start = ( value - 1 ) * this.pageSize1;
             var _end = value * this.pageSize1;
             this.dataArr1 = this.shows .slice(_start,_end);
         },
+
+        instance (type) {
+                const title = '注意';
+                const content = '<p>输入框值不能为空</p>';
+                switch (type) {
+                   
+                   case 'info':
+                        this.$Modal.info({
+                            title: title,
+                            content: "<p>部门/职位/账户名称不能重复</p>"
+                        });
+                        break;
+                    case 'success':
+                        this.$Modal.success({
+                            title: "ok",
+                            content: '<p>添加成功</p>'
+                        });
+                        break;
+                    case 'warning':
+                        this.$Modal.warning({
+                            title: title,
+                            content: '<p>内容不能为空</p>'
+                        });
+                        break;
+                    case 'error':
+                        this.$Modal.error({
+                            title: title,
+                            content: content
+                        });
+                        break;
+                }
+            },
         //保存
         save(){
-            var that = this;
-            var zhanghao = that.visiter
-            var arr = that.shows;
-           console.log(that.shows)
-           var newarr = []
-           for(var i in arr){
-               var pidd = arr[i].pid
-               newarr.push(pidd)
-           }
-            var str = newarr.toString()
-            
-           console.log(that.ptypeid,that.visiter,that.visiterpassword, str,)
-            axios({ 
-                method:"post",
-                url:"http://192.168.0.134:8080/savaByInterviewProject",
-                params:{
-                    //  reviewInterview:{}, 
-                     root:that.visiter,
-                     password:that.visiterpassword,                                     
-                     pid:str,
-                     columu1:that.ptypeid
+            if(this.visiter=="" || this.visiterpassword==null){
+               this.instance('warning')
+            }else{
+                this.visiter =  $.trim(this.visiter)       
+                this.visiterpassword =  $.trim(this.visiterpassword)       
+               var that = this;
+                    var zhanghao = that.visiter
+                    var arr = that.shows;
+                console.log(that.shows)
+                var newarr = []
+                for(var i in arr){
+                    var pidd = arr[i].pid
+                    newarr.push(pidd)
                 }
-            })
-            .then(function(data){
-                console.log(data.data)       
-               if(data.data.msg=="添加成功"){
-                   alert("添加成功")
-               }
-            })
+                    var str = newarr.toString()
+                    
+                console.log(that.ptypeid,that.visiter,that.visiterpassword, str,)
+                    axios({ 
+                        method:"post",
+                        url:"http://192.168.0.134:8080/savaByInterviewProject",
+                        params:{
+                            //  reviewInterview:{}, 
+                            root:that.visiter,
+                            password:that.visiterpassword,                                     
+                            pid:str,
+                            columu1:that.ptypeid
+                        }
+                    })
+                    .then(function(data){
+                        console.log(data.data)       
+                        if(data.data.msg=="添加成功"){
+                           this.instance('success')
+                        }
+                   })
+            }
+            
 
            }
  
@@ -630,14 +678,7 @@ methods: {
             })
                 
        },
-      watch: {    
-        // shows:{
-        //     handler: function (newarr,oldarr) {
-        //         console.log("000"+ newarr.obj, oldarr.obj); 
-        //     },      
-        //    deep: true    //深度监听
-        // } 
-      }
+      
 
   
 }
@@ -659,10 +700,10 @@ methods: {
  
  .content{width: 360px;height: 200px;margin-top: 15px;padding: 20px}
 
-.table{width: 68%;height:520px;overflow:auto;
+.table{width: 68%;height:520px;overflow:auto;border:1px solid #ccc;
     .other{width: 100%;height:30px;background: #5BC0DE;line-height: 30px;color: #fff;padding-left: 10px;box-sizing: border-box;margin-bottom: 5px}
 }
-.table2{width: 31%;height:520px;overflow:auto;
+.table2{width: 31%;height:520px;overflow:auto;border:1px solid #ccc;
     .other{width: 100%;height:30px;background: #5BC0DE;line-height: 30px;color: #fff;padding-left: 10px;box-sizing: border-box;margin-bottom: 5px}
 }
  table{text-align: center;border:1px solid #D2D4D5;margin-top:5px;margin:5px 0 0 0;padding:0;

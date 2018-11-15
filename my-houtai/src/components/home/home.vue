@@ -31,21 +31,21 @@
                              <div class="data"> 
                                 <p>
                                     <Row>
-                                        <Col span="8">
-                                            <DatePicker type="date" placeholder="开始统计日期" style="width: 120px;" @on-change="changedate"></DatePicker>
+                                        <Col span="8" >
+                                            <DatePicker type="date" placeholder="开始统计日期" style="width: 120px;" size="default" @on-change="changedate"></DatePicker>
                                         </Col>
                                         
                                     </Row>
                                     &nbsp;—&nbsp;
                                     <Row>
                                         <Col span="8" style="margin-right:50px">
-                                            <DatePicker type="date" placeholder="结束统计日期" style="width: 120px" @on-change="changedate2"></DatePicker>
+                                            <DatePicker type="date" placeholder="结束统计日期" style="width: 120px" size="default" @on-change="changedate2"></DatePicker>
                                         </Col>
                                         
                                     </Row>
-                                    <Input v-model="proname" placeholder="请选择项目名称" style="width: 150px" />&nbsp;&nbsp;
+                                    <Input v-model="proname" placeholder="请选择项目名称" style="width: 150px" size="default"/>&nbsp;&nbsp;
                                 
-                                    <Input v-model="pronum" placeholder="请输入调研编号" style="width: 150px" /> 
+                                    <Input v-model="pronum" placeholder="请输入调研编号" style="width: 150px" size="default"/> 
                                     <Button type="success" @click="search" size="default" style="margin-left:5px">搜索</Button>
                                 </p>
                                
@@ -53,7 +53,7 @@
                              </div>
              
                            
-                              <Table border :columns="tabval" :data="dataArr"></Table>
+                              <Table border :columns="tabval" :data="dataArr" size="small"></Table>
                                <Page :total="pageTotal" :current="pageNum" :page-size="pageSize" 
                                     show-elevator  show-total placement="top" @on-change="handlePage" style="margin:8px"></Page>
 
@@ -275,7 +275,9 @@ export default {
                 search(){
                      var that = this;
                      console.log(that.proname,that.pronum)
-                    //    if()
+                        that.proname =  $.trim(that.proname)
+                        that.pronum =  $.trim(that.pronum) 
+
                         axios({
                             url:"http://192.168.0.134:8080/queryByDetailsAll",
                             params:{
@@ -332,38 +334,48 @@ export default {
        $(".mc").text("【"+localStorage.getItem('username')+"】")
 
 
-                //    axios({
-                //             url:"http://192.168.0.134:8080/queryByDetailsAll",
-                           
-                //         })
-                //         .then(function(data){
-                //             console.log(data.data) 
-                //             //     that.dataa=[]
-                //             // that.pageTotal = data.data.totalCount;
-                //             // that.pageNum =data.data.page;
-                //             // that.pageSize = data.data.limit;
-                //             // console.log( that.pageTotal)
-                //             // var arr = data.data.list
-                //             // for(var i in arr){
-                //             //     var obj = {
-                //             //         pid:arr[i].pid,
-                //             //         address:arr[i].address,
-                //             //         confirmtime:arr[i].confirmtime,
-                //             //         name:arr[i].name,
-                //             //         projectname:arr[i].projectname,
-                //             //         researchnum:arr[i].researchnum,
-                //             //         researchobject:arr[i].researchobject,
-                //             //         uname:arr[i].uname,
-                //             //         uploadtime:arr[i].uploadtime
-                //             //     }
-                //             //    that.dataa.push(obj) 
-                //             // }
-                           
-                //             // var _start = ( that.pageNum - 1 ) * that.pageSize;  //pageNum 第几页  pageSize:每页几条数据
-                //             // var _end = that.pageNum * that.pageSize;
-                //             // that.dataArr = that.dataa.slice(_start,_end);
 
-                //         })
+                     var that = this;
+                     console.log(that.proname,that.pronum)
+               
+                        axios({
+                            url:"http://192.168.0.134:8080/queryByDetailsAll",
+                            params:{
+                                startime:that.startdate,
+                                endtime:that.enddate,
+                                projectname:that.proname,
+                                researchnum:that.pronum,
+                                page:that.pageNum
+                            }
+                        })
+                        .then(function(data){
+                            console.log(data.data) 
+                                that.dataa=[]
+                            that.pageTotal = data.data.totalCount;
+                            that.pageNum =data.data.page;
+                            that.pageSize = data.data.limit;
+                            console.log( that.pageTotal)
+                            var arr = data.data.list
+                            for(var i in arr){
+                                var obj = {
+                                    pid:arr[i].pid,
+                                    address:arr[i].address,
+                                    confirmtime:arr[i].confirmtime,
+                                    name:arr[i].name,
+                                    projectname:arr[i].projectname,
+                                    researchnum:arr[i].researchnum,
+                                    researchobject:arr[i].researchobject,
+                                    uname:arr[i].uname,
+                                    uploadtime:arr[i].uploadtime
+                                }
+                               that.dataa.push(obj) 
+                            }
+                           
+                            var _start = ( that.pageNum - 1 ) * that.pageSize;  //pageNum 第几页  pageSize:每页几条数据
+                            var _end = that.pageNum * that.pageSize;
+                            that.dataArr = that.dataa.slice(_start,_end);
+
+                        })
      } 
 
       
@@ -381,7 +393,7 @@ export default {
      #top{height: 130px;width: 100%;background:#fff;box-shadow: 0 1px 1px rgba(0,0,0,.1);border-radius:5px;overflow: hidden;
         
         p{
-          width: 100%;height: 30px;line-height: 30px;font-weight: bold;padding-left: 10px
+          width: 100%;height: 30px;line-height: 30px;font-size: 14px;font-weight: bold;padding-left: 10px
         }
      }
      #update{

@@ -22,7 +22,7 @@
             <option>审查访问员</option>
           </select>
           <div id="box">
-              <input type="submit" id="submit" value="登录" @click="login">  
+              <input type="submit" id="submit" value="登录" @click="login"  @keyup.enter="submit">  
               <p>{{this.$store.state.user}}</p>
           </div>       
         </div>
@@ -94,15 +94,28 @@ export default {
                     break;
             }
         },
-
-     login(){
-      var val = $('#mySelect') .val();//选中的值
-      var ins = $("#mySelect").get(0).selectedIndex;;//选中的索引
+     //enter
+     submit(ev){
       
-      // console.log(val,ins)
+         if(ev.keyCode == 13){
+              alert('你按回车键了');
+          }   
+        
+     },
+     login(){
+
+      var val = $('#mySelect') .val();//选中的值
+      var ins = $("#mySelect").get(0).selectedIndex;//选中的索引
+
+      //获取ptype
+      var ptypeid = this.GetUrlParam("ptype")
+      localStorage.setItem('ptypeid',ptypeid)
+      this.ptypeid = ptypeid;
+      console.log(ptypeid)
+      // console.log(this.GetUrlParam("ptype"))
+  
         var that = this;
-        // console.log(that.loginuser,that.loginpassword)
-        console.log(that.ptypeid)
+      //  
         axios({
             url:"http://192.168.0.134:8080/login",
             params:{mid:that.ptypeid,account:that.loginuser,password:that.loginpassword,id:ins,mid:1}
@@ -127,7 +140,7 @@ export default {
             }
         })
      },
-
+  //获取ptype
     GetUrlParam(paraName) {
     　　　　var url = window.location.toString();
     　　　　var arrObj = url.split("?");
@@ -150,16 +163,29 @@ export default {
     　　　　}
     　　}
   },
+  
   mounted(){
-    var ptypeid = this.GetUrlParam("ptype")
-    this.ptypeid = ptypeid;
-    console.log(this.GetUrlParam("ptype"))
-   localStorage.setItem('ptypeid',ptypeid)
+    
+   
     //  $("#mySelect").change(function(){
     //        console.log($(this).val());
     //    });
-  }
+  },
+ 
+created:function(){
+    let _this = this;
+    document.onkeydown = function(e){
+    let _key = window.event.keyCode;
+    if(_key === 13){
+      // 
+      _this.login()
+    }
+    }
+},
+
+
 }
+
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">

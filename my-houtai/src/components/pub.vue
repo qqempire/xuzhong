@@ -9,7 +9,7 @@
                
 
                 
-                    <Submenu name="1"  >
+                    <Submenu name="1"  class=" gis">
                         <template slot="title">
                             <router-link to="/home" tag="span">
                                 <Icon type="ios-compass" />
@@ -20,14 +20,14 @@
                     </Submenu>
                 
                 
-                <Submenu name="2" class="xmgl">
+                <Submenu name="2" class="isshow xmgl">
                     <template slot="title">
                         <Icon type="md-list-box" />
                         项目管理
                     </template>
                     <!-- <div @click="toaddjia()">00000</div> -->
                     <!-- <div @click="toaddjia()" style="border:1px solid red"><MenuItem name="2-1"  >添加项目</MenuItem></div> -->
-                    <MenuItem name="2-1"  class="xmgl1">
+                    <MenuItem name="2-1"  class="xmgl1 ">
                         <router-link to="/base" tag="span">添加项目</router-link>
                     </MenuItem>
                     <MenuItem name="2-2"  class="xmgl2">
@@ -38,7 +38,7 @@
                     </MenuItem>
                 </Submenu>
                
-                <Submenu name="3">
+                <Submenu name="3"  class=" gis">
                     <template slot="title">
                         <Icon type="md-pricetags" />
                         调研对象管理
@@ -50,7 +50,7 @@
                         <router-link to="/updateRecordLists" tag="span">更新记录</router-link>                                        
                     </MenuItem>
                 </Submenu>
-                <Submenu name="4">
+                <Submenu name="4" class="isshow">
                     <template slot="title">
                         <Icon type="md-checkbox-outline" />
                         审核管理
@@ -66,7 +66,7 @@
                         <router-link to="/list" tag="span">审核列表</router-link>
                     </MenuItem>    
                 </Submenu>
-               <Submenu name="5">
+               <Submenu name="5" class="isshow">
                     <template slot="title">
                         <Icon type="md-pie" />
                          门店管理
@@ -75,14 +75,14 @@
                         <router-link to="/shopLists" tag="span">门店列表</router-link>
                     </MenuItem>
                 </Submenu>
-                <Submenu name="6">
+                <Submenu name="6"  class="gis" id="qiye">
                     <template slot="title">                     
                             <Icon type="ios-cube" />
                             企业管理                       
                     </template>
 
                     
-                    <MenuItem name="6-1" class="qygl1">
+                    <MenuItem name="6-1" class="qygl1 qisshow">
                         <router-link to="/moban" tag="span">模板管理</router-link>
                     </MenuItem>
                        
@@ -91,11 +91,11 @@
                     </MenuItem>
                 
                     
-                    <MenuItem name="6-3" class="qygl3">
+                    <MenuItem name="6-3" class="qygl3 qisshow">
                        <router-link to="/daili" tag="span">代理管理</router-link>
                        
                     </MenuItem>
-                    <MenuItem name="6-4" class="qygl4">
+                    <MenuItem name="6-4" class="qygl4 qisshow">
                         <router-link to="/fangwenyuan" tag="span">访问员管理</router-link>
                     </MenuItem>
 
@@ -106,7 +106,7 @@
                         <router-link to="/dodata" tag="span">操作日志</router-link>
                     </MenuItem>
                 </Submenu>
-                <Submenu name="7">
+                <Submenu name="7" class="isshow">
                 <template slot="title">
                     <Icon type="ios-create" />
                     报告管理
@@ -127,7 +127,7 @@
                     <router-link to="/generatedReportList" tag="span">已生成报告</router-link>
                 </MenuItem>               
             </Submenu>
-                <Submenu name="8">
+                <Submenu name="8"  class="gis">
                     <template slot="title">
                         <Icon type="md-eye" />
                         可视化管理
@@ -148,7 +148,7 @@
                         <router-link to="/visualSet" tag="span">设置</router-link>
                     </MenuItem>                   
                 </Submenu>
-              <Submenu name="9">
+              <Submenu name="9" class="isshow">
                     <template slot="title">
                         <Icon type="ios-contact" />
                         我的任务
@@ -219,14 +219,8 @@ export default {
      }
   },
   mounted(){
-    //   console.log( localStorage.getItem('username'))
-       $(".username").text("【"+localStorage.getItem('username')+"】")
-       $(".zhiwei").text("【"+localStorage.getItem('job')+"】")
-       if(localStorage.getItem('username')==null||localStorage.getItem('username')==""){
-           this.$router.push("/login")
-       };
 
-    function ifquan(biaoqian){
+      function ifquan(biaoqian){
        var text = $.trim(biaoqian.text());
        var str =  localStorage.getItem('Jurisdiction')
        var arr = str.split(',')
@@ -237,42 +231,63 @@ export default {
        }else{
            biaoqian.css({'display':'block'})
        }
-    //    console.log(arr)
-    //    console.log(text)
-    //    console.log(num)           
+       
     }
-    // 项目管理
-       ifquan($(".xmgl1"))
-       ifquan($(".xmgl2"))
-       ifquan($(".xmgl3"))
-    //  调研对象管理
-       ifquan($(".dydx1"))
-       ifquan($(".dydx2"))
-    // 审核管理
-       ifquan($(".shgl1"))
-       ifquan($(".shgl2"))
-       ifquan($(".shgl3"))
-    // 门店管理mdgl
-       ifquan($(".mdgl"))
-    // 企业管理
-       ifquan($(".qygl1"))
-       ifquan($(".qygl2"))
-       ifquan($(".qygl3"))
-       ifquan($(".qygl4"))
-       ifquan($(".qygl5"))
-       ifquan($(".qygl6"))
-    // 报告管理
-       ifquan($(".bggl1"))
-       ifquan($(".bggl2"))
-       ifquan($(".bggl3"))
-       ifquan($(".bggl4"))
-       ifquan($(".bggl5"))
-    // 我的任务
-       ifquan($(".mytask1"))
-       ifquan($(".mytask2"))
-       ifquan($(".mytask3"))
-       ifquan($(".mytask4"))
-       ifquan($(".mytask5"))   
+    //   console.log( localStorage.getItem('username'))
+      var ptypeid = localStorage.getItem('ptypeid')
+      console.log(ptypeid)
+      if(ptypeid==1){
+           
+                // 项目管理
+                ifquan($(".xmgl1"))
+                ifquan($(".xmgl2"))
+                ifquan($(".xmgl3"))
+                //  调研对象管理
+                ifquan($(".dydx1"))
+                ifquan($(".dydx2"))
+                // 审核管理
+                ifquan($(".shgl1"))
+                ifquan($(".shgl2"))
+                ifquan($(".shgl3"))
+                // 门店管理mdgl
+                ifquan($(".mdgl"))
+                // 企业管理
+                ifquan($(".qygl1"))
+                ifquan($(".qygl2"))
+                ifquan($(".qygl3"))
+                ifquan($(".qygl4"))
+                ifquan($(".qygl5"))
+                ifquan($(".qygl6"))
+                // 报告管理
+                ifquan($(".bggl1"))
+                ifquan($(".bggl2"))
+                ifquan($(".bggl3"))
+                ifquan($(".bggl4"))
+                ifquan($(".bggl5"))
+                // 我的任务
+                ifquan($(".mytask1"))
+                ifquan($(".mytask2"))
+                ifquan($(".mytask3"))
+                ifquan($(".mytask4"))
+                ifquan($(".mytask5"))   
+             //GIS判断   
+             $(".isshow").css({'display':'none'})
+             $("#qiye .qisshow").css({'display':'none'})
+             $(".gis").css({'display':'block'})
+   
+      }
+
+
+
+
+       $(".username").text("【"+localStorage.getItem('username')+"】")
+       $(".zhiwei").text("【"+localStorage.getItem('job')+"】")
+       if(localStorage.getItem('username')==null||localStorage.getItem('username')==""){
+           this.$router.push("/login")
+       };
+
+    
+    
   }
 }
 </script>

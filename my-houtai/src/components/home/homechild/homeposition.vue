@@ -3,11 +3,11 @@
       <Layout :style="{marginLeft: '200px'}" >
             
             <Content :style="{padding: '0 16px 16px'}">
-                <Breadcrumb :style="{margin: '16px 0'}">
+                <!-- <Breadcrumb :style="{margin: '16px 0'}">
                     
                     
                    
-                </Breadcrumb>
+                </Breadcrumb> -->
                 <Card>
                     <div style="height: 600px;position:relative">
                         <el-button type="info" size="small" @click="tohomedetail" class="back">&nbsp;&nbsp;返&nbsp;回&nbsp;&nbsp;</el-button>

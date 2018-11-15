@@ -14,17 +14,17 @@
 
                           <div class="title"><span>筛选条件</span></div>
                            <div class="ipt">
-                                <Select v-model="model1" style="width:100px" placeholder="部门" @on-change="change1">
+                                <Select v-model="model1" style="width:100px" placeholder="部门" @on-change="change1" size="default">
                                     <Option v-for="item in bumen" :value="item.value" :key="item.value">{{ item.label }}</Option>
                                 </Select>
-                                <Select v-model="model2" style="width:100px" placeholder="职位" @on-change="change2">
+                                <Select v-model="model2" style="width:100px" placeholder="职位" @on-change="change2" size="default">
                                     <Option v-for="item in positionzhi" :value="item.value" :key="item.value">{{ item.label }}</Option>
                                 </Select>
-                                <Select v-model="model3" style="width:100px" placeholder="员工状态" @on-change="change3">
+                                <Select v-model="model3" style="width:100px" placeholder="员工状态" @on-change="change3" size="default">
                                     <Option v-for="item in yuanstatus" :value="item.value" :key="item.value">{{ item.label }}</Option>
                                 </Select>
-                                <Button type="success" @click="search">搜索</Button>
-                                <Button type="success" @click="modal10 = true" class="bumenbtn">添加部门</Button>
+                                <Button type="success" @click="search" size="default">搜索</Button>
+                                <Button type="success" @click="modal10 = true" class="bumenbtn" size="default">添加部门</Button>
                                 
                                     <Modal
                                         title="添加部门"
@@ -37,7 +37,7 @@
                                         </p>
                                        
                                     </Modal>
-                                <Button type="success" @click="modal11= true"  class="zhibtn">添加职位</Button>
+                                <Button type="success" @click="modal11= true"  class="zhibtn" size="default">添加职位</Button>
                                      <Modal
                                         title="添加职位"
                                         v-model="modal11"
@@ -52,13 +52,13 @@
                                         </p>
                                        
                                     </Modal>
-                                <Button type="success" @click="modal12 = true" class="yuanbtn">添加员工</Button>
+                                <Button type="success" @click="modal12 = true" class="yuanbtn" size="default">添加员工</Button>
 
                                 <!-- 员工添加弹出层 -->
                                      <Modal
                                         title="添加员工"
                                         v-model="modal12"
-                                        :styles="{top: '200px'}"
+                                        :styles="{top: '50px'}"
                                         @on-ok="addok"
                                         class-name="vertical-center-modal">
                                         <div class="yuangong">
@@ -105,9 +105,8 @@
                                         
                                         
                                     </Modal>
-                                <Button type="success" @click="addshencha" >管理审查访问员</Button>   
+                                <Button type="success" @click="addshencha" size="default">管理审查访问员</Button>   
                            </div>
-
                         </div>
 
                         <!-- 更新报告 -->
@@ -115,16 +114,16 @@
                              <div class="title title2"><span>状态列表</span><el-button type="info" size="small">导出表格</el-button></div>
                             
                              <!-- 表格 -->
-                             <Table border :columns="columns1" :data="data1"></Table>
+                             <Table border :columns="columns1" :data="data1" size="small"></Table>
 
-                             <Modal
+                             <!-- <Modal
                                 title="Title"
                                 v-model="tablebianji"
                                 class-name="vertical-center-modal">
                                 <p>Content of dialog</p>
                                 <p>Content of dialog</p>
                                 <p>Content of dialog</p>
-                            </Modal>
+                            </Modal> -->
 
 
                         </div>
@@ -342,7 +341,7 @@ export default {
                     case 'warning':
                         this.$Modal.warning({
                             title: title,
-                            content: content
+                            content: '<p>内容不能为空</p>'
                         });
                         break;
                     case 'error':
@@ -434,9 +433,9 @@ export default {
              if(!(regEmail.test(em))){ 
                 $('.emal').css({'border':'1px solid red'})
                 this.youxiangerr('error')    
-                this.email=""
+                // this.email=""
             }else{
-                 $('.emal').css({'border':'1px solid green'})
+                //  $('.emal').css({'border':'1px solid green'})
             }
         },
         blurname(){
@@ -484,16 +483,23 @@ export default {
         },
         //员工添加
         addok(){
-             var that = this;
+            this.ymima =  $.trim(this.ymima) 
+            this.yzhang =  $.trim(this.yzhang) 
+            this.yphone =  $.trim(this.yphone) 
+            this.email =  $.trim(this.email)             
+
+             if(this.addvalue1==""||this.addvalue2==""||this.addvalue2==""||this.addvalue3==""||this.addvalue4==""||this.intime==""||this.intime=="" ||this.intime=="" ||this.outtime=="" ||this.email=="" ||this.yname=="" ||this.ysex=="" ||this.yage==""||this.yxueli==""||this.yphone==""||this.yzhang==""||this.ymima==""){
+               this.instance('warning')
+             }else{
+                 var that = this;
              var em = that.email;
-             axios({          
+              axios({          
                         url:"http://192.168.0.134:8080/QueryByAccount",
                         params:{account:that.yzhang}
                     })
                     .then(function(data){
                         console.log(data.data)
                         if(data.data.msg=="账号可用"){
-                            if(that.addvalue1&&that.addvalue2&&that.addvalue2&&that.addvalue3&&that.addvalue4&&that.intime&&that.intime &&that.intime &&that.outtime &&that.email &&that.yname &&that.ysex &&that.yage&&that.yxueli&&that.yphone&&that.yzhang&&that.ymima){
                                console.log("222")
                                 axios({
                                         method:"post",               
@@ -522,14 +528,13 @@ export default {
                                             alert("添加成功")
                                         }
                                     });
-                            }else{
-                                console.log("333")
-                                that.instance('error') 
-                            }
+                           
                         }else{
-                           that.instance('info') 
+                           that.instance('warning') 
                         }
                     });
+             }
+            
           
 
         
@@ -537,63 +542,77 @@ export default {
         //添加部门
         addbu(){
             
-            var that = this;
-            console.log(that.addbumen)
-            axios({       
-                url:"http://192.168.0.134:8080/QueryByDname",
-                params:{dname:that.addbumen}
-            })
-            .then(function(data){         
-                console.log(data.data)
-                if(data.data.msg=="部门已被占用"){
-                    that.instance('info')
-                }else{
-                    axios({ 
-                            method:"post",               
-                            url:"http://192.168.0.134:8080/SavaDepartment",
-                            params:{dname:that.addbumen}
-                        })
-                        .then(function(data){
-                            that.addbumen=""
-                            console.log(data.data)
-                            if(data.data.msg=="添加成功"){
-                                that.instance('success')
-                            }
-                        });
-                }
-            });
+            this.addbumen =  $.trim(this.addbumen) 
+            if(this.addbumen=="" || this.addbumen==null){
+               this.instance('warning')
+            }else{
+                var that = this;
+                console.log(that.addbumen)
+                axios({       
+                    url:"http://192.168.0.134:8080/QueryByDname",
+                    params:{dname:that.addbumen}
+                })
+                .then(function(data){         
+                    console.log(data.data)
+                    if(data.data.msg=="部门已被占用"){
+                        that.instance('info')
+                    }else{
+                        axios({ 
+                                method:"post",               
+                                url:"http://192.168.0.134:8080/SavaDepartment",
+                                params:{dname:that.addbumen}
+                            })
+                            .then(function(data){
+                                that.addbumen=""
+                                console.log(data.data)
+                                if(data.data.msg=="添加成功"){
+                                    that.instance('success')
+                                }
+                            });
+                    }
+                });
 
+            }
+            
        
         }  ,
         //添加职位
         success(){
-           var that = this;
-            console.log(that.addzhi,that.model1)
-             axios({                
-                url:"http://192.168.0.134:8080/QueryByPname",
-                params:{pname:that.addzhi}
-            })
-            .then(function(data){
-                console.log(data.data)
-                if(data.data.msg=="职位已被占用"){
-                    that.instance('info');
-                }else if(data.data.msg=="职位可用"){
-                   axios({ 
-                        method:"post",               
-                        url:"http://192.168.0.134:8080/SavaPosition",
-                        params:{did:that.model1,pname:that.addzhi}
-                    })
-                    .then(function(data){
-                        that.addzhi=""
-                        that.modal1=""
-                        console.log(data.data)
-                        if(data.data.msg="添加成功"){
-                            // alert("添加成功")
-                            that.$Message.success('添加成功啦');
-                        }
-                    });
-                }
-            });
+            this.addbumen =  $.trim(this.addzhi) 
+           
+
+            if(this.modal1=="" || this.addzhi==""){
+               this.instance('warning')
+            }else{
+                var that = this;
+                // console.log(that.addzhi,that.model1)
+                axios({                
+                    url:"http://192.168.0.134:8080/QueryByPname",
+                    params:{pname:that.addzhi}
+                })
+                .then(function(data){
+                    console.log(data.data)
+                    if(data.data.msg=="职位已被占用"){
+                        that.instance('info');
+                    }else if(data.data.msg=="职位可用"){
+                    axios({ 
+                            method:"post",               
+                            url:"http://192.168.0.134:8080/SavaPosition",
+                            params:{did:that.model1,pname:that.addzhi}
+                        })
+                        .then(function(data){
+                            that.addzhi=""
+                            that.modal1=""
+                            console.log(data.data)
+                            if(data.data.msg="添加成功"){
+                                // alert("添加成功")
+                                that.$Message.success('添加成功啦');
+                            }
+                        });
+                    }
+                });
+            }
+           
            
         },
         //搜索
@@ -613,7 +632,7 @@ export default {
     mounted(){
         var uid = localStorage.getItem('uid')
         this.uid = uid;
-        console.log(uid)
+        // console.log(uid)
 
          var that = this;
         //  部门
@@ -633,7 +652,7 @@ export default {
             url:"http://192.168.0.134:8080/selectJuisdiction",        
             })
             .then(function(data){
-                console.log(data.data)
+                // console.log(data.data)
                 var arr = data.data
                 for(var i in arr){
                     var obj={value:arr[i].jid,label:arr[i].jname}
@@ -644,11 +663,11 @@ export default {
             //按钮权限判断         
             function ifquan(biaoqian){
                 var text = $.trim(biaoqian.text());
-                 console.log(text)                             
+                //  console.log(text)                             
                 var str =  localStorage.getItem('Jurisdiction')
                 var arr = str.split(',');
                 var num = $.inArray(text, arr);  //返回 -1则不存在               
-                console.log(num)
+                // console.log(num)
                 if(num==-1){
                     biaoqian.css({'display':'none'})
                 }else{
@@ -686,7 +705,7 @@ export default {
         }
      }
      #update{
-        width: 100%;height: 440px;background:#fff;box-shadow: 0 1px 1px rgba(0,0,0,.1);margin-top: 8px;border-radius: 5px;overflow: hidden;
+        width: 100%;height: 500px;background:#fff;box-shadow: 0 1px 1px rgba(0,0,0,.1);margin-top: 8px;border-radius: 5px;overflow: hidden;
        
      }
 table{text-align: center;
